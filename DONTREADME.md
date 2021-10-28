@@ -54,3 +54,5 @@ Never gonna let you down
 Never gonna run around and desert you
 Never gonna make you cry
 Never gonna say goodbye
+
+has entrado bajo tu propio riesgo

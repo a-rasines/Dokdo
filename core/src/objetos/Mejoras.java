@@ -1,11 +1,14 @@
 package objetos;
-
+/**
+ * Representa una mejora. Tanto de un {@link objetos.Barco Barco} como de una {@link objetos.Isla Isla} o un {@link objetos.Cañon Cañon}.
+ *
+ */
 public class Mejoras {
 	protected int nivelNecesario;
-	protected int precioDeVenta;
+	protected int precio;
 	public Mejoras(int nivel, int precio) {
 		this.nivelNecesario=nivel;
-		this.precioDeVenta=precio;
+		this.precio=precio;
 	}
 	public int getNivelNecesario() {
 		return nivelNecesario;
@@ -14,9 +17,9 @@ public class Mejoras {
 		this.nivelNecesario = nivelNecesario;
 	}
 	public int getPrecioDeVenta() {
-		return precioDeVenta;
+		return precio;
 	}
 	public void setPrecioDeVenta(int precioDeVenta) {
-		this.precioDeVenta = precioDeVenta;
+		this.precio = precioDeVenta;
 	}
 }

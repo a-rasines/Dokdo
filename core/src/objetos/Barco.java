@@ -2,16 +2,81 @@ package objetos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-public class Barco {
-	public static enum Tipo{};
-	public enum PosicionCañon{IZQUIERDA,DERECHA,DELANTE,ATRAS};
-	protected int vidaDelBarco;
-	protected float posicionEnX;
-	protected float posicionEnY;
-	protected int nivelDelBarco;
+/**
+ * Representa un barco, tanto el del jugador como el de los enemigos
+ *
+ */
+public class Barco extends Sprite{
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ CLASES INTERNAS ▓▓▓▓▓▓▓▓▓▓
+	 */
+	
+	/**
+	 * Clase que contiene y controla los {@link objetos.Cañon Cañon}es en un lado del {@link objetos.Barco Barco}
+	 *
+	 */
+	private class CannonSide{
+		private ArrayList<Cañon>c;//cañones en el lado
+		private double cd = 0; //cooldown
+		private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
+		public CannonSide(ArrayList<Cañon>c) {
+			
+		}
+		public ArrayList<Cañon> getCannons() {
+			return c;
+		}
+		public void setCooldown(double cooldown) {
+			cd = cooldown;
+			t0 = System.currentTimeMillis();
+		}
+		private boolean reset() {
+			cd = 0;
+			return true;
+		}
+		/**
+		 * Determina si los cañones pueden disparar o no.
+		 */
+		public boolean canShoot() {
+			return System.currentTimeMillis()-t0 >=cd?reset():false;
+			
+		}
+	}
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ ENUMS ▓▓▓▓▓▓▓▓▓▓ 
+	 */
+	
+	/**
+	 * Tipo de {@link objetos.Barco Barco}
+	 *
+	 */
+	public static enum Tipo{
+	};
+	/**
+	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
+	 *
+	 */
+	public enum PosicionCañon{
+		IZQUIERDA,
+		DERECHA,
+		DELANTE,
+		ATRAS
+	};
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
+	 */
+	
+	protected int vida;
+	protected int nivel;
 	protected Municion municionEnUso;
-	protected HashMap<PosicionCañon,ArrayList<Cañon>> cañonesEnElBarco;
+	protected HashMap<PosicionCañon,CannonSide> cañones;
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ CONSTRUCTORES ▓▓▓▓▓▓▓▓▓▓
+	 */
+	
 	/** Barcos del juego
 	 * @param vida Vida actual del barco
 	 * @param nivel Nivel actual del barco
@@ -20,35 +85,33 @@ public class Barco {
 	 * @param municionActual Municion que esta usando el barco
 	 */
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
-		this.vidaDelBarco=vida;
-		this.nivelDelBarco=nivel;
-		this.posicionEnX=posX;
-		this.posicionEnY=posY;
+		this.vida=vida;
+		this.nivel=nivel;
+		super.x=posX;
+		super.y=posY;
 		this.municionEnUso=municionActual;
 	}
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓
+	 */
+	
+	
+	/*
+	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓
+	 */
+	
 	public int getVidaDelBarco() {
-		return vidaDelBarco;
+		return vida;
 	}
 	public void setVidaDelBarco(int vidaDelBarco) {
-		this.vidaDelBarco = vidaDelBarco;
-	}
-	public float getPosicionEnX() {
-		return posicionEnX;
-	}
-	public void setPosicionEnX(float posicionEnX) {
-		this.posicionEnX = posicionEnX;
-	}
-	public float getPosicionEnY() {
-		return posicionEnY;
-	}
-	public void setPosicionEnY(float posicionEnY) {
-		this.posicionEnY = posicionEnY;
+		this.vida = vidaDelBarco;
 	}
 	public int getNivelDelBarco() {
-		return nivelDelBarco;
+		return nivel;
 	}
 	public void setNivelDelBarco(int nivelDelBarco) {
-		this.nivelDelBarco = nivelDelBarco;
+		this.nivel = nivelDelBarco;
 	}
 	public Municion getMunicionEnUso() {
 		return municionEnUso;

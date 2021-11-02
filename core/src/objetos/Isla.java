@@ -1,7 +1,10 @@
 package objetos;
 
 import java.util.ArrayList;
-
+/**
+ * Representa las islas en el mapa
+ *
+ */
 public class Isla {
 	protected float posicionEnX;
 	protected float posicionEnY;

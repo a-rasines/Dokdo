@@ -1,16 +1,15 @@
 package objetos;
-
+/**
+ * Esta clase representa un cañon de un {@linkobjetos.Barco Barco}
+ *
+ */
 public class Cañon extends Mejoras{
-	protected float cooldownDelCañon;
-	public Cañon(int nivel, int precio, float cooldown) {
+	private double x;
+	private double y;
+	public Cañon(int nivel, int precio, double x, double y) {
 		super(nivel, precio);
-		this.cooldownDelCañon=cooldown;
 	}
-	public float getCooldownDelCañon() {
-		return cooldownDelCañon;
+	public void disparar(Municion m) {
+		
 	}
-	public void setCooldownDelCañon(float cooldownDelCañon) {
-		this.cooldownDelCañon = cooldownDelCañon;
-	}
-
 }

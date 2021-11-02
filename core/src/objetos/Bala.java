@@ -1,6 +1,6 @@
 package objetos;
 
-public class Bala extends Sprite{
+public class Bala{
 	public Bala() {
 		
 	}

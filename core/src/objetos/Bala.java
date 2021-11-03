@@ -15,9 +15,9 @@ public class Bala extends Sprite{
 	 * @param saltoY salto en Y cada vuelta
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(double x0, double y0, double saltoX, double saltoY, int daño) {
+	public Bala(float x0, float y0, double saltoX, double saltoY, int daño) {
 		super.x = x0;
-		super.y = y0;
+		super.y =  y0;
 		vX = saltoX;
 		vY = saltoY;
 		this.daño = daño;

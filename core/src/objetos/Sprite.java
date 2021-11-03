@@ -4,8 +4,8 @@ package objetos;
  *
  */
 public abstract class Sprite {
-	protected double x;
-	protected double y;
+	protected float x;
+	protected float y;
 	/**
 	 * Mueve el objeto q posiciones
 	 * @param qx cantidad a cambiar en x

@@ -3,7 +3,7 @@ package dg.main;
 import com.badlogic.gdx.Game;
 
 
-public class JugoP extends Game{
+public class Dokdo extends Game{
 	
 	@Override
 	public void create() {

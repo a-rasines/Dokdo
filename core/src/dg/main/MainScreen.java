@@ -1,6 +1,8 @@
 package dg.main;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,8 +23,25 @@ public class MainScreen implements Screen{
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		
-		barco.moverBarco();
-		//barco.dibujarBarco();
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			barco.left();
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			barco.right();
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+			barco.forward();
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+			barco.backwards();
+		}
+		if(!Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
+			barco.decelerate();
+		}
+		barco.printPos();
 		
 	}
 

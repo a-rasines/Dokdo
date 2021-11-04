@@ -8,7 +8,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -28,11 +27,14 @@ public class Barco extends Sprite{
 		private double cd = 0; //cooldown
 		private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
 		public CannonSide(ArrayList<Cañon>c) {
-			
+			this.c = c;
 		}
 		public ArrayList<Cañon> getCannons() {
 			return c;
 		}
+		public Cañon getCannon(int pos) {
+			return c.get(pos);
+			}
 		public void setCooldown(double cooldown) {
 			cd = cooldown;
 			t0 = System.currentTimeMillis();
@@ -79,10 +81,9 @@ public class Barco extends Sprite{
 	protected int nivel;
 	protected Municion municionEnUso;
 	protected HashMap<PosicionCañon,CannonSide> cañones;
-	
-	protected float velocidad = 10;
-	protected float velocidadDeGiro = 10;
-	protected float anguloEnGrados = 0;
+	protected float vMax = 10; //velocidad maxima
+	protected float a = 1; //aceleración
+	protected float vAng = 50; //velocidad angular en grados
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ CONSTRUCTORES ▓▓▓▓▓▓▓▓▓▓
@@ -106,33 +107,31 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓
 	 */
-	public void moverBarco() {
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			//Mover a la Izquierda
-			anguloEnGrados -= velocidadDeGiro * Gdx.graphics.getDeltaTime();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			//Mover a la Derecha
-			anguloEnGrados += velocidadDeGiro * Gdx.graphics.getDeltaTime();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-			//Mover hacia delante en direccion del angulo
-			x +=  Math.cos(Math.toRadians(anguloEnGrados)) * velocidad * Gdx.graphics.getDeltaTime();
-			y += Math.sin(Math.toRadians(anguloEnGrados)) * velocidad * Gdx.graphics.getDeltaTime();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-			x -=  Math.cos(Math.toRadians(anguloEnGrados)) * velocidad * Gdx.graphics.getDeltaTime();
-			y -= Math.sin(Math.toRadians(anguloEnGrados)) * velocidad * Gdx.graphics.getDeltaTime();
-		}
-		System.out.println(x + " X");
-		System.out.println(y + " Y");
-		System.out.println(anguloEnGrados);
-		
-	}
 	
+	//TODO Mover esto al barco del jugador
+	public void right() {
+		rotate(vAng*Gdx.graphics.getDeltaTime());
+	}
+	public void left() {
+		rotate(-vAng*Gdx.graphics.getDeltaTime());
+	}
+	public void forward() {
+		if(v < vMax)v+=a;
+		move();
+	}
+	public void backwards() {
+		if(v>0)v-=a;
+		move();
+	}
+	public void stop() {
+		v=0;
+	}
+	public void decelerate() {
+		if(v>0) {
+			v-=0.2;
+			move();
+		}else if(v<0)v=0;
+	}
 	//TODO posiblemente el dibujado no vaya aqui, pero para probar lo pongo
 	private Texture tileSet;
 	private TextureRegion barco; 	
@@ -145,7 +144,7 @@ public class Barco extends Sprite{
 		// el TextureRegion selecciona la parte de la imagen deseada (en 0,0 contamaño36*36)
 		barco = new TextureRegion(tileSet, 0, 0, 36, 36 );
 		
-		sb.draw(barco, x, y, 18, 18, 36, 36, 1, 1, anguloEnGrados);
+		sb.draw(barco, x, y, 18, 18, 36, 36, 1, 1, super.angle);
 		
 	}
 	

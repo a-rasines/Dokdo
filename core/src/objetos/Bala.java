@@ -15,11 +15,11 @@ public class Bala extends Sprite{
 	 * @param saltoY salto en Y cada vuelta
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, double saltoX, double saltoY, int daño) {
+	public Bala(float x0, float y0, float vel, float angulo, int daño) {
 		super.x = x0;
 		super.y =  y0;
-		vX = saltoX;
-		vY = saltoY;
+		super.v = vel;
+		super.angle = angulo;
 		this.daño = daño;
 		//TODO hacer el bucle de movimiento
 	}
@@ -27,19 +27,6 @@ public class Bala extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 
 	 */
-	
-	public double getvX() {
-		return vX;
-	}
-	public void setvX(double vX) {
-		this.vX = vX;
-	}
-	public double getvY() {
-		return vY;
-	}
-	public void setvY(double vY) {
-		this.vY = vY;
-	}
 	public int getDaño() {
 		return daño;
 	}

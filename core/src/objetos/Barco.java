@@ -108,7 +108,6 @@ public class Barco extends Sprite{
 	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓
 	 */
 	
-	//TODO Mover esto al barco del jugador
 	public void right() {
 		rotate(vAng*Gdx.graphics.getDeltaTime());
 	}

@@ -1,6 +1,6 @@
 package objetos;
 /**
- * Esta clase representa un cañon de un {@linkobjetos.Barco Barco}
+ * Esta clase representa un cañon de un {@link objetos.Barco Barco}
  *
  */
 public class Cañon extends Mejoras{

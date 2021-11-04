@@ -23,7 +23,7 @@ public class Barco extends Sprite{
 	 *
 	 */
 	private class CannonSide{
-		private ArrayList<Cañon>c;//cañones en el lado
+		private ArrayList<Cañon> c;//cañones en el lado
 		private double cd = 0; //cooldown
 		private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
 		public CannonSide(ArrayList<Cañon>c) {
@@ -47,7 +47,7 @@ public class Barco extends Sprite{
 		 * Determina si los cañones pueden disparar o no.
 		 */
 		public boolean canShoot() {
-			return System.currentTimeMillis()-t0 >=cd?reset():false;
+			return System.currentTimeMillis()-t0 >=cd*1000?reset():false;
 			
 		}
 	}

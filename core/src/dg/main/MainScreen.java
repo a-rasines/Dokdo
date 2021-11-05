@@ -42,6 +42,8 @@ public class MainScreen implements Screen{
 			barco.decelerate();
 		}
 		barco.printPos();
+		//TODO el dibujado sigue dando problemas
+		//barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), barco.getAngle(), 32);
 		
 	}
 

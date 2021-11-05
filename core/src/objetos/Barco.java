@@ -94,21 +94,7 @@ public class Barco extends Sprite{
 			move();
 		}else if(v<0)v=0;
 	}
-	//TODO posiblemente el dibujado no vaya aqui, pero para probar lo pongo
-	private Texture tileSet;
-	private TextureRegion barco; 	
 	
-	
-	
-	public void dibujarBarco() {
-		SpriteBatch sb = new SpriteBatch();
-		tileSet = new Texture("TexturasMal.png");
-		// el TextureRegion selecciona la parte de la imagen deseada (en 0,0 contamaño36*36)
-		barco = new TextureRegion(tileSet, 0, 0, 36, 36 );
-		
-		sb.draw(barco, x, y, 18, 18, 36, 36, 1, 1, super.angle);
-		
-	}
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 import objetos.Barco;
 
@@ -22,6 +23,7 @@ public class MainScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		ScreenUtils.clear(1, 0, 0, 1); //Necesario para updatear correctamente la pantalla
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
 			barco.left();
@@ -43,7 +45,8 @@ public class MainScreen implements Screen{
 		}
 		barco.printPos();
 		//TODO el dibujado sigue dando problemas
-		//barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), barco.getAngle(), 32);
+		//Si se escribe la ruta absoluta funciona 
+		//barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), 32);
 		
 	}
 

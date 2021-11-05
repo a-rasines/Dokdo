@@ -18,7 +18,7 @@ public abstract class Sprite {
 	 * Mueve el objeto por velocidad en el ángulo especificado
 	 */
 	public void move() {
-		move((float)(v*Math.cos(angle)),(float)(v*Math.sin(angle)));
+		move((float)(v*Math.sin(Math.toRadians(angle))),(float)(v*Math.cos(Math.toRadians(angle))));
 	}
 	/**
 	 * Mueve el objeto coordenadas personalizadas
@@ -51,39 +51,25 @@ public abstract class Sprite {
 	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
 	 * @param posX, Posicion de X
 	 * @param posY, posicion de Y
-	 * @param angulo, Angulo en el que dibujar el Sprite(En grados)
 	 * @param tamañoPx, Tamaño en pixeles, los sprites son cuadrados
 	 */
-	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, float angulo, int tamañoPx) {
-		SpriteBatch sb = new SpriteBatch();
-		//TODO Añadir los casos de las balas, cañones y tal
-		switch (tamañoPx) {
-		case 32: //Barcos y tal
+	private SpriteBatch sb = new SpriteBatch();
+	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tamañoPx) {
+		
+		
+	
 			//En filas y columnas, se indica la posicioin *32 (32x32 pixeles cada barco) +1 ya que en la textura habra un pixel entre estos
 			//Empieza a contar en 0 las filas, aunque el primer sprite se encontrara en el pixel 1-1
-			TextureRegion sprite32 = new TextureRegion(tileSet, fila*32 +1, columna*32 +1, 32, 32);
+			TextureRegion sprite = new TextureRegion(tileSet, fila*32 +1, columna*32 +1, 32, 32);
 			
 			sb.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite32, posX, posY, 16, 16, 32, 32, 1, 1, angulo);
+			sb.draw(sprite, posX, posY, tamañoPx/2, tamañoPx/2, tamañoPx, tamañoPx, 1, 1, -angle);
 			sb.end();
-			break;
-		case 64: //Islas y tal
-			//En filas y columnas, se indica la posicioin *64 (64x64 pixeles cada barco) +1 ya que en la textura habra un pixel entre estos
-			//Empieza a contar en 0 las filas, aunque el primer sprite se encontrara en el pixel 1-1
-			TextureRegion sprite64 = new TextureRegion(tileSet, fila*64 +1, columna*64 +1, 64, 64);
-			
-			sb.begin();
-			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite64, posX, posY, 32, 32, 64, 64, 1, 1, angulo);
-			sb.end();
-			break;
-		default:
-			System.out.println("Ningun valor valido");
-			break;
-		}
 		
 	}
+		
+	
 	
 	//Getters 
 	public float getX() {

@@ -44,8 +44,8 @@ public class MainScreen implements Screen{
 			barco.decelerate();
 		}
 		barco.printPos();
-		//TODO el dibujado sigue dando problemas
-		//Si se escribe la ruta absoluta funciona 
+		
+		
 		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), 32);
 		
 	}

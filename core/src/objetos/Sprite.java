@@ -45,7 +45,7 @@ public abstract class Sprite {
 	
 	
 	
-	/** Dibuja sprites especificos de un mapa de Sprites
+	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
 	 * @param tileSet, Archivo en el que se encuentra el sprite deseado
 	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
 	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)

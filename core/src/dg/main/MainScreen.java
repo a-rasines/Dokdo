@@ -5,14 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import objetos.Barco;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
-
 	Barco barco = new Barco(10,0,0,0,null);
 	@Override
 	public void show() {
@@ -24,25 +22,20 @@ public class MainScreen implements Screen{
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		ScreenUtils.clear(1, 0, 0, 1); //Necesario para updatear correctamente la pantalla
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-			barco.left();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-			barco.right();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-			barco.forward();
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-			barco.backwards();
-		}
-		if(!Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S)){
+		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
-		}
+		else if(Gdx.input.isKeyPressed(Input.Keys.W))
+			barco.forward();
+		else if(Gdx.input.isKeyPressed(Input.Keys.S))
+			barco.backwards();
+		else 
+			barco.decelerate();
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.D))
+			barco.right();
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
+			barco.left();
+		
 		barco.printPos();
 		
 		

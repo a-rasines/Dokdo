@@ -4,8 +4,6 @@ package objetos;
  *
  */
 public class Bala extends Sprite{
-	private double vX;
-	private double vY;
 	private int daño;
 	/**
 	 * Bala disparada por un {@link objetos.Cañon Cañon}

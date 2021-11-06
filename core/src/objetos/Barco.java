@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -44,9 +41,9 @@ public class Barco extends Sprite{
 	protected int nivel;
 	protected Municion municionEnUso;
 	protected HashMap<PosicionCañon,CannonSide> cañones;
-	protected float vMax = 10; //velocidad maxima
+	protected float vMax = 5; //velocidad maxima
 	protected float a = 1; //aceleración
-	protected float vAng = 50; //velocidad angular en grados
+	protected float vAng = 100; //velocidad angular en grados
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ CONSTRUCTORES ▓▓▓▓▓▓▓▓▓▓
@@ -82,7 +79,7 @@ public class Barco extends Sprite{
 		move();
 	}
 	public void backwards() {
-		if(v>0)v-=a;
+		if(v>-vMax)v-=a;
 		move();
 	}
 	public void stop() {
@@ -90,9 +87,13 @@ public class Barco extends Sprite{
 	}
 	public void decelerate() {
 		if(v>0) {
-			v-=0.2;
+			v-=0.1;
 			move();
-		}else if(v<0)v=0;
+		}else if(v<0) {
+			v+=0.1;
+			move();
+		}
+		if(v<0.1 && v>-0.1)v=0;
 	}
 	
 	

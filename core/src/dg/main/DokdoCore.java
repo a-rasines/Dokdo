@@ -4,9 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import objetos.Barco;
-
 public class DokdoCore extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;

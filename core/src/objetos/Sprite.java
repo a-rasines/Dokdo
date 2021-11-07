@@ -31,10 +31,10 @@ public abstract class Sprite {
 	}
 	/**
 	 * Rota el objeto q grados
-	 * @param q grados a girar
+	 * @param w grados a girar
 	 */
-	public void rotate(double q) {
-		angle = (float) ((angle + q)%360);
+	public void rotate(double w) {
+		angle = (float) ((angle + w)%360);
 	}
 	/**
 	 * Hace un print de la posición y la orientación del objeto

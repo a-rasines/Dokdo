@@ -17,6 +17,10 @@ public enum Municion {
 	}
 	public final boolean instantaneo;
 	private int daño;
+	/**Caracteristicas generales de la municion
+	 * @param daño Daño que hace la bala al impactar
+	 * @param instantaneo Este parametro define si hace daño instantaneo o durante un cierto tiempo
+	 */
 	Municion(int daño, boolean instantaneo){
 		this.instantaneo = instantaneo;
 	}

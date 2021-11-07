@@ -12,11 +12,11 @@ public class Isla {
 	protected ArrayList<Barco> barcos;
 	protected int botin;
 	/** Islas generales del juego.
-	 * @param posX
-	 * @param posY
-	 * @param nivel
-	 * @param barcosProtegiendo
-	 * @param botin
+	 * @param posX Posicion en X de la isla
+	 * @param posY Posicion en Y de la isla
+	 * @param nivel Nivel recomendado para ser invadida
+	 * @param barcosProtegiendo Cantidad de barcos protegiendo la lista
+	 * @param botin Botin que dara la isla
 	 */
 	public Isla(float posX, float posY, int nivel, ArrayList<Barco> barcosProtegiendo, int botin) {
 		this.posicionEnX=posX;

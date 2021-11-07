@@ -6,6 +6,10 @@ package objetos;
 public class Mejoras {
 	protected int nivelNecesario;
 	protected int precio;
+	/**Mejoras generales del juego
+	 * @param nivel Nivel necesario para adquirir la mejora
+	 * @param precio Precio necesario para comprar la mejora
+	 */
 	public Mejoras(int nivel, int precio) {
 		this.nivelNecesario=nivel;
 		this.precio=precio;

@@ -3,7 +3,7 @@ package objetos;
  * Esta clase representa un cañon de un {@link objetos.Barco Barco}
  *
  */
-public class Cañon extends Mejoras{
+public class Canyon extends Mejoras{
 	private double x;
 	private double y;
 	/** Cañones que usaran los barcos del juego
@@ -12,7 +12,7 @@ public class Cañon extends Mejoras{
 	 * @param x Posicion en X
 	 * @param y Posicion en Y
 	 */
-	public Cañon(int nivel, int precio, double x, double y) {
+	public Canyon(int nivel, int precio, double x, double y) {
 		super(nivel, precio);
 		this.x = x;
 		this.y = y;

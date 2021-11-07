@@ -1,6 +1,6 @@
 package objetos;
 /**
- * Representa una mejora. Tanto de un {@link objetos.Barco Barco} como de una {@link objetos.Isla Isla} o un {@link objetos.Cañon Cañon}.
+ * Representa una mejora. Tanto de un {@link objetos.Barco Barco} como de una {@link objetos.Isla Isla} o un {@link objetos.Canyon Cañon}.
  *
  */
 public class Mejoras {

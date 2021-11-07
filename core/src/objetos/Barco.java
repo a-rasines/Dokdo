@@ -23,7 +23,7 @@ public class Barco extends Sprite{
 	public static enum Tipo{
 	};
 	/**
-	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
+	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Canyon Cañon}
 	 *
 	 */
 	public enum PosicionCañon{
@@ -121,33 +121,33 @@ public class Barco extends Sprite{
 	}
 }
 /**
- * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objetos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
+ * Representa los {@link objetos.Canyon Cañon}es de un lado del {@link objetos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Canyon Cañon}es con su cooldown
  *
  */
 class CannonSide{
-	private ArrayList<Cañon> c;//cañones en el lado
+	private ArrayList<Canyon> c;//cañones en el lado
 	private double cd = 0; //cooldown en segundos
 	private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
-	public CannonSide(List<Cañon>c) {
+	public CannonSide(List<Canyon>c) {
 		setCannons(c);
 	}
-	public CannonSide(Cañon... c) {
+	public CannonSide(Canyon... c) {
 		setCannons(c);
 	}
-	public ArrayList<Cañon> getCannons() {
+	public ArrayList<Canyon> getCannons() {
 		return c;
 	}
-	public void setCannons(List<Cañon> list) {
+	public void setCannons(List<Canyon> list) {
 		c = new ArrayList<>(list);
 	}
-	public void setCannons(Cañon... cannons) {
+	public void setCannons(Canyon... cannons) {
 		setCannons(Arrays.asList(cannons));
 	}
-	public void addCannons(Cañon... cannons) {
-		for(Cañon ca : cannons)
+	public void addCannons(Canyon... cannons) {
+		for(Canyon ca : cannons)
 			c.add(ca);
 	}
-	public Cañon getCannon(int pos) {
+	public Canyon getCannon(int pos) {
 		return c.get(pos);
 		}
 	public void setCooldown(double cooldown) {

@@ -1,12 +1,12 @@
 package objetos;
 /**
- * Representa una bala disparada por un {@link objetos.Cañon}.
+ * Representa una bala disparada por un {@link objetos.Canyon}.
  *
  */
 public class Bala extends Sprite{
 	private int daño;
 	/**
-	 * Bala disparada por un {@link objetos.Cañon Cañon}
+	 * Bala disparada por un {@link objetos.Canyon Cañon}
 	 * @param x0 x inicial
 	 * @param y0 y inicial
 	 * @param saltoX salto en X cada vuelta

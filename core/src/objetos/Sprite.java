@@ -1,5 +1,7 @@
 package objetos;
 
+import java.util.logging.Logger;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  *
  */
 public abstract class Sprite {
+	private static Logger loggerSprite = Logger.getLogger(Isla.class.getName());
 	public static Texture tMap;
 	protected float x = 0;
 	protected float y = 0;

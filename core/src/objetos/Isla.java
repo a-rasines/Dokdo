@@ -1,11 +1,15 @@
 package objetos;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
+
+
 /**
  * Representa las islas en el mapa
  *
  */
 public class Isla {
+	private static Logger loggerIsla = Logger.getLogger(Isla.class.getName());
 	protected float posicionEnX;
 	protected float posicionEnY;
 	protected int nivelRecomendado;

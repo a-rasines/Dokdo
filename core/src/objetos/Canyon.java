@@ -1,9 +1,13 @@
 package objetos;
+
+import java.util.logging.Logger;
+
 /**
  * Esta clase representa un cañon de un {@link objetos.Barco Barco}
  *
  */
 public class Canyon extends Mejoras{
+	private static Logger loggerCanyon = Logger.getLogger(Isla.class.getName());
 	private double x;
 	private double y;
 	/** Cañones que usaran los barcos del juego

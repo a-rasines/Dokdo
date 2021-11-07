@@ -1,9 +1,13 @@
 package objetos;
+
+import java.util.logging.Logger;
+
 /**
  * Representa una bala disparada por un {@link objetos.Canyon}.
  *
  */
 public class Bala extends Sprite{
+	private static Logger loggerBala = Logger.getLogger(Isla.class.getName());
 	private int daño;
 	/**
 	 * Bala disparada por un {@link objetos.Canyon Cañon}

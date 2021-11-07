@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
 /**
@@ -11,6 +12,7 @@ import com.badlogic.gdx.Gdx;
  *
  */
 public class Barco extends Sprite{
+	private static Logger loggerBarco = Logger.getLogger(Isla.class.getName());
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ENUMS ▓▓▓▓▓▓▓▓▓▓ 

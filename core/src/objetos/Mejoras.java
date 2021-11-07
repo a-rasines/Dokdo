@@ -1,9 +1,13 @@
 package objetos;
+
+import java.util.logging.Logger;
+
 /**
  * Representa una mejora. Tanto de un {@link objetos.Barco Barco} como de una {@link objetos.Isla Isla} o un {@link objetos.Canyon Cañon}.
  *
  */
 public class Mejoras {
+	private static Logger loggerMejoras = Logger.getLogger(Isla.class.getName());
 	protected int nivelNecesario;
 	protected int precio;
 	/**Mejoras generales del juego

@@ -9,15 +9,15 @@ public enum Municion {
 	INCENDIARIA(2, false),
 	VENENOSA(1, false),
 	ENCADENADA(1, false);
-	public int getDaño() {
-		return daño;
+	public int getDanyo() {
+		return danyo;
 	}
-	public void setDaño(int daño) {
-		this.daño = daño;
+	public void setDanyo(int danyo) {
+		this.danyo = danyo;
 	}
 	public final boolean instantaneo;
-	private int daño;
-	Municion(int daño, boolean instantaneo){
+	private int danyo;
+	Municion(int danyo, boolean instantaneo){
 		this.instantaneo = instantaneo;
 	}
 	

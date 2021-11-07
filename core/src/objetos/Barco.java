@@ -26,7 +26,7 @@ public class Barco extends Sprite{
 	 * Lado del {@link objetos.Barco Barco} en el que estÃ¡ el {@link objetos.CaÃ±on CaÃ±on}
 	 *
 	 */
-	public enum PosicionCañon{
+	public enum PosicionCanyon{
 		IZQUIERDA,
 		DERECHA,
 		DELANTE,
@@ -40,7 +40,7 @@ public class Barco extends Sprite{
 	protected int vida;
 	protected int nivel;
 	protected Municion municionEnUso;
-	protected HashMap<PosicionCañon,CannonSide> cañones;
+	protected HashMap<PosicionCanyon,CannonSide> canyones;
 	protected float vMax = 5; //velocidad maxima
 	protected float a = 1; //aceleraciÃ³n
 	protected float vAng = 100; //velocidad angular en grados
@@ -125,29 +125,29 @@ public class Barco extends Sprite{
  *
  */
 class CannonSide{
-	private ArrayList<Cañon> c;//caÃ±ones en el lado
+	private ArrayList<Canyon> c;//caÃ±ones en el lado
 	private double cd = 0; //cooldown en segundos
 	private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
-	public CannonSide(List<Cañon>c) {
+	public CannonSide(List<Canyon>c) {
 		setCannons(c);
 	}
-	public CannonSide(Cañon... c) {
+	public CannonSide(Canyon... c) {
 		setCannons(c);
 	}
-	public ArrayList<Cañon> getCannons() {
+	public ArrayList<Canyon> getCannons() {
 		return c;
 	}
-	public void setCannons(List<Cañon> list) {
+	public void setCannons(List<Canyon> list) {
 		c = new ArrayList<>(list);
 	}
-	public void setCannons(Cañon... cannons) {
+	public void setCannons(Canyon... cannons) {
 		setCannons(Arrays.asList(cannons));
 	}
-	public void addCannons(Cañon... cannons) {
-		for(Cañon ca : cannons)
+	public void addCannons(Canyon... cannons) {
+		for(Canyon ca : cannons)
 			c.add(ca);
 	}
-	public Cañon getCannon(int pos) {
+	public Canyon getCannon(int pos) {
 		return c.get(pos);
 		}
 	public void setCooldown(double cooldown) {

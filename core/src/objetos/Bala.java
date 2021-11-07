@@ -4,7 +4,7 @@ package objetos;
  *
  */
 public class Bala extends Sprite{
-	private int da�o;
+	private int danyo;
 	/**
 	 * Bala disparada por un {@link objetos.Cañon Cañon}
 	 * @param x0 x inicial
@@ -13,20 +13,20 @@ public class Bala extends Sprite{
 	 * @param saltoY salto en Y cada vuelta
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, float vel, float angulo, int da�o) {
+	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
 		super.x = x0;
 		super.y =  y0;
 		super.v = vel;
 		super.angle = angulo;
-		this.da�o = da�o;
+		this.danyo = danyo;
 		//TODO hacer el bucle de movimiento
 	}
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 
 	 */
-	public int getDa�o() {
-		return da�o;
+	public int getDanyo() {
+		return danyo;
 	}
 	
 }

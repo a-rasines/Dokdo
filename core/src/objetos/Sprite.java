@@ -54,7 +54,7 @@ public abstract class Sprite {
 	 * @param tamaÃ±oPx, TamaÃ±o en pixeles, los sprites son cuadrados
 	 */
 	private SpriteBatch sb = new SpriteBatch();
-	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tamañoPx) {
+	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tamanyoPx) {
 		
 		
 	
@@ -64,7 +64,7 @@ public abstract class Sprite {
 			
 			sb.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite, posX, posY, tamañoPx/2, tamañoPx/2, tamañoPx, tamañoPx, 1, 1, -angle);
+			sb.draw(sprite, posX, posY, tamanyoPx/2, tamanyoPx/2, tamanyoPx, tamanyoPx, 1, 1, -angle);
 			sb.end();
 		
 	}

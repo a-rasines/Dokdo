@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
 /**
@@ -12,7 +11,6 @@ import com.badlogic.gdx.Gdx;
  *
  */
 public class Barco extends Sprite{
-	private static Logger loggerBarco = Logger.getLogger(Isla.class.getName());
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ENUMS ▓▓▓▓▓▓▓▓▓▓ 
@@ -25,10 +23,10 @@ public class Barco extends Sprite{
 	public static enum Tipo{
 	};
 	/**
-	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Canyon Cañon}
+	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
 	 *
 	 */
-	public enum PosicionCañon{
+	public enum PosicionCa�on{
 		IZQUIERDA,
 		DERECHA,
 		DELANTE,
@@ -42,7 +40,7 @@ public class Barco extends Sprite{
 	protected int vida;
 	protected int nivel;
 	protected Municion municionEnUso;
-	protected HashMap<PosicionCañon,CannonSide> cañones;
+	protected HashMap<PosicionCa�on,CannonSide> ca�ones;
 	protected float vMax = 5; //velocidad maxima
 	protected float a = 1; //aceleración
 	protected float vAng = 100; //velocidad angular en grados
@@ -123,33 +121,33 @@ public class Barco extends Sprite{
 	}
 }
 /**
- * Representa los {@link objetos.Canyon Cañon}es de un lado del {@link objetos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Canyon Cañon}es con su cooldown
+ * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objetos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
  *
  */
 class CannonSide{
-	private ArrayList<Canyon> c;//cañones en el lado
+	private ArrayList<Ca�on> c;//cañones en el lado
 	private double cd = 0; //cooldown en segundos
 	private long t0 = System.currentTimeMillis(); //Momento de reinicio del cooldown
-	public CannonSide(List<Canyon>c) {
+	public CannonSide(List<Ca�on>c) {
 		setCannons(c);
 	}
-	public CannonSide(Canyon... c) {
+	public CannonSide(Ca�on... c) {
 		setCannons(c);
 	}
-	public ArrayList<Canyon> getCannons() {
+	public ArrayList<Ca�on> getCannons() {
 		return c;
 	}
-	public void setCannons(List<Canyon> list) {
+	public void setCannons(List<Ca�on> list) {
 		c = new ArrayList<>(list);
 	}
-	public void setCannons(Canyon... cannons) {
+	public void setCannons(Ca�on... cannons) {
 		setCannons(Arrays.asList(cannons));
 	}
-	public void addCannons(Canyon... cannons) {
-		for(Canyon ca : cannons)
+	public void addCannons(Ca�on... cannons) {
+		for(Ca�on ca : cannons)
 			c.add(ca);
 	}
-	public Canyon getCannon(int pos) {
+	public Ca�on getCannon(int pos) {
 		return c.get(pos);
 		}
 	public void setCooldown(double cooldown) {

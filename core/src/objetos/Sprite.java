@@ -1,7 +1,5 @@
 package objetos;
 
-import java.util.logging.Logger;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  *
  */
 public abstract class Sprite {
-	private static Logger loggerSprite = Logger.getLogger(Isla.class.getName());
 	public static Texture tMap;
 	protected float x = 0;
 	protected float y = 0;
@@ -34,10 +31,10 @@ public abstract class Sprite {
 	}
 	/**
 	 * Rota el objeto q grados
-	 * @param w grados a girar
+	 * @param q grados a girar
 	 */
-	public void rotate(double w) {
-		angle = (float) ((angle + w)%360);
+	public void rotate(double q) {
+		angle = (float) ((angle + q)%360);
 	}
 	/**
 	 * Hace un print de la posición y la orientación del objeto
@@ -57,7 +54,7 @@ public abstract class Sprite {
 	 * @param tamañoPx, Tamaño en pixeles, los sprites son cuadrados
 	 */
 	private SpriteBatch sb = new SpriteBatch();
-	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tamañoPx) {
+	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tama�oPx) {
 		
 		
 	
@@ -67,7 +64,7 @@ public abstract class Sprite {
 			
 			sb.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite, posX, posY, tamañoPx/2, tamañoPx/2, tamañoPx, tamañoPx, 1, 1, -angle);
+			sb.draw(sprite, posX, posY, tama�oPx/2, tama�oPx/2, tama�oPx, tama�oPx, 1, 1, -angle);
 			sb.end();
 		
 	}

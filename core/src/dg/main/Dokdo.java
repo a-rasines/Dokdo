@@ -10,7 +10,9 @@ public class Dokdo extends Game{
 		//setScreen(new MenuP());
 		//TODO cambiado para probar el movimiento del barco
 	
-		setScreen(new MainScreen());
+		//setScreen(new MainScreen());
+		setScreen(new MenuP() ); //pruebas de menu
+		
 	}
 	
 

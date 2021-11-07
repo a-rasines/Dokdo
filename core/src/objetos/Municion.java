@@ -1,7 +1,4 @@
 package objetos;
-
-import java.util.logging.Logger;
-
 /**
  * Representa los tipos de {@link ojbetos.Bala Bala} que disparan los {@linkobjetos.Cañon Cañon}es.
  *
@@ -12,20 +9,15 @@ public enum Municion {
 	INCENDIARIA(2, false),
 	VENENOSA(1, false),
 	ENCADENADA(1, false);
-	public int getDaño() {
-		return daño;
+	public int getDa�o() {
+		return da�o;
 	}
-	public void setDaño(int daño) {
-		this.daño = daño;
+	public void setDa�o(int da�o) {
+		this.da�o = da�o;
 	}
 	public final boolean instantaneo;
-	private int daño;
-	/**Caracteristicas generales de la municion
-	 * @param daño Daño que hace la bala al impactar
-	 * @param instantaneo Este parametro define si hace daño instantaneo o durante un cierto tiempo
-	 */
-	private static Logger loggerMunicion = Logger.getLogger(Isla.class.getName());
-	Municion(int daño, boolean instantaneo){
+	private int da�o;
+	Municion(int da�o, boolean instantaneo){
 		this.instantaneo = instantaneo;
 	}
 	

@@ -1,26 +1,22 @@
 package objetos;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
-
-
 /**
  * Representa las islas en el mapa
  *
  */
 public class Isla {
-	private static Logger loggerIsla = Logger.getLogger(Isla.class.getName());
 	protected float posicionEnX;
 	protected float posicionEnY;
 	protected int nivelRecomendado;
 	protected ArrayList<Barco> barcos;
 	protected int botin;
 	/** Islas generales del juego.
-	 * @param posX Posicion en X de la isla
-	 * @param posY Posicion en Y de la isla
-	 * @param nivel Nivel recomendado para ser invadida
-	 * @param barcosProtegiendo Cantidad de barcos protegiendo la lista
-	 * @param botin Botin que dara la isla
+	 * @param posX
+	 * @param posY
+	 * @param nivel
+	 * @param barcosProtegiendo
+	 * @param botin
 	 */
 	public Isla(float posX, float posY, int nivel, ArrayList<Barco> barcosProtegiendo, int botin) {
 		this.posicionEnX=posX;

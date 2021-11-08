@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  *
  */
 public class Canyon extends Mejoras{
-	private static Logger loggerCanyon = Logger.getLogger(Isla.class.getName());
+	private static Logger loggerCanyon = Logger.getLogger("Canyon");
 	private double x;
 	private double y;
 	/** Cañones que usaran los barcos del juego

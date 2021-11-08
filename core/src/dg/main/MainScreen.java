@@ -1,6 +1,8 @@
 package dg.main;
 
 
+import java.util.logging.Logger;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -12,6 +14,7 @@ import objetos.Barco;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
+	private static Logger logger= Logger.getLogger("MainScreen");
 	Barco barco = new Barco(10,0,0,0,null);
 	
 	Music musicaOverworld;
@@ -40,13 +43,18 @@ public class MainScreen implements Screen{
 			barco.backwards();
 		else 
 			barco.decelerate();
-		
+		logger.info("pressed:"+
+				" W= "+Gdx.input.isKeyPressed(Input.Keys.W)+
+				" A= "+Gdx.input.isKeyPressed(Input.Keys.A)+
+				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
+				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
+				);
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
 			barco.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			barco.left();
+		logger.info("barco: "+barco.getInfo());
 		
-		barco.printPos();
 		
 		
 		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), 32);

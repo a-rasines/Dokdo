@@ -42,6 +42,9 @@ public abstract class Sprite {
 	public void printPos() {
 		System.out.println("( "+x+" , "+y+" ) "+angle+"º, v="+v);
 	}
+	public String getInfo() {
+		return "( "+x+" , "+y+" ) "+angle+"º, v="+v;
+	}
 	
 	
 	

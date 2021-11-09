@@ -1,6 +1,7 @@
 package dg.main;
 
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
@@ -29,7 +30,6 @@ public class MainScreen implements Screen{
 		musicaOverworld.play();
     	musicaOverworld.setLooping(true);
     	musicaOverworld.setVolume(0.5f);
-    	
 	}
 
 	Boolean inBattle = false;
@@ -46,19 +46,19 @@ public class MainScreen implements Screen{
 			barco.backwards();
 		else 
 			barco.decelerate();
-		/*logger.info("pressed:"+
+		logger.info("pressed:"+
 				" W= "+Gdx.input.isKeyPressed(Input.Keys.W)+
 				" A= "+Gdx.input.isKeyPressed(Input.Keys.A)+
 				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
 				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
-				);*/
+				);
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
 			barco.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			barco.left();
-		//logger.info("barco: "+barco.getInfo());
+		logger.info("barco: "+barco.getInfo());
 		secondShipTest();
-		System.out.println(barco.collidesWith(barco2));
+		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
 		
 		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY());
 		barco.drawCollisions(sr);

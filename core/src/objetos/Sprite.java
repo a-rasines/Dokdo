@@ -3,6 +3,10 @@ package objetos;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Representa todo objeto movil
@@ -10,10 +14,59 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public abstract class Sprite {
 	public static Texture tMap;
-	protected float x = 0;
-	protected float y = 0;
-	protected float v = 0; //velocidad
-	protected float angle = 0;
+	private float x;
+	private float y;
+	protected float v; //velocidad
+	private float angle;
+	private int sizeX;
+	private int sizeY;
+	private Polygon bounds;
+	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY) {
+		this.x = x;
+		this.y = y;
+		this.v = v;
+		this.angle = angle;
+		this.sizeX = sizeX;
+		this.sizeY = sizeY;
+		refreshBounds();
+	}
+	/**
+	 * Comprueba si el Sprite colisiona con otro
+	 * @param o El Sprite contra el que se comprueba la colisión
+	 * @return True = Colisiona
+	 */
+	public boolean collidesWith(Sprite o) {
+		Polygon t = getBounds();
+		return Intersector.overlapConvexPolygons(t, o.getBounds());
+	}
+	/**
+	 * Refresca la posición y rotación de la caja de colisiones
+	 */
+	public void refreshBounds() {
+		if(bounds == null) {
+			bounds = new Polygon(new float[]{x,y,sizeX+x,x,sizeX+x,sizeY+y,y,sizeY+y});
+			bounds.setOrigin(x + sizeX/2, y + sizeY/2);
+		}else 
+			bounds.setPosition(x, y);
+		bounds.setRotation(-angle);
+		
+	}
+	/**
+	 * Dibuja en pantalla la caja de colisiones. Función solo para debug
+	 * @param shapeRenderer
+	 */
+	public void drawCollisions(ShapeRenderer shapeRenderer) {
+	    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+	    shapeRenderer.polygon(bounds.getTransformedVertices());
+	    shapeRenderer.end();
+	}
+	/**
+	 * Devuelve un {@link com.badlogic.gdx.math.Polygon Polygon} para aplicar lógica de colisiones
+	 * @return El {@link com.badlogic.gdx.math.Polygon Polygon} del Sprite
+	 */
+	public Polygon getBounds() {
+		return bounds;
+	}
 	/**
 	 * Mueve el objeto por velocidad en el ángulo especificado
 	 */
@@ -28,6 +81,7 @@ public abstract class Sprite {
 	public void move(float x, float y) {
 		this.x+=x;
 		this.y+=y;
+		refreshBounds();
 	}
 	/**
 	 * Rota el objeto q grados
@@ -35,6 +89,7 @@ public abstract class Sprite {
 	 */
 	public void rotate(double q) {
 		angle = (float) ((angle + q)%360);
+		refreshBounds();
 	}
 	/**
 	 * Hace un print de la posición y la orientación del objeto
@@ -57,9 +112,9 @@ public abstract class Sprite {
 	 * @param tamañoPx, Tamaño en pixeles, los sprites son cuadrados
 	 */
 	private SpriteBatch sb = new SpriteBatch();
-	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY, int tamanyoPx) {
+	public void dibujar(Texture tileSet, int columna, int fila, float posX, float posY) {
 		
-		
+			int size = Math.max(sizeX, sizeY);
 	
 			//En filas y columnas, se indica la posicioin *32 (32x32 pixeles cada barco) +1 ya que en la textura habra un pixel entre estos
 			//Empieza a contar en 0 las filas, aunque el primer sprite se encontrara en el pixel 1-1
@@ -67,7 +122,7 @@ public abstract class Sprite {
 			
 			sb.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite, posX, posY, tamanyoPx/2, tamanyoPx/2, tamanyoPx, tamanyoPx, 1, 1, -angle);
+			sb.draw(sprite, posX, posY, size/2, size/2, size, size, 1, 1, -angle);
 			sb.end();
 		
 	}

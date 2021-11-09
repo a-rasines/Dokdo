@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import objetos.Barco;
@@ -16,6 +17,8 @@ import objetos.Barco;
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
 	Barco barco = new Barco(10,0,0,0,null);
+	Barco barco2 = new Barco(10,0,0,0,null);
+	ShapeRenderer sr = new ShapeRenderer();
 	
 	Music musicaOverworld;
 	Music musicaBattle =  Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Battle.mp3"));
@@ -43,21 +46,23 @@ public class MainScreen implements Screen{
 			barco.backwards();
 		else 
 			barco.decelerate();
-		logger.info("pressed:"+
+		/*logger.info("pressed:"+
 				" W= "+Gdx.input.isKeyPressed(Input.Keys.W)+
 				" A= "+Gdx.input.isKeyPressed(Input.Keys.A)+
 				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
 				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
-				);
+				);*/
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
 			barco.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			barco.left();
-		logger.info("barco: "+barco.getInfo());
+		//logger.info("barco: "+barco.getInfo());
+		secondShipTest();
+		System.out.println(barco.collidesWith(barco2));
 		
-		
-		
-		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY(), 32);
+		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY());
+		barco.drawCollisions(sr);
+		barco2.drawCollisions(sr);
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
 			musicaOverworld.dispose();
 			musicaBattle.dispose();
@@ -67,6 +72,25 @@ public class MainScreen implements Screen{
 	    	musicaBattle.setVolume(0.5f);
 		}
 		
+	}
+	public void secondShipTest() {
+		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN))
+			barco2.decelerate();
+		else if(Gdx.input.isKeyPressed(Input.Keys.UP))
+			barco2.forward();
+		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+			barco2.backwards();
+		else 
+			//barco2.decelerate();
+			barco2.stop();
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			barco2.right();
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
+			barco2.left();
+		
+		
+		
+		barco2.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco2.getX(), barco2.getY());
 	}
 
 	@Override

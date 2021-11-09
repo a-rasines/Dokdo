@@ -14,10 +14,7 @@ public class Bala extends Sprite{
 	 * @param daño daño que ocasiona al colisionar
 	 */
 	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
-		super.x = x0;
-		super.y =  y0;
-		super.v = vel;
-		super.angle = angulo;
+		super(x0, y0, vel, angulo, 8, 8);
 		this.danyo = danyo;
 		//TODO hacer el bucle de movimiento
 	}

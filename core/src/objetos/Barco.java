@@ -57,10 +57,9 @@ public class Barco extends Sprite{
 	 * @param municionActual Municion que esta usando el barco
 	 */
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
+		super(posX, posY, 0, 0, 32, 32);
 		this.vida=vida;
 		this.nivel=nivel;
-		super.x=posX;
-		super.y=posY;
 		this.municionEnUso=municionActual;
 	}
 	

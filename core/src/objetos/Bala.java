@@ -1,4 +1,7 @@
 package objetos;
+
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Representa una bala disparada por un {@link objetos.Cañon}.
  *
@@ -13,9 +16,10 @@ public class Bala extends Sprite{
 	 * @param saltoY salto en Y cada vuelta
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
+	public Bala(float x0, float y0, float vel, float angulo, int danyo, Texture textura) {
 		super(x0, y0, vel, angulo, 8, 8);
 		this.danyo = danyo;
+		this.setTexture(textura);
 		//TODO hacer el bucle de movimiento
 	}
 	

@@ -1,13 +1,13 @@
 package dg.main;
 
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,10 +17,12 @@ import objetos.Barco;
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	Barco barco = new Barco(10,0,0,0,null);
-	Barco barco2 = new Barco(10,0,0,0,null);
+	public Barco barco = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
+	Barco barco2 = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
 	ShapeRenderer sr = new ShapeRenderer();
 	
+	
+		
 	Music musicaOverworld;
 	Music musicaBattle =  Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Battle.mp3"));
 	@Override
@@ -30,7 +32,8 @@ public class MainScreen implements Screen{
 		musicaOverworld.play();
     	musicaOverworld.setLooping(true);
     	musicaOverworld.setVolume(0.5f);
-	}
+    	
+   	}
 
 	Boolean inBattle = false;
 	
@@ -60,9 +63,7 @@ public class MainScreen implements Screen{
 		secondShipTest();
 		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
 		
-		barco.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco.getX(), barco.getY());
-		barco.drawCollisions(sr);
-		barco2.drawCollisions(sr);
+		
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
 			musicaOverworld.dispose();
 			musicaBattle.dispose();
@@ -71,6 +72,14 @@ public class MainScreen implements Screen{
 	    	musicaBattle.setLooping(true);
 	    	musicaBattle.setVolume(0.5f);
 		}
+		
+				
+		barco.dibujar(0, 0, 0, 0); 
+		barco.drawCollisions(sr);
+		barco2.dibujarRelativo(0, 0, barco2.getX() , barco2.getY(), barco.getX(), barco.getY());
+		barco2.drawCollisions(sr);
+		
+		
 		
 	}
 	public void secondShipTest() {
@@ -90,7 +99,8 @@ public class MainScreen implements Screen{
 		
 		
 		
-		barco2.dibujar(new Texture("tileSetBarco.png"), 0, 0, barco2.getX(), barco2.getY());
+		
+		
 	}
 
 	@Override

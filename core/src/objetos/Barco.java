@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -56,8 +57,9 @@ public class Barco extends Sprite{
 	 * @param posY Posicion en Y del barco
 	 * @param municionActual Municion que esta usando el barco
 	 */
-	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
+	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual, Texture textura) {
 		super(posX, posY, 0, 0, 32, 32);
+		this.setTexture(textura);
 		this.vida=vida;
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
@@ -164,4 +166,6 @@ class CannonSide{
 		return System.currentTimeMillis()-t0 >=cd*1000?reset():false;
 		
 	}
+	
+	
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,7 +16,7 @@ import objetos.Barco;
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public Barco barco = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
+	public static Barco barco = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
 	Barco barco2 = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
 	ShapeRenderer sr = new ShapeRenderer();
 	
@@ -74,9 +73,9 @@ public class MainScreen implements Screen{
 		}
 		
 				
-		barco.dibujar(0, 0, 0, 0); 
+		barco.dibujar(0, 0); 
 		barco.drawCollisions(sr);
-		barco2.dibujarRelativo(0, 0, barco2.getX() , barco2.getY(), barco.getX(), barco.getY());
+		barco2.dibujar(0, 0);
 		barco2.drawCollisions(sr);
 		
 		

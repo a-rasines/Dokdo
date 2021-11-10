@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 
 import dg.main.MainScreen;
 
@@ -104,42 +103,13 @@ public abstract class Sprite {
 		return "( "+x+" , "+y+" ) "+angle+"º, v="+v;
 	}
 	
-	
-	
-	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
-	 * @param tileSet, Archivo en el que se encuentra el sprite deseado
-	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
-	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
-	 * @param posX, Posicion de X
-	 * @param posY, posicion de Y
-	 */
-	private SpriteBatch sb = new SpriteBatch();
-	public void dibujar(int columna, int fila, float posX, float posY) {
-		
-			int size = Math.max(sizeX, sizeY);
-	
-			//En filas y columnas, se indica la posicioin *32 (32x32 pixeles cada barco) +1 ya que en la textura habra un pixel entre estos
-			//Empieza a contar en 0 las filas, aunque el primer sprite se encontrara en el pixel 1-1
-			TextureRegion sprite = new TextureRegion(tMap, fila*size +1, columna*size +1, size, 32);
-			
-			sb.begin();
-			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb.draw(sprite, posX + Gdx.graphics.getWidth() / 2 , posY + Gdx.graphics.getHeight() / 2 , size/2, size/2, size, size, 1, 1, -angle);
-			sb.end();
-		
-	}
-	
-	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
-	 * @param tileSet, Archivo en el que se encuentra el sprite deseado
-	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
-	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
-	 * @param posX, Posicion de X
-	 * @param posY, posicion de Y
-	 * @param posXR, posicion respecto a la que se quiere relativizar el sprite (X)
-	 * @param posYR, posicion respecto a la que se quiere relativizar el sprite (Y)
-	 */
+
 	private SpriteBatch sb2 = new SpriteBatch();
-	public void dibujarRelativo(int columna, int fila, float posX, float posY, float posXR, float posYR) {
+	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
+	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
+	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
+	 */
+	public void dibujar(int columna, int fila) {
 		
 			int size = Math.max(sizeX, sizeY);
 	
@@ -149,7 +119,7 @@ public abstract class Sprite {
 			
 			sb2.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb2.draw(sprite, posX + Gdx.graphics.getWidth() / 2 - posXR, posY + Gdx.graphics.getHeight() / 2 - posYR, size/2, size/2, size, size, 1, 1, -angle);
+			sb2.draw(sprite, x + Gdx.graphics.getWidth() / 2 - MainScreen.barco.getX(), y + Gdx.graphics.getHeight() / 2 - MainScreen.barco.getY(), size/2, size/2, size, size, 1, 1, -angle);
 			sb2.end();
 		
 	}

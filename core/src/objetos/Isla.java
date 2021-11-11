@@ -22,7 +22,7 @@ public class Isla extends Sprite{
 	 * @param barcosProtegiendo
 	 */
 	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
-		super(posX, posY, 0, 0, 32, 32);
+		super(posX, posY, 0, 0, 64, 64);
 		super.tMap = t;
 		this.nivelRecomendado=nivel;
 		this.barcos=barcosProtegiendo;

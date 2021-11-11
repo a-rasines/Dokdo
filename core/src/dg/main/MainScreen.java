@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -58,17 +57,20 @@ public class MainScreen implements Screen{
 				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
 				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
 				);
-		if(Gdx.input.isKeyPressed(Input.Keys.D))
-			barco.right();
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			barco.left();
-		logger.info("barco: "+barco.getInfo());
-		secondShipTest();
-		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
 		if (barco.collidesWith(islaList)) {
 			barco.undoMove();
 			barco.stop();
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
+			barco.right();
+		if(Gdx.input.isKeyPressed(Input.Keys.A) || barco.collidesWith(islaList)) 
+			barco.left();
+		if(barco.collidesWith(islaList))
+			barco.right();
+		logger.info("barco: "+barco.getInfo());
+		secondShipTest();
+		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
+		
 		
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
 			musicaOverworld.dispose();

@@ -39,8 +39,7 @@ public abstract class Sprite {
 	 */
 	public boolean collidesWith(Sprite o) {
 		if(o==null)return false;
-		Polygon t = getBounds();
-		return Intersector.overlapConvexPolygons(t, o.getBounds());
+		return Intersector.overlapConvexPolygons(bounds, o.getBounds());
 	}
 	/**
 	 * Comprueba si algun Sprite colisiona con este

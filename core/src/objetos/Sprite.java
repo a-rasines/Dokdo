@@ -1,5 +1,8 @@
 package objetos;
 
+import java.util.Collection;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,13 +41,23 @@ public abstract class Sprite {
 	 * @return True = Colisiona
 	 */
 	public boolean collidesWith(Sprite o) {
+		if(o==null)return false;
 		Polygon t = getBounds();
 		return Intersector.overlapConvexPolygons(t, o.getBounds());
 	}
 	/**
+	 * Comprueba si algun Sprite colisiona con este
+	 * @paramc La colección contra el que se comprueba la colisión
+	 * @return True = Colisiona
+	 */
+	public boolean collidesWith(Iterable<? extends Sprite> c) {
+		for(Sprite s : c)if (collidesWith(s))return true;
+		return false;
+	}
+	/**
 	 * Refresca la posición y rotación de la caja de colisiones
 	 */
-	public void refreshBounds() {
+	protected void refreshBounds() {
 		if(bounds == null) {
 			bounds = new Polygon(new float[]{x,y,sizeX+x,x,sizeX+x,sizeY+y,y,sizeY+y});
 			bounds.setOrigin(x + sizeX/2, y + sizeY/2);

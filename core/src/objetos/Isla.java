@@ -3,11 +3,14 @@ package objetos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.badlogic.gdx.graphics.Texture;
 /**
  * Representa las islas en el mapa
  *
  */
 public class Isla extends Sprite{
+	private static Texture t = new Texture("tileSetIsla.png");
 	protected int nivelRecomendado;
 	protected List<Barco> barcos;
 	protected int botin;
@@ -20,6 +23,7 @@ public class Isla extends Sprite{
 	 */
 	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
 		super(posX, posY, 0, 0, 32, 32);
+		super.tMap = t;
 		this.nivelRecomendado=nivel;
 		this.barcos=barcosProtegiendo;
 		this.botin=botin;

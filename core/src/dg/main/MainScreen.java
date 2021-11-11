@@ -1,6 +1,7 @@
 package dg.main;
 
 
+import java.util.LinkedList;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
@@ -12,14 +13,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import objetos.Barco;
+import objetos.Isla;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public static Barco barco = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
-	Barco barco2 = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
+	public static Barco barco = new Barco(10,0,0,0,null);
+	LinkedList<Isla> islaList = new LinkedList<>();
+	Barco barco2 = new Barco(10,0,0,0,null);
 	ShapeRenderer sr = new ShapeRenderer();
-	
 	Music musicaOverworld;
 	Music musicaBattle =  Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Battle.mp3"));
 	@Override
@@ -29,6 +31,7 @@ public class MainScreen implements Screen{
 		musicaOverworld.play();
     	musicaOverworld.setLooping(true);
     	musicaOverworld.setVolume(0.5f);
+    	islaList.add(new Isla(100, 100, 1, 1));
     	
    	}
 
@@ -59,7 +62,10 @@ public class MainScreen implements Screen{
 		logger.info("barco: "+barco.getInfo());
 		secondShipTest();
 		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
-		
+		if (barco.collidesWith(islaList)) {
+			barco.undoMove();
+			barco.stop();
+		}
 		
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
 			musicaOverworld.dispose();
@@ -74,6 +80,8 @@ public class MainScreen implements Screen{
 		barco.dibujar(0, 0); 
 		barco.drawCollisions(sr);
 		barco2.dibujar(0, 0);
+		islaList.get(0).dibujar(0, 0);
+		islaList.get(0).drawCollisions(sr);
 		barco2.drawCollisions(sr);
 		
 		

@@ -20,8 +20,6 @@ public class MainScreen implements Screen{
 	Barco barco2 = new Barco(10,0,0,0,null, new Texture("tileSetBarco.png"));
 	ShapeRenderer sr = new ShapeRenderer();
 	
-	
-		
 	Music musicaOverworld;
 	Music musicaBattle =  Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Battle.mp3"));
 	@Override

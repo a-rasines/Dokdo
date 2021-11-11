@@ -1,41 +1,38 @@
 package objetos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 /**
  * Representa las islas en el mapa
  *
  */
-public class Isla {
-	protected float posicionEnX;
-	protected float posicionEnY;
+public class Isla extends Sprite{
 	protected int nivelRecomendado;
-	protected ArrayList<Barco> barcos;
+	protected List<Barco> barcos;
 	protected int botin;
 	/** Islas generales del juego.
 	 * @param posX
 	 * @param posY
 	 * @param nivel
-	 * @param barcosProtegiendo
 	 * @param botin
+	 * @param barcosProtegiendo
 	 */
-	public Isla(float posX, float posY, int nivel, ArrayList<Barco> barcosProtegiendo, int botin) {
-		this.posicionEnX=posX;
-		this.posicionEnY=posY;
+	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
+		super(posX, posY, 0, 0, 32, 32);
 		this.nivelRecomendado=nivel;
 		this.barcos=barcosProtegiendo;
 		this.botin=botin;
 	}
-	public float getPosicionEnX() {
-		return posicionEnX;
-	}
-	public void setPosicionEnX(float posicionEnX) {
-		this.posicionEnX = posicionEnX;
-	}
-	public float getPosicionEnY() {
-		return posicionEnY;
-	}
-	public void setPosicionEnY(float posicionEnY) {
-		this.posicionEnY = posicionEnY;
+	/** Islas generales del juego.
+	 * @param posX
+	 * @param posY
+	 * @param nivel
+	 * @param botin
+	 * @param barcosProtegiendo 
+	 */
+	public Isla(float posX, float posY, int nivel, int botin, Barco... barcosProtegiendo) {
+		this(posX, posY, nivel, botin, Arrays.asList(barcosProtegiendo));
 	}
 	public int getNivelRecomendado() {
 		return nivelRecomendado;
@@ -43,7 +40,7 @@ public class Isla {
 	public void setNivelRecomendado(int nivelRecomendado) {
 		this.nivelRecomendado = nivelRecomendado;
 	}
-	public ArrayList<Barco> getBarcos() {
+	public List<Barco> getBarcos() {
 		return barcos;
 	}
 	public void setBarcos(ArrayList<Barco> barcos) {

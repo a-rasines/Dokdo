@@ -49,6 +49,8 @@ public class MenuP implements Screen{
     	camara.update();
     	
     	//dibujo barco 
+    	Texture t = new Texture(Gdx.files.internal("tileSetBala.png"));
+    	System.out.println(t);
         bar= new Texture(Gdx.files.internal("Barco.png"));
         sprite = new Sprite(bar);
         sprite.scale(0.1f);

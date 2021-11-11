@@ -24,6 +24,11 @@ public abstract class Sprite {
 	private int sizeY;
 	private Polygon bounds;
 	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY) {
+		try {
+			sb2 = new SpriteBatch();
+		} catch (Throwable e) {
+			sb2=null;
+		}
 		this.x = x;
 		this.y = y;
 		this.v = v;
@@ -117,12 +122,15 @@ public abstract class Sprite {
 	}
 	
 
-	private SpriteBatch sb2 = new SpriteBatch();
+	private SpriteBatch sb2 ; // se ha movido al constructor para poder usar el Junit
 	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
 	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
 	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
 	 */
 	public void dibujar(int columna, int fila) {
+		if(sb2==null || tMap == null ) {
+			return;
+		}//esto es para evitar nullpointer con los junit
 		
 			int size = Math.max(sizeX, sizeY);
 	

@@ -50,6 +50,10 @@ public abstract class Sprite {
 		for(Sprite s : c)if (collidesWith(s))return true;
 		return false;
 	}
+	public Sprite getCollidesWith(Iterable<? extends Sprite> c) {
+		for(Sprite s : c)if (collidesWith(s))return s;
+		return null;
+	}
 	/**
 	 * Refresca la posición y rotación de la caja de colisiones
 	 */

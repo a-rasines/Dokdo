@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import objetos.Bala;
 import objetos.Barco;
+import objetos.Sprite;
 
 public class HiloColisionBala extends Thread{
 	private ArrayList<Barco> barcoEnem;
@@ -29,14 +30,10 @@ public class HiloColisionBala extends Thread{
 		this.balaDisp = bDisp;
 	}
 	public void run() {
-		if (balaDisp.collidesWith(barcoEnem)) {
-			for(Barco b :barcoEnem) {
-				if(balaDisp.collidesWith(b)) {
-					b.setVidaDelBarco(b.getVidaDelBarco()-balaDisp.getDanyo());
-					//FALTA FORMA DE HACER BORRAR LA BALA.
-					break;
-				}
-			}
+		Sprite s = balaDisp.getCollidesWith(barcoEnem);
+		if (s == null) {
+			Barco b = (Barco)s;
+			b.setVidaDelBarco(b.getVidaDelBarco()-balaDisp.getDanyo());
 		}
 	}
 }

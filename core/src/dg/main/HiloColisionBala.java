@@ -31,7 +31,7 @@ public class HiloColisionBala extends Thread{
 	}
 	public void run() {
 		Sprite s = balaDisp.getCollidesWith(barcoEnem);
-		if (s == null) {
+		if (s != null) {
 			Barco b = (Barco)s;
 			b.setVidaDelBarco(b.getVidaDelBarco()-balaDisp.getDanyo());
 		}

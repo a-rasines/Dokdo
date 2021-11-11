@@ -1,6 +1,7 @@
 package dg.main;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
@@ -20,6 +21,8 @@ public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static Barco barco = new Barco(10,0,0,0,null);
 	LinkedList<Isla> islaList = new LinkedList<>();
+	ArrayList<Barco> barcosEnemigos = new ArrayList<>();
+	ArrayList<Barco> balasDisparadas = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
 	ShapeRenderer sr = new ShapeRenderer();
 	Music musicaOverworld;

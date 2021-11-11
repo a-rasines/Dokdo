@@ -1,8 +1,5 @@
 package objetos;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -47,7 +44,7 @@ public abstract class Sprite {
 	}
 	/**
 	 * Comprueba si algun Sprite colisiona con este
-	 * @paramc La colección contra el que se comprueba la colisión
+	 * @param c La colección contra el que se comprueba la colisión
 	 * @return True = Colisiona
 	 */
 	public boolean collidesWith(Iterable<? extends Sprite> c) {

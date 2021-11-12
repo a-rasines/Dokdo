@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.Texture;
  *
  */
 public class Isla extends Sprite{
-	private static Texture t = new Texture("tileSetIsla.png");
 	protected int nivelRecomendado;
 	protected List<Barco> barcos;
 	protected int botin;
+	private static Texture t = new Texture("tileSetIsla.png");
 	/** Islas generales del juego.
 	 * @param posX
 	 * @param posY
@@ -23,8 +23,8 @@ public class Isla extends Sprite{
 	 */
 	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
 		super(posX, posY, 0, 0, 64, 64);
-		super.tMap = t;
 		this.nivelRecomendado=nivel;
+		super.tMap = t;
 		this.barcos=barcosProtegiendo;
 		this.botin=botin;
 	}
@@ -38,6 +38,19 @@ public class Isla extends Sprite{
 	public Isla(float posX, float posY, int nivel, int botin, Barco... barcosProtegiendo) {
 		this(posX, posY, nivel, botin, Arrays.asList(barcosProtegiendo));
 	}
+	
+	@Override
+	public void onRangeOfPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onExitFromRange() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public int getNivelRecomendado() {
 		return nivelRecomendado;
 	}

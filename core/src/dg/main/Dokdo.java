@@ -9,7 +9,7 @@ public class Dokdo extends Game{
 	public void create() {
 	
 		//setScreen(new MainScreen() ); //pruebas de juego
-		setScreen(new MenuP()); //no borrar por favor--> pruebas del menu
+		setScreen(new MainScreen()); //no borrar por favor--> pruebas del menu
 	}
 	
 

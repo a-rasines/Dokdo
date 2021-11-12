@@ -68,6 +68,9 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓
 	 */
+	
+	//MOVIMIENTO
+	
 	public void right() {
 		rotate(vAng*Gdx.graphics.getDeltaTime());
 	}
@@ -99,6 +102,20 @@ public class Barco extends Sprite{
 			move();
 		}
 		if(v<0.1 && v>-0.1)v=0;
+	}
+	
+	//DETECCIÓN
+	
+	@Override
+	public void onRangeOfPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void onExitFromRange() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

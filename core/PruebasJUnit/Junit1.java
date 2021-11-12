@@ -13,7 +13,7 @@ public class Junit1 {
 	@Test
 	public void probarBala() {
 		//Texture t = new Texture(Gdx.files.internal("tileSetBala.png"));
-		Bala b1 = new Bala(1,0,0,0,1,null); //las texturas no cargan sin el libgdx por lo que no se hace la prueba
+		Bala b1 = new Bala(1,0,0,0,1); //las texturas no cargan sin el libgdx por lo que no se hace la prueba
 		assertEquals(1,b1.getDanyo());
 		
 	}

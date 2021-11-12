@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
  *
  */
 public class Bala extends Sprite{
+	private static Texture t = new Texture("tileSetBala.png");
 	private int danyo;
 	/**
 	 * Bala disparada por un {@link objetos.Cañon Cañon}
@@ -16,11 +17,22 @@ public class Bala extends Sprite{
 	 * @param saltoY salto en Y cada vuelta
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, float vel, float angulo, int danyo, Texture textura) {
+	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
 		super(x0, y0, vel, angulo, 8, 8);
+		super.tMap = t;
 		this.danyo = danyo;
-		this.setTexture(textura);
 		//TODO hacer el bucle de movimiento
+	}
+	
+	@Override
+	public void onRangeOfPlayer() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onExitFromRange() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*

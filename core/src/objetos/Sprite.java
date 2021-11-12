@@ -37,6 +37,21 @@ public abstract class Sprite {
 		this.sizeY = sizeY;
 		refreshBounds();
 	}
+	
+	//DETECCIÓN
+	
+	/**
+	 * Esta función se ejecuta cuando un objeto entra en el rango del jugador
+	 */
+	public abstract void onRangeOfPlayer();
+	
+	/**
+	 * Esta función se ejecuta cuando el objeto sale del rango del jugador
+	 */
+	public abstract void onExitFromRange();
+	
+	//COLISIONES
+	
 	/**
 	 * Comprueba si el Sprite colisiona con otro
 	 * @param o El Sprite contra el que se comprueba la colisión
@@ -87,6 +102,9 @@ public abstract class Sprite {
 	public Polygon getBounds() {
 		return bounds;
 	}
+	
+	//MOVIMIENTO
+	
 	/**
 	 * Mueve el objeto por velocidad en el ángulo especificado
 	 */
@@ -111,6 +129,9 @@ public abstract class Sprite {
 		angle = (float) ((angle + q)%360);
 		refreshBounds();
 	}
+	
+	//LOGGER
+	
 	/**
 	 * Hace un print de la posición y la orientación del objeto
 	 */
@@ -121,6 +142,7 @@ public abstract class Sprite {
 		return "( "+x+" , "+y+" ) "+angle+"º, v="+v;
 	}
 	
+	//DIBUJADO
 
 	private SpriteBatch sb2 ; // se ha movido al constructor para poder usar el Junit
 	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
@@ -161,12 +183,6 @@ public abstract class Sprite {
 	}
 	public float getAngle() {
 		return angle;
-	}
-	
-	//Setters
-	
-	public void setTexture(Texture textura){
-		tMap = textura;
 	}
 	
 }

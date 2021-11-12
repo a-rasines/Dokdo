@@ -24,15 +24,11 @@ public class MainScreen implements Screen{
 	ArrayList<Barco> balasDisparadas = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
 	ShapeRenderer sr = new ShapeRenderer();
-	Music musicaOverworld;
-	Music musicaBattle =  Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Battle.mp3"));
+	
 	@Override
 	public void show() {
 		//Musica normal
-		musicaOverworld = Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\Overworld.mp3"));
-		musicaOverworld.play();
-    	musicaOverworld.setLooping(true);
-    	musicaOverworld.setVolume(0.5f);
+		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
     	islaList.add(new Isla(100, 100, 1, 1));
     	
    	}
@@ -71,14 +67,9 @@ public class MainScreen implements Screen{
 		secondShipTest();
 		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
 		
-		
+		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
-			musicaOverworld.dispose();
-			musicaBattle.dispose();
-			
-			musicaBattle.play();
-	    	musicaBattle.setLooping(true);
-	    	musicaBattle.setVolume(0.5f);
+			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 		}
 		
 				

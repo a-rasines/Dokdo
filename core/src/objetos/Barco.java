@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+
+import dg.main.AudioPlayer;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -109,12 +111,14 @@ public class Barco extends Sprite{
 	@Override
 	public void onRangeOfPlayer() {
 		// TODO Auto-generated method stub
+		AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 		
 	}
 	
 	@Override
 	public void onExitFromRange() {
 		// TODO Auto-generated method stub
+		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		
 	}
 	

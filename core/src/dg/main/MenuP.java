@@ -26,14 +26,11 @@ public class MenuP implements Screen{
     private Texture bar;
     private Sprite sprite;
 
-    private Music mFondo;
+  
     
     public MenuP() {
     	//musica de fondo;
-    	mFondo = Gdx.audio.newMusic(Gdx.files.internal("Sonidos\\DrunkenSailor.mp3"));
-    	mFondo.play();
-    	mFondo.setLooping(true);
-    	mFondo.setVolume(0.1f);
+    	AudioPlayer.Reproducir("Sonidos//DrunkeSailor.mp3");
     	
     	//dibujador de sprites
     	batch = new SpriteBatch();
@@ -136,7 +133,6 @@ public class MenuP implements Screen{
 		skin.dispose();
 		batch.dispose();
 		bar.dispose();
-		mFondo.dispose();
 		
 	}
 }

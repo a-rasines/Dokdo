@@ -30,7 +30,7 @@ public class MenuP implements Screen{
     
     public MenuP() {
     	//musica de fondo;
-    	AudioPlayer.Reproducir("Sonidos//DrunkeSailor.mp3");
+    	AudioPlayer.Reproducir("Sonidos/DrunkenSailor.mp3");
     	
     	//dibujador de sprites
     	batch = new SpriteBatch();

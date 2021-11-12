@@ -38,7 +38,7 @@ public class MainScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		ScreenUtils.clear(1, 0, 0, 1); //Necesario para updatear correctamente la pantalla
+		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
 		else if(Gdx.input.isKeyPressed(Input.Keys.W))

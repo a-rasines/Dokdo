@@ -39,7 +39,12 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
 	 */
-	private static Texture t = new Texture("tileSetBarco.png");
+	private static Texture t;
+	static {
+		try {
+			t = new Texture("tileSetBarco.png");
+		}catch(Exception e) {}
+	}
 	protected int vida;
 	protected int nivel;
 	protected Municion municionEnUso;

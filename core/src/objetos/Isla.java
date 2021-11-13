@@ -13,7 +13,12 @@ public class Isla extends Sprite{
 	protected int nivelRecomendado;
 	protected List<Barco> barcos;
 	protected int botin;
-	private static Texture t = new Texture("tileSetIsla.png");
+	private static Texture t;
+	static {
+		try {
+			t = new Texture("tileSetIsla.png");
+		}catch(Exception e) {}
+	}
 	/** Islas generales del juego.
 	 * @param posX
 	 * @param posY

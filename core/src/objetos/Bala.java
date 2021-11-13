@@ -1,7 +1,6 @@
 package objetos;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Representa una bala disparada por un {@link objetos.Cañon}.
@@ -10,6 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Bala extends Sprite{
 	
 	private static Texture t ;
+	static {
+		try {
+		t = new Texture("tileSetBala.png");
+		}catch(Exception e) {}
+		}
 	private int danyo;
 	/**
 	 * Bala disparada por un {@link objetos.Cañon Cañon}
@@ -21,11 +25,6 @@ public class Bala extends Sprite{
 	 */
 	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
 		super(x0, y0, vel, angulo, 8, 8);
-		try {
-			t = new Texture("tileSetBala.png"); // usen un try para las texturas, que si se dejan est�ticas no funcionan los jUnit
-		} catch (Throwable e) {
-			t=null;
-		}
 		super.tMap = t;
 		this.danyo = danyo;
 		//TODO hacer el bucle de movimiento

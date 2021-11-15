@@ -1,5 +1,8 @@
 package dg.main;
 
+import java.util.logging.Logger;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -8,29 +11,34 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuP implements Screen{
-	
+	private static Logger logger= Logger.getLogger("Menu");
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
-    private OrthographicCamera camara;
     protected Skin skin;
-    
     private Texture bar;
     private Sprite sprite;
-
-  
     
     public MenuP() {
     	//musica de fondo;
-    	AudioPlayer.Reproducir("Sonidos/DrunkenSailor.mp3");
+    	try {
+    		AudioPlayer.Reproducir("Sonidos//DrunkenSailor.mp3");
+        	logger.info("Cación cargada sin problemas");
+		} catch (Exception e) {
+			// TODO: handle exception
+        	logger.info("Fallo al cargar la canción");
+		}
+    	
     	
     	//dibujador de sprites
     	batch = new SpriteBatch();
@@ -38,20 +46,13 @@ public class MenuP implements Screen{
     	viewport.apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(viewport,batch);
-    	
-    	camara = new OrthographicCamera();
     	batch = new SpriteBatch();
-    	
-    	camara.position.set(camara.viewportWidth/2, camara.viewportHeight/2,0);
-    	camara.update();
+    
     	
     	//dibujo barco 
-    	Texture t = new Texture(Gdx.files.internal("tileSetBala.png"));
-    	System.out.println(t);
         bar= new Texture(Gdx.files.internal("Barco.png"));
         sprite = new Sprite(bar);
-        sprite.scale(0.1f);
-        sprite.setPosition(0, 0);
+        sprite.setPosition((Gdx.graphics.getWidth()/2)-(sprite.getWidth()/2), Gdx.graphics.getHeight()/1.5f);
     	
     }
  
@@ -73,12 +74,33 @@ public class MenuP implements Screen{
         TextButton boton2 = new TextButton("Opciones", skin);
         TextButton boton3 = new TextButton("Salir", skin);
         
+      //listeners
+        boton1.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	AudioPlayer.detener();
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainScreen());
+            }
+        });
+        
+        boton3.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		skin.dispose();
+        		batch.dispose();
+        		bar.dispose();
+        		
+        	}
+        });
+        
        // menu.add(sprite);
-        menu.add(boton1);
+        menu.add(boton1).width(100);
         menu.row();
-        menu.add(boton2);
+        menu.add(boton2).width(100);
         menu.row();
-        menu.add(boton3);
+        menu.add(boton3).width(100);
+        
+        
         
         stage.addActor(menu);
       
@@ -91,7 +113,6 @@ public class MenuP implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        sprite.setPosition((Gdx.graphics.getWidth()/2)-(sprite.getWidth()/2), Gdx.graphics.getHeight()/1.5f);
         sprite.draw(batch);
         batch.end();
         
@@ -104,8 +125,6 @@ public class MenuP implements Screen{
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 		viewport.update(width, height);
-		camara.position.set(camara.viewportWidth/2, camara.viewportHeight/2,0);
-    	camara.update();
     	
 	}
 
@@ -129,7 +148,6 @@ public class MenuP implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		skin.dispose();
 		batch.dispose();
 		bar.dispose();

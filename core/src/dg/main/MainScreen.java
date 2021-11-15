@@ -65,7 +65,7 @@ public class MainScreen implements Screen{
 			barco.right();
 		logger.info("barco: "+barco.getInfo());
 		secondShipTest();
-		logger.info("collision: "+String.valueOf(barco.collidesWith(barco2)));
+		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
 		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate

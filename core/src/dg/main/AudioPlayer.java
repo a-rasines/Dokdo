@@ -13,6 +13,7 @@ public class AudioPlayer {
 	 */
 	public static void Reproducir(String cancion) {
 		musica = Gdx.audio.newMusic(Gdx.files.internal(cancion));
+		
 		musica.play();
 		musica.setLooping(true);
 		musica.setVolume(0.5f);

@@ -65,7 +65,7 @@ public class Barco extends Sprite{
 	 * @param municionActual Municion que esta usando el barco
 	 */
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
-		super(posX, posY, 0, 0, 32, 32);
+		super(posX, posY, 0, 0, 32, 32, 150); //TODO Ajustar rango hasta una distancia interesante
 		super.tMap = t;
 		this.vida=vida;
 		this.nivel=nivel;
@@ -116,6 +116,7 @@ public class Barco extends Sprite{
 	@Override
 	public void onRangeOfPlayer() {
 		// TODO Auto-generated method stub
+		AudioPlayer.detener();
 		AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 		
 	}
@@ -123,6 +124,7 @@ public class Barco extends Sprite{
 	@Override
 	public void onExitFromRange() {
 		// TODO Auto-generated method stub
+		AudioPlayer.detener();
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		
 	}

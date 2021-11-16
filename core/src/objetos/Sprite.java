@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 
 import dg.main.MainScreen;
 
@@ -23,7 +26,8 @@ public abstract class Sprite {
 	private int sizeX;
 	private int sizeY;
 	private Polygon bounds;
-	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY) {
+	private Circle range = new Circle();
+	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY, float rango) {
 		try {
 			sb2 = new SpriteBatch();
 		} catch (Throwable e) {
@@ -36,6 +40,9 @@ public abstract class Sprite {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		refreshBounds();
+		
+		range.setRadius(rango);
+		range.setPosition(new Vector2(x,y));
 	}
 	
 	//DETECCIÓN
@@ -51,6 +58,34 @@ public abstract class Sprite {
 	public abstract void onExitFromRange();
 	
 	//COLISIONES
+	
+	//Colisiones con el Circulo
+	public boolean enRango(Sprite o) {
+		if(o==null)return false;
+		return Sprite.overlapCirclePolygon(o.getBounds(), range);
+	}
+	
+	/** Funcion para comparar Circulos con Polygonos
+	 * (Inspiracion: https://stackoverflow.com/questions/15323719/circle-and-polygon-collision-with-libgdx)
+	 * @param poly, Polygono que se desea comparar
+	 * @param circle, Circulo que se desea comparar
+	 * @return boolean, true si toca, false si no toca
+	 */
+	public static boolean overlapCirclePolygon(Polygon poly, Circle circle) {
+		float []vertices=poly.getTransformedVertices();
+	    Vector2 center=new Vector2(circle.x, circle.y);
+	    float squareRadius=circle.radius*circle.radius;
+	    for (int i=0;i<vertices.length;i+=2){
+	        if (i==0){
+	            if (Intersector.intersectSegmentCircle(new Vector2(vertices[vertices.length - 2], vertices[vertices.length - 1]), new Vector2(vertices[i], vertices[i + 1]), center, squareRadius))
+	                return true;
+	        } else {
+	            if (Intersector.intersectSegmentCircle(new Vector2(vertices[i-2], vertices[i-1]), new Vector2(vertices[i], vertices[i+1]), center, squareRadius))
+	                return true;
+	        }
+	    }
+	    return poly.contains(circle.x, circle.y);
+	}
 	
 	/**
 	 * Comprueba si el Sprite colisiona con otro
@@ -73,6 +108,18 @@ public abstract class Sprite {
 	public Sprite getCollidesWith(Iterable<? extends Sprite> c) {
 		for(Sprite s : c)if (collidesWith(s))return s;
 		return null;
+	}
+	
+	/**Refresca la posicion del rango(Circulo)
+	 * 
+	 */
+	protected void refreshRange() {
+		if(range == null) {
+			range.setRadius(150);
+			range.setPosition(new Vector2(x,y));
+		} else {
+			range.setPosition(new Vector2(x,y));
+		}
 	}
 	/**
 	 * Refresca la posición y rotación de la caja de colisiones
@@ -120,6 +167,7 @@ public abstract class Sprite {
 		this.x+=x;
 		this.y+=y;
 		refreshBounds();
+		refreshRange();
 	}
 	/**
 	 * Rota el objeto q grados

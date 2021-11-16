@@ -33,7 +33,8 @@ public class MainScreen implements Screen{
     	
    	}
 
-	Boolean inBattle = false;
+	Boolean cambioEstado = true;
+
 	
 	@Override
 	public void render(float delta) {
@@ -67,9 +68,17 @@ public class MainScreen implements Screen{
 		secondShipTest();
 		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		
+		
+		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
-		if(inBattle || Gdx.input.isKeyPressed(Input.Keys.P)) { //TODO Hacer que cambie cuando se entre en combate
-			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
+		
+		if(cambioEstado && barco.enRango(barco2)){ //TODO Hacer que cambie cuando se entre en combate
+			barco.onRangeOfPlayer();
+			cambioEstado = false;
+		}
+		if(!cambioEstado && !barco.enRango(barco2)) {
+			barco.onExitFromRange();
+			cambioEstado = true;
 		}
 		
 				

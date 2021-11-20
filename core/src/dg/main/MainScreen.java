@@ -84,7 +84,7 @@ public class MainScreen implements Screen{
 				
 		barco.dibujar(0, 0); 
 		barco.drawCollisions(sr);
-		barco2.dibujar(0, 0);
+		barco2.dibujar(0, 1);
 		islaList.get(0).dibujar(0, 0);
 		islaList.get(0).drawCollisions(sr);
 		barco2.drawCollisions(sr);

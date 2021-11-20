@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
 /**
@@ -39,6 +40,8 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
 	 */
+	
+	
 	private static Texture t;
 	static {
 		try {
@@ -71,6 +74,8 @@ public class Barco extends Sprite{
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
 	}
+	
+	
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓

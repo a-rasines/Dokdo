@@ -27,6 +27,7 @@ public abstract class Sprite {
 	private int sizeY;
 	private Polygon bounds;
 	private Circle range = new Circle();
+	
 	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY, float rango) {
 		try {
 			sb2 = new SpriteBatch();
@@ -58,6 +59,7 @@ public abstract class Sprite {
 	public abstract void onExitFromRange();
 	
 	//COLISIONES
+	
 	
 	//Colisiones con el Circulo
 	public boolean enRango(Sprite o) {
@@ -95,6 +97,7 @@ public abstract class Sprite {
 	public boolean collidesWith(Sprite o) {
 		if(o==null)return false;
 		return Intersector.overlapConvexPolygons(bounds, o.getBounds());
+		
 	}
 	/**
 	 * Comprueba si algun Sprite colisiona con este
@@ -194,8 +197,8 @@ public abstract class Sprite {
 
 	private SpriteBatch sb2 ; // se ha movido al constructor para poder usar el Junit
 	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
-	 * @param columna, Columna en la que se encuentra el sprite (Vertical)
-	 * @param fila, Fila en la que se encuentra el sprite (Horizontal)
+	 * @param columna, Columna en la que se encuentra el sprite (Horizontal)
+	 * @param fila, Fila en la que se encuentra el sprite (Vertical)
 	 */
 	public void dibujar(int columna, int fila) {
 		if(sb2==null || tMap == null ) {
@@ -206,7 +209,10 @@ public abstract class Sprite {
 	
 			//En filas y columnas, se indica la posicioin *32 (32x32 pixeles cada barco) +1 ya que en la textura habra un pixel entre estos
 			//Empieza a contar en 0 las filas, aunque el primer sprite se encontrara en el pixel 1-1
-			TextureRegion sprite = new TextureRegion(tMap, fila*size +1, columna*size +1, size, size);
+			//Mirando en GIMP, el primer sprite empieza en 1-1, por eso el mas 1, pero el segundo comienza en 34-34, asiq el +1 se qeuda corto
+			//Esto va escalando, ya que el sprite 3 estaria en 67 (size * 2 +2), sumando la propia columna en la que esta se soluciona
+			//Los ejemplos son con texturas de 32 px, pero afecta igual a las texturas de cualquier tamaño
+			TextureRegion sprite = new TextureRegion(tMap, fila*size +1+fila, columna*size +1+columna, size, size);
 			
 			sb2.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)

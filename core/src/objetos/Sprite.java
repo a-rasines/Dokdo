@@ -238,5 +238,11 @@ public abstract class Sprite {
 	public float getAngle() {
 		return angle;
 	}
+	public int getSizeX() {
+		return sizeX;
+	}
+	public int getSizeY() {
+		return sizeY;
+	}
 	
 }

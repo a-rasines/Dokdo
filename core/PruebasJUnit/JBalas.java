@@ -10,8 +10,6 @@ public class JBalas {
 	@Test
 	public void getDanyo() {
 		assertEquals(5,b1.getDanyo());
-		//b1.getX();
-		//b1.getY();
 	}
 	
 	@Test
@@ -28,7 +26,5 @@ public class JBalas {
 	public void getY() {
 		assertEquals(2,b1.getY(),2);
 	}
- 
-	//se donde sale velocidad / ¿hay getter de velocidad?
 
 }

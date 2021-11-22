@@ -147,7 +147,7 @@ public class Barco extends Sprite{
 		
 	}
 	//CANYONES
-	public boolean disaprarLado(PosicionCanyon lc) {
+	public boolean dispararLado(PosicionCanyon lc) {
 		return canyones.get(lc).shootIfPosible(municionEnUso, canyones.get(lc).getCoolDown());
 	}
 	

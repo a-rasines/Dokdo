@@ -8,11 +8,9 @@ import java.util.logging.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import objetos.Bala;
 import objetos.Barco;
 import objetos.Barco.PosicionCanyon;
 import objetos.Isla;
@@ -40,7 +38,6 @@ public class MainScreen implements Screen{
 	
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
@@ -70,7 +67,7 @@ public class MainScreen implements Screen{
 		secondShipTest();
 		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
-			barco.disaprarLado(PosicionCanyon.DELANTE);
+			barco.dispararLado(PosicionCanyon.DELANTE);
 		}
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente

@@ -18,6 +18,6 @@ public class Canyon extends Mejoras{
 		super(nivel, precio);
 	}
 	public void disparar(Municion m, float posX, float posY, float angle) {
-		
+		Bala bDisp=new Bala(posX, posY, 10, angle, m.getDanyo());
 	}
 }

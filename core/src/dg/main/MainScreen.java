@@ -12,7 +12,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import objetos.Bala;
 import objetos.Barco;
+import objetos.Barco.PosicionCanyon;
 import objetos.Isla;
 
 //Pantalla en la que se va desarrollar el juego
@@ -67,8 +69,9 @@ public class MainScreen implements Screen{
 		logger.info("barco: "+barco.getInfo());
 		secondShipTest();
 		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
-		
-		
+		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+			barco.disaprarLado(PosicionCanyon.DELANTE);
+		}
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
 		

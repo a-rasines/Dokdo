@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Bala extends Sprite{
 	
 	private static Texture t ;
+	private float vInicial=10;
 	static {
 		try {
 		t = new Texture("tileSetBala.png");
@@ -47,5 +48,4 @@ public class Bala extends Sprite{
 	public int getDanyo() {
 		return danyo;
 	}
-	
 }

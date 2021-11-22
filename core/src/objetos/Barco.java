@@ -146,6 +146,10 @@ public class Barco extends Sprite{
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		
 	}
+	//CANYONES
+	public boolean disaprarLado(PosicionCanyon lc) {
+		return canyones.get(lc).shootIfPosible(municionEnUso, canyones.get(lc).getCoolDown());
+	}
 	
 	
 	/*
@@ -209,6 +213,9 @@ class CannonSide{
 		cd = cooldown;
 		t0 = System.currentTimeMillis();
 	}
+	public double getCoolDown() {
+		return cd;
+	}
 	private boolean reset() {
 		cd = 0;
 		return true;
@@ -220,6 +227,7 @@ class CannonSide{
 		return System.currentTimeMillis()-t0 >=cd*1000?reset():false;
 		
 	}
+	
 	/**
 	 * Combrueba si los cañones pueden disparar y si eso dispara
 	 * @param m La munición que van a disparar

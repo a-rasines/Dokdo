@@ -83,6 +83,8 @@ public class Barco extends Sprite{
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
 		super(posX, posY, 0, 0, 32, 32, 150); //TODO Ajustar rango hasta una distancia interesante
 		super.tMap = t;
+		canyones = new HashMap<>();
+		canyones.put(PosicionCanyon.DELANTE, new CannonSide(this, PosicionCanyon.DELANTE, new Canyon(0,0)));
 		this.vida=vida;
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
@@ -148,7 +150,7 @@ public class Barco extends Sprite{
 	}
 	//CANYONES
 	public boolean dispararLado(PosicionCanyon lc) {
-		return canyones.get(lc).shootIfPosible(municionEnUso, canyones.get(lc).getCoolDown());
+		return canyones.get(lc).shootIfPosible(municionEnUso, 10);
 	}
 	
 	
@@ -190,8 +192,8 @@ class CannonSide{
 		this.b = b;
 		this.pc = pc;
 	}
-	public CannonSide(Canyon... c) {
-		setCannons(c);
+	public CannonSide(Barco b, PosicionCanyon pc, Canyon... c) {
+		this(Arrays.asList(c), b, pc);
 	}
 	public ArrayList<Canyon> getCannons() {
 		return c;
@@ -235,6 +237,8 @@ class CannonSide{
 	 * @return Devuelve si ha disparado
 	 */
 	public boolean shootIfPosible(Municion m, double cooldown) {
+		System.out.println(System.currentTimeMillis()-t0);
+		System.out.println(cd);
 		int n=1;
 		int s = c.size();
 		float x0 = b.getX();

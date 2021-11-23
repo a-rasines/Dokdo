@@ -17,7 +17,20 @@ public class Canyon extends Mejoras{
 	public Canyon(int nivel, int precio) {
 		super(nivel, precio);
 	}
-	public void disparar(Municion m, float posX, float posY, float angle) {
-		Bala bDisp=new Bala(posX, posY, 10, angle, m.getDanyo());
+	
+	/** FALTA ARREGLARLO
+	 * @param m
+	 * @param posX
+	 * @param posY
+	 * @param angle
+	 */
+	public void disparar(Municion m, float posX, float posICIONY, float angle) {
+		Bala bDisp=new Bala(posX, posICIONY, 2, angle, m.getDanyo());
+		System.out.println(posX);
+		System.out.println(posICIONY);
+		while(bDisp.getVelocidad()>0) {
+			bDisp.decelerate();
+			bDisp.dibujar(0,0);
+		}
 	}
 }

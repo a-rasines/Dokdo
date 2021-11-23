@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class Bala extends Sprite{
 	
 	private static Texture t ;
-	private float vInicial=10;
 	static {
 		try {
 		t = new Texture("tileSetBala.png");
@@ -20,8 +19,8 @@ public class Bala extends Sprite{
 	 * Bala disparada por un {@link objetos.Cañon Cañon}
 	 * @param x0 x inicial
 	 * @param y0 y inicial
-	 * @param saltoX salto en X cada vuelta
-	 * @param saltoY salto en Y cada vuelta
+	 * @param vel Velocidad Inicial de la bala
+	 * @param angulo Angulo de disparo de la bala
 	 * @param daño daño que ocasiona al colisionar
 	 */
 	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
@@ -41,11 +40,23 @@ public class Bala extends Sprite{
 		// TODO Auto-generated method stub
 		
 	}
-	
+	public void decelerate() {
+		if(v>0) {
+			v-=0.05;
+			move();
+		}else if(v<0) {
+			v+=0.05;
+			move();
+		}
+		if(v<0.05 && v>-0.05)v=0;
+	}
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 
 	 */
 	public int getDanyo() {
 		return danyo;
+	}
+	public float getVelocidad() {
+		return v;
 	}
 }

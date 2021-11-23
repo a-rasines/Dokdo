@@ -13,7 +13,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import objetos.Barco;
 import objetos.Canyon;
@@ -29,15 +30,14 @@ public class MainScreen implements Screen{
 	ArrayList<Barco> balasDisparadas = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	Stage stage = new Stage(new StretchViewport((float) (screenSize.getWidth()-50), (float)(screenSize.getHeight()-50)));
+	Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
+	Stage stage = new Stage(vp);
 	ShapeRenderer sr = new ShapeRenderer();
 	
 	@Override
 	public void show() {
 		//Musica normal
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-		
-		
     	islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	
@@ -125,7 +125,7 @@ public class MainScreen implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		vp.update(width, height);
 		
 	}
 

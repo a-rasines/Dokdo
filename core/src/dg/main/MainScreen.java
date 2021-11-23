@@ -12,8 +12,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import objetos.Barco;
-import objetos.Barco.PosicionCanyon;
+import objetos.Canyon;
 import objetos.Isla;
+import objetos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
@@ -30,6 +31,7 @@ public class MainScreen implements Screen{
 		//Musica normal
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
     	islaList.add(new Isla(100, 100, 1, 1));
+    	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	
    	}
 
@@ -82,10 +84,10 @@ public class MainScreen implements Screen{
 		}
 		
 				
-		barco.dibujar(0, 0); 
+		barco.dibujar(); 
 		barco.drawCollisions(sr);
-		barco2.dibujar(0, 1);
-		islaList.get(0).dibujar(0, 0);
+		barco2.dibujar();
+		islaList.get(0).dibujar();
 		islaList.get(0).drawCollisions(sr);
 		barco2.drawCollisions(sr);
 		

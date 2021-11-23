@@ -25,6 +25,8 @@ public abstract class Sprite {
 	private float angle;
 	private int sizeX;
 	private int sizeY;
+	private int textureX = 0;
+	private int textureY = 0;
 	private Polygon bounds;
 	private Circle range = new Circle();
 	
@@ -194,13 +196,26 @@ public abstract class Sprite {
 	}
 	
 	//DIBUJADO
-
+	
+	/**
+	 * Establece la posición de la textura a coger, (0,0) por defecto
+	 * @param x posicion X del borde izquierdo
+	 * @param y posición Y del borde superior
+	 * @return El propio Sprite para concatenar funciones
+	 */
+	public Sprite setTexture(int x, int y) {
+		this.textureX = x;
+		this.textureY = y;
+		return this;
+	}
+	
 	private SpriteBatch sb2 ; // se ha movido al constructor para poder usar el Junit
 	/** Dibuja sprites especificos de un mapa de Sprites. 64 px = Isla, 32 px = Barco, 16 px = cañon, 8 px = bala
 	 * @param columna, Columna en la que se encuentra el sprite (Horizontal)
 	 * @param fila, Fila en la que se encuentra el sprite (Vertical)
 	 */
-	public void dibujar(int columna, int fila) {
+	public void dibujar() {
+		int columna = textureX; int fila = textureY;
 		if(sb2==null || tMap == null ) {
 			return;
 		}//esto es para evitar nullpointer con los junit
@@ -220,6 +235,7 @@ public abstract class Sprite {
 			sb2.end();
 		
 	}
+	
 		
 	
 	

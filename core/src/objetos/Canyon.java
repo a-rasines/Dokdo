@@ -30,7 +30,7 @@ public class Canyon extends Mejoras{
 		System.out.println(posICIONY);
 		while(bDisp.getVelocidad()>0) {
 			bDisp.decelerate();
-			bDisp.dibujar(0,0);
+			bDisp.dibujar();
 		}
 	}
 }

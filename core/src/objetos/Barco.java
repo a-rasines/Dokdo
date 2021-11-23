@@ -7,8 +7,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-
 import dg.main.AudioPlayer;
 import objetos.Barco.PosicionCanyon;
 /**
@@ -84,12 +82,10 @@ public class Barco extends Sprite{
 		super(posX, posY, 0, 0, 32, 32, 150); //TODO Ajustar rango hasta una distancia interesante
 		super.tMap = t;
 		canyones = new HashMap<>();
-		canyones.put(PosicionCanyon.DELANTE, new CannonSide(this, PosicionCanyon.DELANTE, new Canyon(0,0)));
 		this.vida=vida;
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
 	}
-	
 	
 	
 	/*
@@ -151,6 +147,14 @@ public class Barco extends Sprite{
 	//CANYONES
 	public boolean dispararLado(PosicionCanyon lc) {
 		return canyones.get(lc).shootIfPosible(municionEnUso, 10);
+	}
+	/**
+	 * Establece los cañones de un lado
+	 * @param key lado a establecer
+	 * @param canyones los cañones a establecer, puede ser un Array o los cañones uno detras de otro
+	 */
+	public void setCanyones(PosicionCanyon key, Canyon... canyones) {
+		this.canyones.put(key, new CannonSide(this, key, canyones));
 	}
 	
 	
@@ -229,7 +233,14 @@ class CannonSide{
 		return System.currentTimeMillis()-t0 >=cd*1000?reset():false;
 		
 	}
-	
+	/**
+	 * Combrueba si los cañones pueden disparar y si eso dispara
+	 * @param cooldown El cooldown despues de terminar de disparar
+	 * @return Devuelve si ha disparado
+	 */
+	public boolean shootIfPosible(double cooldown) {
+		return shootIfPosible(Municion.NORMAL, cooldown);
+	}
 	/**
 	 * Combrueba si los cañones pueden disparar y si eso dispara
 	 * @param m La munición que van a disparar

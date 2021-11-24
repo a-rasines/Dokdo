@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
@@ -55,10 +56,10 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
 	 */
-	private Vector2 lineaFrente = new Vector2();
-	private Vector2 lineaIzquierda = new Vector2();
-	private Vector2 lineaDerecha = new Vector2();
-	private Vector2 lineaAtras = new Vector2();
+	private Polygon lineaFrente;
+	private Polygon lineaIzquierda;
+	private Polygon lineaDerecha;
+	private Polygon lineaAtras;
 	
 	
 	private static Texture t;
@@ -108,14 +109,52 @@ public class Barco extends Sprite{
 	/**Actualiza los valores de fin de linea (El inicio de esta es la posicion propia del barco)
 	 * 
 	 */
+	
+	
 	protected void refreshLineas() {
-		lineaFrente.set((float) Math.sin(Math.toRadians(getAngle())) * rango + this.getX() , (float) Math.cos(Math.toRadians(getAngle())) * rango + this.getY()); //Genera la linea del frente
-		lineaIzquierda.set((float) Math.sin(Math.toRadians(getAngle() + 90)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()+90)) * rango + this.getY());
-		lineaDerecha.set((float) Math.sin(Math.toRadians(getAngle()+180)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()+180)) * rango + this.getY());
-		lineaAtras.set((float) Math.sin(Math.toRadians(getAngle()-90)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()-90)) * rango + this.getY());
+		if(lineaFrente == null) {
+			lineaFrente = new Polygon(new float[]{
+					(float) this.getX() , (float) this.getY() ,
+					(float) this.getX() +1, (float) this.getY() ,
+					(float) this.getX() , (float) this.getY()  + rango
+			});//Esquinas
+			
+			lineaAtras = new Polygon(new float[]{
+					(float) this.getX() , (float) this.getY() ,
+					(float) this.getX()  +1, (float) this.getY() ,
+					(float) this.getX() , (float) this.getY() - rango
+			});//Esquinas
+			
+			lineaDerecha = new Polygon(new float[]{
+					(float) this.getX() , (float) this.getY() ,
+					(float) this.getX()  +1, (float) this.getY() ,
+					(float) this.getX()  + rango, (float) this.getY() 
+			});//Esquinas
+			
+			lineaIzquierda = new Polygon(new float[]{
+					(float) this.getX() , (float) this.getY() ,
+					(float) this.getX()  +1, (float) this.getY(),
+					(float) this.getX()  - rango, (float) this.getY() 
+			});//Esquinas
+			
+			lineaFrente.setOrigin((float) this.getX(), (float) this.getY());//Pos barco
+			lineaAtras.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
+			lineaDerecha.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
+			lineaIzquierda.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
+		}else 
+			lineaFrente.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaFrente.setRotation(-getAngle()); //Get angulo
+		
+		lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaAtras.setRotation(-getAngle()); //Get angulo
+		
+		lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaDerecha.setRotation(-getAngle()); //Get angulo
+		
+		lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaIzquierda.setRotation(-getAngle()); //Get angulo
 		
 	}
-	
 	//MOVIMIENTO
 	
 	public void right() {
@@ -165,13 +204,33 @@ public class Barco extends Sprite{
 	 * @param o Sprite con el que se desea comparar (Objeto Pasado)
 	 * @return True si toca, False si no
 	 */
-	//TODO Funciona mal
-	public boolean tocaLinea(Sprite o) {
+	//TODO Se añade return polygon y asi sabemos que linea toca, Meterselo al hijo ;)
+	public Polygon tocaLinea(Sprite o) {
 		ShapeRenderer shapeRenderer = new ShapeRenderer();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-	    shapeRenderer.line(new Vector2(this.getX() + this.getSizeX()/2,this.getY() + this.getSizeY()/2), lineaFrente);
+	    shapeRenderer.polygon(lineaDerecha.getTransformedVertices());
+	    shapeRenderer.polygon(lineaIzquierda.getTransformedVertices());
+	    shapeRenderer.polygon(lineaFrente.getTransformedVertices());
+	    shapeRenderer.polygon(lineaAtras.getTransformedVertices());
 	    shapeRenderer.end();
-		return Intersector.intersectLinePolygon(new Vector2(this.getX() + this.getSizeX()/2, this.getY()+this.getSizeY()/2), lineaFrente, o.getBounds());//TODO Prueba con la linea frontal, queda la deteccion de lineas unicas
+	    if(Intersector.overlapConvexPolygons(lineaDerecha, o.getBounds())) {
+	    	return lineaDerecha;
+	    }
+	    
+	    if(Intersector.overlapConvexPolygons(lineaIzquierda, o.getBounds())) {
+	    	return lineaIzquierda;
+	    }
+	    
+	    if(Intersector.overlapConvexPolygons(lineaFrente, o.getBounds())) {
+	    	return lineaFrente;
+	    }
+	    
+	    if(Intersector.overlapConvexPolygons(lineaAtras, o.getBounds())) {
+	    	return lineaAtras;
+	    }
+	    
+	    return null;
+		
 	}
 	
 	@Override

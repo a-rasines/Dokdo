@@ -101,7 +101,7 @@ public class MainScreen implements Screen{
 		barco2.drawCollisions(sr);
 		
 		//TODO Prueba de lineas
-		if(barco2.tocaLinea(barco)) {
+		if(barco2.tocaLinea(barco) != null) {
 			
 			System.out.println("toca");
 		}

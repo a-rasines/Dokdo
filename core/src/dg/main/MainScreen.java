@@ -29,6 +29,7 @@ public class MainScreen implements Screen{
 	ArrayList<Barco> barcosEnemigos = new ArrayList<>();
 	ArrayList<Barco> balasDisparadas = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
+	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	Stage stage = new Stage(vp);
@@ -40,7 +41,7 @@ public class MainScreen implements Screen{
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
     	islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
-    	
+    	barco2.setTexturePos(0,1); //Para seleccionar el sprite dentro del archivo TODO hacerlo bonito
    	}
 
 	Boolean cambioEstado = true;
@@ -99,7 +100,11 @@ public class MainScreen implements Screen{
 		islaList.get(0).drawCollisions(sr);
 		barco2.drawCollisions(sr);
 		
-		
+		//TODO Prueba de lineas
+		if(barco2.tocaLinea(barco)) {
+			
+			System.out.println("toca");
+		}
 		
 	}
 	public void secondShipTest() {

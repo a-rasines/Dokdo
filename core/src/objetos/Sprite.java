@@ -88,6 +88,7 @@ public abstract class Sprite {
 	                return true;
 	        }
 	    }
+	    
 	    return poly.contains(circle.x, circle.y);
 	}
 	
@@ -195,6 +196,7 @@ public abstract class Sprite {
 		return "( "+x+" , "+y+" ) "+angle+"º, v="+v;
 	}
 	
+	
 	//DIBUJADO
 	
 	/**
@@ -203,7 +205,7 @@ public abstract class Sprite {
 	 * @param y posición Y del borde superior
 	 * @return El propio Sprite para concatenar funciones
 	 */
-	public Sprite setTexture(int x, int y) {
+	public Sprite setTexturePos(int x, int y) {
 		this.textureX = x;
 		this.textureY = y;
 		return this;
@@ -235,7 +237,6 @@ public abstract class Sprite {
 			sb2.end();
 		
 	}
-	
 		
 	
 	

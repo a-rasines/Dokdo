@@ -7,6 +7,10 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
+
 import dg.main.AudioPlayer;
 import objetos.Barco.PosicionCanyon;
 /**
@@ -51,6 +55,10 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
 	 */
+	private Vector2 lineaFrente = new Vector2();
+	private Vector2 lineaIzquierda = new Vector2();
+	private Vector2 lineaDerecha = new Vector2();
+	private Vector2 lineaAtras = new Vector2();
 	
 	
 	private static Texture t;
@@ -66,6 +74,7 @@ public class Barco extends Sprite{
 	protected float vMax = 5; //velocidad maxima
 	protected float a = 1; //aceleración
 	protected float vAng = 100; //velocidad angular en grados
+	private float rango = 150; //Rango de accion
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ CONSTRUCTORES ▓▓▓▓▓▓▓▓▓▓
@@ -85,33 +94,54 @@ public class Barco extends Sprite{
 		this.vida=vida;
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
+		this.rango = 150;
+		refreshLineas();
 	}
+	
 	
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ FUNCIONES ▓▓▓▓▓▓▓▓▓▓
 	 */
 	
+	//Actualizar valores
+	/**Actualiza los valores de fin de linea (El inicio de esta es la posicion propia del barco)
+	 * 
+	 */
+	protected void refreshLineas() {
+		lineaFrente.set((float) Math.sin(Math.toRadians(getAngle())) * rango + this.getX() , (float) Math.cos(Math.toRadians(getAngle())) * rango + this.getY()); //Genera la linea del frente
+		lineaIzquierda.set((float) Math.sin(Math.toRadians(getAngle() + 90)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()+90)) * rango + this.getY());
+		lineaDerecha.set((float) Math.sin(Math.toRadians(getAngle()+180)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()+180)) * rango + this.getY());
+		lineaAtras.set((float) Math.sin(Math.toRadians(getAngle()-90)) * rango + this.getX(), (float) Math.cos(Math.toRadians(getAngle()-90)) * rango + this.getY());
+		
+	}
+	
 	//MOVIMIENTO
 	
 	public void right() {
 		rotate(vAng*Gdx.graphics.getDeltaTime());
+		refreshLineas();
+		
 	}
 	public void left() {
 		rotate(-vAng*Gdx.graphics.getDeltaTime());
+		refreshLineas();
 	}
 	public void forward() {
 		if(v < vMax)v+=a;
 		move();
+		refreshLineas();
 	}
 	public void undoMove() {
 		v= -v;
 		move();
+		refreshLineas();
 		v=-v;
 	}
 	public void backwards() {
 		if(v>-vMax)v-=a;
 		move();
+		refreshLineas();
 	}
 	public void stop() {
 		v=0;
@@ -120,14 +150,29 @@ public class Barco extends Sprite{
 		if(v>0) {
 			v-=0.1;
 			move();
+			refreshLineas();
 		}else if(v<0) {
 			v+=0.1;
 			move();
+			refreshLineas();
 		}
 		if(v<0.1 && v>-0.1)v=0;
 	}
 	
 	//DETECCIÓN
+	
+	/** Compara las lineas del llamador con el bounding del objeto pasado
+	 * @param o Sprite con el que se desea comparar (Objeto Pasado)
+	 * @return True si toca, False si no
+	 */
+	//TODO Funciona mal
+	public boolean tocaLinea(Sprite o) {
+		ShapeRenderer shapeRenderer = new ShapeRenderer();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+	    shapeRenderer.line(new Vector2(this.getX() + this.getSizeX()/2,this.getY() + this.getSizeY()/2), lineaFrente);
+	    shapeRenderer.end();
+		return Intersector.intersectLinePolygon(new Vector2(this.getX() + this.getSizeX()/2, this.getY()+this.getSizeY()/2), lineaFrente, o.getBounds());//TODO Prueba con la linea frontal, queda la deteccion de lineas unicas
+	}
 	
 	@Override
 	public void onRangeOfPlayer() {

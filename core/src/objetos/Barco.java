@@ -213,13 +213,14 @@ public class Barco extends Sprite{
 		if(v<0.1 && v>-0.1)v=0;
 	}
 	//REVISAR
-	public static void recibeDaño(Barco a, Bala bullet) {
-		a.setVidaDelBarco(a.getVidaDelBarco()-bullet.getDanyo());
-		if(a.getVidaDelBarco()<=0) {
-			MainScreen.barEneBorrar.add(a);
+	public static void recibeDaño(Sprite a, Bala bullet) {
+		Barco b = (Barco) a;
+		b.setVidaDelBarco(b.getVidaDelBarco()-bullet.getDanyo());
+		MainScreen.balasBorrar.add(bullet);
+		if(b.getVidaDelBarco()<=0) {
+			MainScreen.barEneBorrar.add(b);
 		}
 	}
-	
 	//DETECCIÓN
 	
 	/** Compara las lineas del llamador con el bounding del objeto pasado
@@ -377,6 +378,11 @@ class CannonSide{
 		float n=1;
 		float s = c.size();
 		float[] v = b.getBounds().getTransformedVertices();
+		//copiado de git
+		float x0 = b.getX();
+		float y0 = b.getY();
+		float vx = b.getSizeX();
+		float vy = b.getSizeY();
 		
 		/*
 		 * 4-----3  6,7----4,5     0,32---32,32
@@ -385,9 +391,9 @@ class CannonSide{
 		 * 1-----2  0,1----2,3      0,0----32,0
 		 */
 		
-		
-		float x0 = v[0];//0
-		float y0 = v[1];//0
+		//Lo que tenia antes Canal
+		//float x0 = v[0];//0
+		//float y0 = v[1];//0
 		float vX0 = v[2] - x0; //32, 0, 32
 		float vY0 = v[3] - y0; // 0, 0, 0
 		float vX1 = v[4] - v[2]; //32, 32, 0
@@ -396,7 +402,7 @@ class CannonSide{
 			for(Canyon c: c) {
 				float[] x = {0, n/(s+1), 1};
 				float[] y = {0, n/(s+1), 1};
-				c.disparar(m, x0 + vX * x[pc.getX()], y0 + y[pc.getY()] ,b.getAngle()+ pc.getAngle());
+				c.disparar(m, (float)(x0+x[pc.getX()]*vx), (float)(y0+y[pc.getY()]*vy), b.getAngle()+ pc.getAngle());
 				n++;
 			}
 			//setCooldown(cooldown);

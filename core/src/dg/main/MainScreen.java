@@ -97,16 +97,20 @@ public class MainScreen implements Screen{
 		//DAÑO A LOS BARCOS ENEMIGOS.
 		for (Bala i: balasDisparadas){
 			if(i.collidesWith(barcosEnemigos)) {
-				Barco.recibeDaño((Barco) i.getCollidesWith(barcosEnemigos), i);
-				for(Barco j: barEneBorrar) {
-					barcosEnemigos.remove(j);
-				}
+				System.out.println("tocado");
+				Barco.recibeDaño(i.getCollidesWith(barcosEnemigos), i);
 			}
 			i.decelerate();
 			i.dibujar();
-		}for(Bala i: balasBorrar) {
+		}
+		for(Bala i: balasBorrar) {
 			balasDisparadas.remove(i);
 		}
+		for(Barco j: barEneBorrar) {
+			barcosEnemigos.remove(j);
+		}
+		
+		barEneBorrar.clear();
 		balasBorrar.clear();
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente

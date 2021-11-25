@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
@@ -20,19 +21,20 @@ import objetos.Bala;
 import objetos.Barco;
 import objetos.Canyon;
 import objetos.Isla;
-import objetos.Municion;
+import objetos.Sprite;
 import objetos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public static Barco barco = new Barco(10,0,0,0,Municion.NORMAL);
+	public static Barco barco = new Barco(10,0,0,0);
 	LinkedList<Isla> islaList = new LinkedList<>();
 	public static ArrayList<Barco> barcosEnemigos = new ArrayList<>();
 	public static ArrayList<Barco> barEneBorrar = new ArrayList<>();
 	public static ArrayList<Bala> balasDisparadas = new ArrayList<>();
 	public static ArrayList<Bala> balasBorrar = new ArrayList<>();
-	Barco barco2 = new Barco(10,0,0,0,null);
+	public static List<Sprite> onRange = new ArrayList<>();
+	Barco barco2 = (Barco) new Barco(10,0,0,0).setTexturePos(0,1);;
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
@@ -48,7 +50,6 @@ public class MainScreen implements Screen{
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
-    	barco2.setTexturePos(0,1); //Para seleccionar el sprite dentro del archivo TODO hacerlo bonito
     	barcosEnemigos.add(barco2);
 	}
 
@@ -118,11 +119,22 @@ public class MainScreen implements Screen{
 			barco.onRangeOfPlayer();
 			cambioEstado = false;
 		}
-		if(!cambioEstado && !barco.enRango(barco2)) {
-			barco.onExitFromRange();
-			cambioEstado = true;
-		}
-		
+		barcosEnemigos.forEach((v)->{
+			if( barco.enRango(v)) {
+				v.onRangeOfPlayer();
+				onRange.add(v);
+			}
+		});
+		List<Sprite> toRemove = new LinkedList<>();
+		onRange.forEach((v)->{
+			if( !barco.enRango(v)) {
+				v.onExitFromRange();
+				toRemove.add(v);
+			}
+		});
+		toRemove.forEach((v)->{
+			onRange.remove(v);
+		});
 				
 		barco.dibujar(); 
 		barco.drawCollisions(sr);

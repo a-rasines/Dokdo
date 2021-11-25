@@ -271,10 +271,10 @@ public class Barco extends Sprite{
 	
 	@Override
 	public void onExitFromRange() {
-		// TODO Auto-generated method stub
-		AudioPlayer.detener();
-		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-		
+		if(MainScreen.onRange.size() == 0) {
+			AudioPlayer.detener();
+			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+		}
 	}
 	//CANYONES
 	public boolean dispararLado(PosicionCanyon lc) {

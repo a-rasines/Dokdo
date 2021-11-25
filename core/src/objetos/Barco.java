@@ -37,7 +37,7 @@ public class Barco extends Sprite{
 	 */
 	public enum PosicionCanyon{
 		IZQUIERDA(0, 2, 270),
-		DERECHA(0, 1, 90),
+		DERECHA(0, 0, 90),
 		DELANTE(1, 0, 0),
 		ATRAS(2, 0, 180);
 		private int x;
@@ -376,15 +376,27 @@ class CannonSide{
 	public boolean shootIfPosible(Municion m, double cooldown) {
 		float n=1;
 		float s = c.size();
-		float x0 = b.getX();
-		float y0 = b.getY();
-		float vx = b.getSizeX();
-		float vy = b.getSizeY();
+		float[] v = b.getBounds().getTransformedVertices();
+		
+		/*
+		 * 4-----3  6,7----4,5     0,32---32,32
+		 * |     |   |      |        |      |
+		 * |     |   |      |        |      |
+		 * 1-----2  0,1----2,3      0,0----32,0
+		 */
+		
+		
+		float x0 = v[0];//0
+		float y0 = v[1];//0
+		float vX0 = v[2] - x0; //32, 0, 32
+		float vY0 = v[3] - y0; // 0, 0, 0
+		float vX1 = v[4] - v[2]; //32, 32, 0
+		float vY1 = v[5] - v[3]; //32, 0, 32
 		if(canShoot()) {
 			for(Canyon c: c) {
-				float[] x = {0, n/(s+1), 1 };
+				float[] x = {0, n/(s+1), 1};
 				float[] y = {0, n/(s+1), 1};
-				c.disparar(m, (float)(x0+x[pc.getX()]*vx), (float)(y0+y[pc.getY()]*vy), b.getAngle()+ pc.getAngle());
+				c.disparar(m, x0 + vX * x[pc.getX()], y0 + y[pc.getY()] ,b.getAngle()+ pc.getAngle());
 				n++;
 			}
 			//setCooldown(cooldown);

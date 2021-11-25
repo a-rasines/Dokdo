@@ -132,7 +132,7 @@ public abstract class Sprite {
 	 */
 	protected void refreshBounds() {
 		if(bounds == null) {
-			bounds = new Polygon(new float[]{x,y,sizeX+x,x,sizeX+x,sizeY+y,y,sizeY+y});
+			bounds = new Polygon(new float[]{x,y,sizeX+x,y,sizeX+x,sizeY+y,x,sizeY+y});
 			bounds.setOrigin(x + sizeX/2, y + sizeY/2);
 		}else 
 			bounds.setPosition(x, y);

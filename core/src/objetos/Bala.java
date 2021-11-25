@@ -42,13 +42,13 @@ public class Bala extends Sprite{
 	}
 	public void decelerate() {
 		if(v>0) {
-			v-=0.05;
+			v-=0.01;
 			move();
 		}else if(v<0) {
-			v+=0.05;
+			v+=0.01;
 			move();
 		}
-		if(v<0.05 && v>-0.05)v=0;
+		if(v<0.01 && v>-0.01)v=0;
 	}
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 

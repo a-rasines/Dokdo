@@ -19,12 +19,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import objetos.Barco;
 import objetos.Canyon;
 import objetos.Isla;
+import objetos.Municion;
 import objetos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public static Barco barco = new Barco(10,0,0,0,null);
+	public static Barco barco = new Barco(10,0,0,0,Municion.NORMAL);
 	LinkedList<Isla> islaList = new LinkedList<>();
 	ArrayList<Barco> barcosEnemigos = new ArrayList<>();
 	ArrayList<Barco> balasDisparadas = new ArrayList<>();
@@ -41,6 +42,9 @@ public class MainScreen implements Screen{
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
     	islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
+    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+    	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+    	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barco2.setTexturePos(0,1); //Para seleccionar el sprite dentro del archivo TODO hacerlo bonito
    	}
 
@@ -79,6 +83,12 @@ public class MainScreen implements Screen{
 		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
+		}else if(Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+			barco.dispararLado(PosicionCanyon.IZQUIERDA);
+		}else if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+			barco.dispararLado(PosicionCanyon.ATRAS);
+		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+			barco.dispararLado(PosicionCanyon.DERECHA);
 		}
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente

@@ -2,12 +2,14 @@ package objetos;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import dg.main.MainScreen;
+
 /**
  * Representa una bala disparada por un {@link objetos.Cañon}.
  *
  */
 public class Bala extends Sprite{
-	
+	private float decelerate = 0.1f; 
 	private static Texture t ;
 	static {
 		try {
@@ -42,13 +44,13 @@ public class Bala extends Sprite{
 	}
 	public void decelerate() {
 		if(v>0) {
-			v-=0.01;
+			v-=decelerate;
 			move();
 		}else if(v<0) {
-			v+=0.01;
+			v+=decelerate;
 			move();
 		}
-		if(v<0.01 && v>-0.01)v=0;
+		if(v<decelerate && v>-decelerate)MainScreen.balasBorrar.add(this);
 	}
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 

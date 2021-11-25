@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import objetos.Bala;
 import objetos.Barco;
 import objetos.Canyon;
 import objetos.Isla;
@@ -28,7 +29,8 @@ public class MainScreen implements Screen{
 	public static Barco barco = new Barco(10,0,0,0,Municion.NORMAL);
 	LinkedList<Isla> islaList = new LinkedList<>();
 	ArrayList<Barco> barcosEnemigos = new ArrayList<>();
-	ArrayList<Barco> balasDisparadas = new ArrayList<>();
+	public static ArrayList<Bala> balasDisparadas = new ArrayList<>();
+	public static ArrayList<Bala> balasBorrar = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -90,6 +92,13 @@ public class MainScreen implements Screen{
 		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}
+		for (Bala i: balasDisparadas){
+			i.decelerate();
+			i.dibujar();
+		}for(Bala i: balasBorrar) {
+			balasDisparadas.remove(i);
+		}
+		balasBorrar.clear();
 		
 		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
 		
@@ -167,7 +176,4 @@ public class MainScreen implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 }

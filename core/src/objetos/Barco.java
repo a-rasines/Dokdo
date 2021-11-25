@@ -218,12 +218,12 @@ public class Barco extends Sprite{
 		if(v<0.1 && v>-0.1)v=0;
 	}
 	//REVISAR
-	public static void recibeDaño(Sprite a, Bala bullet) {
-		Barco b = (Barco) a;
-		b.setVidaDelBarco(b.getVidaDelBarco()-bullet.getDanyo());
+	public static void recibeDaño(Barco a, Bala bullet) {
+		a.setVidaDelBarco(a.getVidaDelBarco()-bullet.getDanyo());
+		System.out.println(a.getVidaDelBarco());
 		MainScreen.balasBorrar.add(bullet);
-		if(b.getVidaDelBarco()<=0) {
-			MainScreen.barEneBorrar.add(b);
+		if(a.getVidaDelBarco()<=0) {
+			MainScreen.barEneBorrar.add(a);
 		}
 	}
 	//DETECCIÓN
@@ -383,8 +383,6 @@ class CannonSide{
 		float n=1;
 		float s = c.size();
 		float[] v = b.getBounds().getTransformedVertices();
-		for(float f : v)System.out.print(String.valueOf(f)+",");
-		System.out.println("\n");
 		/*
 		 * 4-----3  6,7----4,5     0,32---32,32
 		 * |     |   |      |        |      |
@@ -396,7 +394,6 @@ class CannonSide{
 		float y0 = v[2*pc.getFirst()+1];
 		float x1 = v[2*pc.getSecond()];
 		float y1 = v[2*pc.getSecond()+1];
-		System.out.println(String.valueOf(x0)+","+String.valueOf(y0)+","+String.valueOf(x1)+","+String.valueOf(y1)+","+String.valueOf(n*(x0+x1)/(s+1))+","+String.valueOf(n*(y0+y1)/(s+1)));
 		if(canShoot()) {
 			for(Canyon c: c) {
 				

@@ -19,6 +19,7 @@ public enum Municion {
 	private int danyo;
 	Municion(int danyo, boolean instantaneo){
 		this.instantaneo = instantaneo;
+		this.danyo=danyo;
 	}
 	
 }

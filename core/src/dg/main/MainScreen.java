@@ -49,14 +49,14 @@ public class MainScreen implements Screen{
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barco2.setTexturePos(0,1); //Para seleccionar el sprite dentro del archivo TODO hacerlo bonito
-   	}
+    	barcosEnemigos.add(barco2);
+	}
 
 	Boolean cambioEstado = true;
 
 	
 	@Override
 	public void render(float delta) {
-		barcosEnemigos.add(barco2);
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
@@ -97,8 +97,7 @@ public class MainScreen implements Screen{
 		//DAÑO A LOS BARCOS ENEMIGOS.
 		for (Bala i: balasDisparadas){
 			if(i.collidesWith(barcosEnemigos)) {
-				System.out.println("tocado");
-				Barco.recibeDaño(i.getCollidesWith(barcosEnemigos), i);
+				Barco.recibeDaño((Barco) i.getCollidesWith(barcosEnemigos), i);
 			}
 			i.decelerate();
 			i.dibujar();
@@ -127,10 +126,11 @@ public class MainScreen implements Screen{
 				
 		barco.dibujar(); 
 		barco.drawCollisions(sr);
-		barco2.dibujar();
+		for(Barco j: barcosEnemigos) {
+			j.dibujar();
+		}
 		islaList.get(0).dibujar();
 		islaList.get(0).drawCollisions(sr);
-		barco2.drawCollisions(sr);
 		
 		//TODO Prueba de lineas
 		if(barco2.tocaLinea(barco) != null) {

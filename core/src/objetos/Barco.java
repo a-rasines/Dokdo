@@ -98,6 +98,15 @@ public class Barco extends Sprite{
 		this.rango = 150;
 		refreshLineas();
 	}
+	/** Barcos del juego
+	 * @param vida Vida actual del barco
+	 * @param nivel Nivel actual del barco
+	 * @param posX Posicion en X del barco
+	 * @param posY Posicion en Y del barco
+	 */
+	public Barco(int vida, int nivel, float posX, float posY) {
+		this(vida, nivel, posX, posY, Municion.NORMAL);
+	}
 	
 	
 	

@@ -43,32 +43,26 @@ public class TableBuilder {
 	 * @throws NumberFormatException si alguno de los valores en q no es numérico
 	 */
 	public TableBuilder addColumn(String name, DataType type, String... q) {
-		if(type.getParams() != q.length)throw new NullPointerException("No coincide el número de parametros introducidos con los del tipo");
-		for(String s : q)Integer.parseInt(s);
-		String params = String.join(",",q);
-		if(!columnNames.contains(name)) {
-			columns.add(name+" "+type.toString()+(params.length()==0?"":"("+params+")"));
-			columnNames.add(name);
-		}
-		int pos = columnNames.indexOf(name);
-		columns.set(pos, name+" "+type.toString()+(params.length()==0?"":"("+params+")"));
-		return this;
+		return addColumn(name, null, type, q);
 	}
 	/**
 	 * Añade una columna a la tabla
 	 * @param name nombre de la tabla
+	 * @param def valor por defecto de la funcion. null si no tiene
 	 * @param type tipo de dato
-	 * @param q cantidad de datos (digitos/caracteres)
-	 * @param def valor por defecto de la funcion
+	 * @param q cantidad de datos (digitos/caracteres). En string para facilitar el código, pero deben ser números
 	 * @return El propio constructor para concatenar acciones
 	 */
-	public TableBuilder addColumn(String name, DataType type, int q, String def) {
+	public TableBuilder addColumn(String name, String def, DataType type, String... q) {
+		if(type.getParams() != q.length)throw new NullPointerException("No coincide el número de parametros introducidos con los del tipo");
+		for(String s : q)Integer.parseInt(s);
+		String params = String.join(",",q);
 		if(!columnNames.contains(name)) {
-			columns.add(name+" "+type.toString()+"("+String.valueOf(q)+") DEFAULT "+def);
+			columns.add(name+" "+type.toString()+(params.length()==0?"":"("+params+")"+(def == null?"": " DEFAULT "+def)));
 			columnNames.add(name);
 		}
 		int pos = columnNames.indexOf(name);
-		columns.set(pos, name+" "+type.toString()+"("+String.valueOf(q)+") DEFAULT"+def);
+		columns.set(pos, name+" "+type.toString()+(params.length()==0?"":"("+params+")"));
 		return this;
 	}
 	/**
@@ -147,7 +141,7 @@ public class TableBuilder {
 	
 	public String build(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("CREATE TABLE "+name+"(\n");
+		sb.append("CREATE TABLE IF NOT EXISTS "+name+"(\n");
 		Consumer<String> c = new Consumer<String>() {
 			@Override
 			public void accept(String t) {

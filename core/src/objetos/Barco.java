@@ -36,22 +36,27 @@ public class Barco extends Sprite{
 	 *
 	 */
 	public enum PosicionCanyon{
-		IZQUIERDA(0, 2, 270),
-		DERECHA(0, 0, 90),
-		DELANTE(1, 0, 0),
-		ATRAS(2, 0, 180);
+		IZQUIERDA(3, 0, 270),
+		DERECHA(1, 2, 90),
+		DELANTE(3, 2, 0),
+		ATRAS(0, 1, 180);
 		private int x;
 		private int y;
 		private int angle;
+		/*
+		 * 3---2
+		 * |   |
+		 * 0---1
+		 */
 		PosicionCanyon(int i, int j, int k) {
 			x = i;
 			y = j;
 			angle = k;
 		}
-		int getX() {
+		int getFirst() {
 			return x;
 		}
-		int getY() {
+		int getSecond() {
 			return y;
 		}
 		int getAngle() {
@@ -378,12 +383,8 @@ class CannonSide{
 		float n=1;
 		float s = c.size();
 		float[] v = b.getBounds().getTransformedVertices();
-		//copiado de git
-		float x0 = b.getX();
-		float y0 = b.getY();
-		float vx = b.getSizeX();
-		float vy = b.getSizeY();
-		
+		for(float f : v)System.out.print(String.valueOf(f)+",");
+		System.out.println("\n");
 		/*
 		 * 4-----3  6,7----4,5     0,32---32,32
 		 * |     |   |      |        |      |
@@ -391,23 +392,21 @@ class CannonSide{
 		 * 1-----2  0,1----2,3      0,0----32,0
 		 */
 		
-		//Lo que tenia antes Canal
-		//float x0 = v[0];//0
-		//float y0 = v[1];//0
-		float vX0 = v[2] - x0; //32, 0, 32
-		float vY0 = v[3] - y0; // 0, 0, 0
-		float vX1 = v[4] - v[2]; //32, 32, 0
-		float vY1 = v[5] - v[3]; //32, 0, 32
+		float x0 = v[2*pc.getFirst()];
+		float y0 = v[2*pc.getFirst()+1];
+		float x1 = v[2*pc.getSecond()];
+		float y1 = v[2*pc.getSecond()+1];
+		System.out.println(String.valueOf(x0)+","+String.valueOf(y0)+","+String.valueOf(x1)+","+String.valueOf(y1)+","+String.valueOf(n*(x0+x1)/(s+1))+","+String.valueOf(n*(y0+y1)/(s+1)));
 		if(canShoot()) {
 			for(Canyon c: c) {
-				float[] x = {0, n/(s+1), 1};
-				float[] y = {0, n/(s+1), 1};
-				c.disparar(m, (float)(x0+x[pc.getX()]*vx), (float)(y0+y[pc.getY()]*vy), b.getAngle()+ pc.getAngle());
+				
+				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle());
 				n++;
 			}
 			//setCooldown(cooldown);
+			return true;
 		}
-		return canShoot();
+		return false;
 	}
 	
 	

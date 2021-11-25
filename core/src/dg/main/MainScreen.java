@@ -66,12 +66,12 @@ public class MainScreen implements Screen{
 			barco.backwards();
 		else 
 			barco.decelerate();
-		logger.info("pressed:"+
+		/*logger.info("pressed:"+
 				" W= "+Gdx.input.isKeyPressed(Input.Keys.W)+
 				" A= "+Gdx.input.isKeyPressed(Input.Keys.A)+
 				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
 				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
-				);
+				);*/
 		if (barco.collidesWith(islaList)) {
 			barco.undoMove();
 			barco.stop();
@@ -82,9 +82,9 @@ public class MainScreen implements Screen{
 			barco.left();
 		if(barco.collidesWith(islaList))
 			barco.right();
-		logger.info("barco: "+barco.getInfo());
+		//logger.info("barco: "+barco.getInfo());
 		secondShipTest();
-		logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
+		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
 		}else if(Gdx.input.isKeyJustPressed(Input.Keys.J)) {

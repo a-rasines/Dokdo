@@ -371,7 +371,7 @@ class CannonSide{
 		int vy = b.getSizeY();
 		if(canShoot()) {
 			for(Canyon c: c) {
-				int[] x = {0, n/s, 1};
+				int[] x = {0, n/s, 1 };
 				int[] y = {0, n/s, 1};
 				c.disparar(m, x0+(x[pc.getX()]*vx), y0+(y[pc.getY()]*vy), b.getAngle());
 				n++;

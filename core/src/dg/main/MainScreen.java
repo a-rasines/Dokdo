@@ -28,7 +28,8 @@ public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static Barco barco = new Barco(10,0,0,0,Municion.NORMAL);
 	LinkedList<Isla> islaList = new LinkedList<>();
-	ArrayList<Barco> barcosEnemigos = new ArrayList<>();
+	public static ArrayList<Barco> barcosEnemigos = new ArrayList<>();
+	public static ArrayList<Barco> barEneBorrar = new ArrayList<>();
 	public static ArrayList<Bala> balasDisparadas = new ArrayList<>();
 	public static ArrayList<Bala> balasBorrar = new ArrayList<>();
 	Barco barco2 = new Barco(10,0,0,0,null);
@@ -55,6 +56,7 @@ public class MainScreen implements Screen{
 	
 	@Override
 	public void render(float delta) {
+		barcosEnemigos.add(barco2);
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
@@ -92,7 +94,14 @@ public class MainScreen implements Screen{
 		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}
+		//DAÑO A LOS BARCOS ENEMIGOS.
 		for (Bala i: balasDisparadas){
+			if(i.collidesWith(barcosEnemigos)) {
+				Barco.recibeDaño((Barco) i.getCollidesWith(barcosEnemigos), i);
+				for(Barco j: barEneBorrar) {
+					barcosEnemigos.remove(j);
+				}
+			}
 			i.decelerate();
 			i.dibujar();
 		}for(Bala i: balasBorrar) {

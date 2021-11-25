@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
+import dg.main.MainScreen;
 import objetos.Barco.PosicionCanyon;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
@@ -210,6 +211,13 @@ public class Barco extends Sprite{
 			refreshLineas();
 		}
 		if(v<0.1 && v>-0.1)v=0;
+	}
+	//REVISAR
+	public static void recibeDaño(Barco a, Bala bullet) {
+		a.setVidaDelBarco(a.getVidaDelBarco()-bullet.getDanyo());
+		if(a.getVidaDelBarco()<=0) {
+			MainScreen.barEneBorrar.add(a);
+		}
 	}
 	
 	//DETECCIÓN

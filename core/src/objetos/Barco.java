@@ -35,21 +35,26 @@ public class Barco extends Sprite{
 	 *
 	 */
 	public enum PosicionCanyon{
-		IZQUIERDA(0, 2),
-		DERECHA(0, 1),
-		DELANTE(1, 0),
-		ATRAS(2, 0);
+		IZQUIERDA(0, 2, 270),
+		DERECHA(0, 1, 90),
+		DELANTE(1, 0, 0),
+		ATRAS(2, 0, 180);
 		private int x;
 		private int y;
-		PosicionCanyon(int i, int j) {
+		private int angle;
+		PosicionCanyon(int i, int j, int k) {
 			x = i;
 			y = j;
+			angle = k;
 		}
 		int getX() {
 			return x;
 		}
 		int getY() {
 			return y;
+		}
+		int getAngle() {
+			return angle;
 		}
 	};
 	
@@ -361,19 +366,17 @@ class CannonSide{
 	 * @return Devuelve si ha disparado
 	 */
 	public boolean shootIfPosible(Municion m, double cooldown) {
-		System.out.println(System.currentTimeMillis()-t0);
-		System.out.println(cd);
-		int n=1;
-		int s = c.size();
+		float n=1;
+		float s = c.size();
 		float x0 = b.getX();
 		float y0 = b.getY();
-		int vx = b.getSizeX();
-		int vy = b.getSizeY();
+		float vx = b.getSizeX();
+		float vy = b.getSizeY();
 		if(canShoot()) {
 			for(Canyon c: c) {
-				int[] x = {0, n/s, 1 };
-				int[] y = {0, n/s, 1};
-				c.disparar(m, x0+(x[pc.getX()]*vx), y0+(y[pc.getY()]*vy), b.getAngle());
+				float[] x = {0, n/(s+1), 1 };
+				float[] y = {0, n/(s+1), 1};
+				c.disparar(m, (float)(x0+x[pc.getX()]*vx), (float)(y0+y[pc.getY()]*vy), b.getAngle()+ pc.getAngle());
 				n++;
 			}
 			//setCooldown(cooldown);

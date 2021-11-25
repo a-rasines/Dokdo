@@ -14,8 +14,6 @@ public class Canyon extends Mejoras{
 	/** Cañones que usaran los barcos del juego
 	 * @param nivel Nivel necesario para adquirir el cañon
 	 * @param precio Precio necesario para comprar el cañon
-	 * @param x Posicion en X
-	 * @param y Posicion en Y
 	 */
 	public Canyon(int nivel, int precio) {
 		super(nivel, precio);

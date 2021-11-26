@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-
 import dg.main.MainScreen;
 
 /**
@@ -28,9 +26,8 @@ public abstract class Sprite {
 	private int textureX = 0;
 	private int textureY = 0;
 	private Polygon bounds;
-	private Circle range = new Circle();
 	
-	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY, float rango) {
+	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY) {
 		try {
 			sb2 = new SpriteBatch();
 		} catch (Throwable e) {
@@ -44,8 +41,6 @@ public abstract class Sprite {
 		this.sizeY = sizeY;
 		refreshBounds();
 		
-		range.setRadius(rango);
-		range.setPosition(new Vector2(x,y));
 	}
 	
 	//DETECCIÓN
@@ -62,12 +57,6 @@ public abstract class Sprite {
 	
 	//COLISIONES
 	
-	
-	//Colisiones con el Circulo
-	public boolean enRango(Sprite o) {
-		if(o==null)return false;
-		return Sprite.overlapCirclePolygon(o.getBounds(), range);
-	}
 	
 	/** Funcion para comparar Circulos con Polygonos
 	 * (Inspiracion: https://stackoverflow.com/questions/15323719/circle-and-polygon-collision-with-libgdx)
@@ -111,22 +100,18 @@ public abstract class Sprite {
 		for(Sprite s : c)if (collidesWith(s))return true;
 		return false;
 	}
-	public Sprite getCollidesWith(Iterable<? extends Sprite> c) {
-		for(Sprite s : c)if (collidesWith(s))return s;
+	/**
+	 * Devuelve el objeto de la lista con el que colisiona
+	 * @param c lista a buscar
+	 * @return objeto que toca/null
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends Sprite> T getCollidesWith(Iterable<T> c) {
+		for(Sprite s : c)if (collidesWith(s))return (T) s;
 		return null;
 	}
 	
-	/**Refresca la posicion del rango(Circulo)
-	 * 
-	 */
-	protected void refreshRange() {
-		if(range == null) {
-			range.setRadius(150);
-			range.setPosition(new Vector2(x,y));
-		} else {
-			range.setPosition(new Vector2(x,y));
-		}
-	}
+	
 	/**
 	 * Refresca la posición y rotación de la caja de colisiones
 	 */
@@ -173,7 +158,6 @@ public abstract class Sprite {
 		this.x+=x;
 		this.y+=y;
 		refreshBounds();
-		refreshRange();
 	}
 	/**
 	 * Rota el objeto q grados
@@ -205,10 +189,11 @@ public abstract class Sprite {
 	 * @param y posición Y del borde superior
 	 * @return El propio Sprite para concatenar funciones
 	 */
-	public Sprite setTexturePos(int x, int y) {
+	@SuppressWarnings("unchecked")
+	public <T extends Sprite> T setTexturePos(int x, int y) {
 		this.textureX = x;
 		this.textureY = y;
-		return this;
+		return (T) this;
 	}
 	
 	private SpriteBatch sb2 ; // se ha movido al constructor para poder usar el Junit

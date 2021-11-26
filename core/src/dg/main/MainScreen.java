@@ -17,24 +17,26 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import objectos.barcos.Barco;
+import objectos.barcos.Barco.PosicionCanyon;
+import objectos.barcos.BarcoEnemigo;
+import objectos.barcos.BarcoJugador;
 import objetos.Bala;
-import objetos.Barco;
 import objetos.Canyon;
 import objetos.Isla;
 import objetos.Sprite;
-import objetos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public static Barco barco = new Barco(10,0,0,0);
+	public static BarcoJugador barco = new BarcoJugador(10,0,0,0, 150);
 	LinkedList<Isla> islaList = new LinkedList<>();
-	public static ArrayList<Barco> barcosEnemigos = new ArrayList<>();
-	public static ArrayList<Barco> barEneBorrar = new ArrayList<>();
-	public static ArrayList<Bala> balasDisparadas = new ArrayList<>();
-	public static ArrayList<Bala> balasBorrar = new ArrayList<>();
+	public static ArrayList<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
+	public static ArrayList<BarcoEnemigo> barEneBorrar = new ArrayList<>();
+	public static List<Bala> balasDisparadas = new ArrayList<>();
+	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
-	Barco barco2 = (Barco) new Barco(10,0,0,0).setTexturePos(0,1);;
+	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0).setTexturePos(0,1);;
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
@@ -97,8 +99,9 @@ public class MainScreen implements Screen{
 		}
 		//DAÑO A LOS BARCOS ENEMIGOS.
 		for (Bala i: balasDisparadas){
-			if(i.collidesWith(barcosEnemigos)) {
-				Barco.recibeDaño((Barco) i.getCollidesWith(barcosEnemigos), i);
+			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
+			if(b != null && i.isJugador()) {
+				b.recibeDaño(i);
 			}
 			i.decelerate();
 			i.dibujar();

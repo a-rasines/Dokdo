@@ -2,8 +2,8 @@ package dg.main;
 
 import java.util.ArrayList;
 
+import objectos.barcos.Barco;
 import objetos.Bala;
-import objetos.Barco;
 import objetos.Sprite;
 
 public class HiloColisionBala extends Thread{

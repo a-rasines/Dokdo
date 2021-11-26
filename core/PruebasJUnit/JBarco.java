@@ -1,7 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import objetos.Barco;
+import objectos.barcos.Barco;
 import objetos.Municion;
 
 public class JBarco {

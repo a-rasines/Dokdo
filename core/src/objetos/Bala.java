@@ -11,6 +11,7 @@ import dg.main.MainScreen;
 public class Bala extends Sprite{
 	private float decelerate = 0.1f; 
 	private static Texture t ;
+	private boolean jugador;
 	static {
 		try {
 		t = new Texture("tileSetBala.png");
@@ -25,10 +26,11 @@ public class Bala extends Sprite{
 	 * @param angulo Angulo de disparo de la bala
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, float vel, float angulo, int danyo) {
-		super(x0, y0, vel, angulo, 8, 8, 0);
+	public Bala(float x0, float y0, float vel, float angulo, int danyo, boolean jugador) {
+		super(x0, y0, vel, angulo, 8, 8);
 		super.tMap = t;
 		this.danyo = danyo;
+		this.jugador = jugador;
 		//TODO hacer el bucle de movimiento
 	}
 	
@@ -60,5 +62,8 @@ public class Bala extends Sprite{
 	}
 	public float getVelocidad() {
 		return v;
+	}
+	public boolean isJugador() {
+		return jugador;
 	}
 }

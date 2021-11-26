@@ -1,4 +1,4 @@
-package objetos;
+package objectos.barcos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
 import dg.main.MainScreen;
-import objetos.Barco.PosicionCanyon;
+import objectos.barcos.Barco.PosicionCanyon;
+import objetos.Bala;
+import objetos.Canyon;
+import objetos.Municion;
+import objetos.Sprite;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -26,13 +30,13 @@ public class Barco extends Sprite{
 	 */
 	
 	/**
-	 * Tipo de {@link objetos.Barco Barco}
+	 * Tipo de {@link objectos.barcos.Barco Barco}
 	 *
 	 */
 	public static enum Tipo{
 	};
 	/**
-	 * Lado del {@link objetos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
+	 * Lado del {@link objectos.barcos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
 	 *
 	 */
 	public enum PosicionCanyon{
@@ -67,10 +71,7 @@ public class Barco extends Sprite{
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ ATRIBUTOS ▓▓▓▓▓▓▓▓▓▓
 	 */
-	private Polygon lineaFrente;
-	private Polygon lineaIzquierda;
-	private Polygon lineaDerecha;
-	private Polygon lineaAtras;
+	
 	
 	
 	private static Texture t;
@@ -86,7 +87,6 @@ public class Barco extends Sprite{
 	protected float vMax = 5; //velocidad maxima
 	protected float a = 1; //aceleración
 	protected float vAng = 100; //velocidad angular en grados
-	private float rango = 150; //Rango de accion
 	
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ CONSTRUCTORES ▓▓▓▓▓▓▓▓▓▓
@@ -100,14 +100,12 @@ public class Barco extends Sprite{
 	 * @param municionActual Municion que esta usando el barco
 	 */
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
-		super(posX, posY, 0, 0, 32, 32, 150); //TODO Ajustar rango hasta una distancia interesante
+		super(posX, posY, 0, 0, 32, 32); //TODO Ajustar rango hasta una distancia interesante
 		super.tMap = t;
 		canyones = new HashMap<>();
 		this.vida=vida;
 		this.nivel=nivel;
 		this.municionEnUso=municionActual;
-		this.rango = 150;
-		refreshLineas();
 	}
 	/** Barcos del juego
 	 * @param vida Vida actual del barco
@@ -126,81 +124,28 @@ public class Barco extends Sprite{
 	 */
 	
 	//Actualizar valores
-	/**Actualiza los valores de fin de linea (El inicio de esta es la posicion propia del barco)
-	 * 
-	 */
 	
-	
-	protected void refreshLineas() {
-		if(lineaFrente == null) {
-			lineaFrente = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX() +1, (float) this.getY() ,
-					(float) this.getX() , (float) this.getY()  + rango
-			});//Esquinas
-			
-			lineaAtras = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY() ,
-					(float) this.getX() , (float) this.getY() - rango
-			});//Esquinas
-			
-			lineaDerecha = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY() ,
-					(float) this.getX()  + rango, (float) this.getY() 
-			});//Esquinas
-			
-			lineaIzquierda = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY(),
-					(float) this.getX()  - rango, (float) this.getY() 
-			});//Esquinas
-			
-			lineaFrente.setOrigin((float) this.getX(), (float) this.getY());//Pos barco
-			lineaAtras.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-			lineaDerecha.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-			lineaIzquierda.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-		}else 
-			lineaFrente.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaFrente.setRotation(-getAngle()); //Get angulo
-		
-		lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaAtras.setRotation(-getAngle()); //Get angulo
-		
-		lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaDerecha.setRotation(-getAngle()); //Get angulo
-		
-		lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaIzquierda.setRotation(-getAngle()); //Get angulo
-		
-	}
 	//MOVIMIENTO
 	
 	public void right() {
 		rotate(vAng*Gdx.graphics.getDeltaTime());
-		refreshLineas();
 		
 	}
 	public void left() {
 		rotate(-vAng*Gdx.graphics.getDeltaTime());
-		refreshLineas();
 	}
 	public void forward() {
 		if(v < vMax)v+=a;
 		move();
-		refreshLineas();
 	}
 	public void undoMove() {
 		v= -v;
 		move();
-		refreshLineas();
 		v=-v;
 	}
 	public void backwards() {
 		if(v>-vMax)v-=a;
 		move();
-		refreshLineas();
 	}
 	public void stop() {
 		v=0;
@@ -209,61 +154,22 @@ public class Barco extends Sprite{
 		if(v>0) {
 			v-=0.1;
 			move();
-			refreshLineas();
 		}else if(v<0) {
 			v+=0.1;
 			move();
-			refreshLineas();
 		}
 		if(v<0.1 && v>-0.1)v=0;
 	}
 	//REVISAR
-	public static void recibeDaño(Barco a, Bala bullet) {
-		a.setVidaDelBarco(a.getVidaDelBarco()-bullet.getDanyo());
-		System.out.println(a.getVidaDelBarco());
+	public void recibeDaño( Bala bullet) {
+		vida -= bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
-		if(a.getVidaDelBarco()<=0) {
-			MainScreen.barEneBorrar.add(a);
-		}
+		System.out.println(vida);
 	}
 	//DETECCIÓN
 	
-	/** Compara las lineas del llamador con el bounding del objeto pasado
-	 * @param o Sprite con el que se desea comparar (Objeto Pasado)
-	 * @return True si toca, False si no
-	 */
-	//TODO Se añade return polygon y asi sabemos que linea toca, Meterselo al hijo ;)
-	public Polygon tocaLinea(Sprite o) {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-	    shapeRenderer.polygon(lineaDerecha.getTransformedVertices());
-	    shapeRenderer.polygon(lineaIzquierda.getTransformedVertices());
-	    shapeRenderer.polygon(lineaFrente.getTransformedVertices());
-	    shapeRenderer.polygon(lineaAtras.getTransformedVertices());
-	    shapeRenderer.end();
-	    if(Intersector.overlapConvexPolygons(lineaDerecha, o.getBounds())) {
-	    	return lineaDerecha;
-	    }
-	    
-	    if(Intersector.overlapConvexPolygons(lineaIzquierda, o.getBounds())) {
-	    	return lineaIzquierda;
-	    }
-	    
-	    if(Intersector.overlapConvexPolygons(lineaFrente, o.getBounds())) {
-	    	return lineaFrente;
-	    }
-	    
-	    if(Intersector.overlapConvexPolygons(lineaAtras, o.getBounds())) {
-	    	return lineaAtras;
-	    }
-	    
-	    return null;
-		
-	}
-	
 	@Override
 	public void onRangeOfPlayer() {
-		// TODO Auto-generated method stub
 		AudioPlayer.detener();
 		AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 		
@@ -314,7 +220,7 @@ public class Barco extends Sprite{
 	}
 }
 /**
- * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objetos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
+ * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objectos.barcos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
  *
  */
 class CannonSide{
@@ -397,7 +303,7 @@ class CannonSide{
 		if(canShoot()) {
 			for(Canyon c: c) {
 				
-				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle());
+				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle(), b instanceof BarcoJugador);
 				n++;
 			}
 			//setCooldown(cooldown);

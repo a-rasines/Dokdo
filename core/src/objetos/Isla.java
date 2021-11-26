@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+
+import objectos.barcos.Barco;
 /**
  * Representa las islas en el mapa
  *
@@ -27,7 +29,7 @@ public class Isla extends Sprite{
 	 * @param barcosProtegiendo
 	 */
 	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
-		super(posX, posY, 0, 0, 64, 64, 0);
+		super(posX, posY, 0, 0, 64, 64);
 		this.nivelRecomendado=nivel;
 		super.tMap = t;
 		this.barcos=barcosProtegiendo;

@@ -100,7 +100,7 @@ public class Barco extends Sprite{
 	 * @param municionActual Municion que esta usando el barco
 	 */
 	public Barco(int vida, int nivel, float posX, float posY, Municion municionActual) {
-		super(posX, posY, 0, 0, 32, 32); //TODO Ajustar rango hasta una distancia interesante
+		super(posX, posY, 0, 32, 32); //TODO Ajustar rango hasta una distancia interesante
 		super.tMap = t;
 		canyones = new HashMap<>();
 		this.vida=vida;

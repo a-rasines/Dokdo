@@ -1,8 +1,13 @@
 package objetos.barcos;
 
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
+
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
+import DataBase.DatabaseHandler;
 import objetos.Sprite;
 
 public class BarcoJugador extends Barco{
@@ -32,10 +37,22 @@ public class BarcoJugador extends Barco{
 			if(o==null)return false;
 			return Sprite.overlapCirclePolygon(o.getBounds(), range);
 		}
+	@SuppressWarnings("unchecked")
 	@Override
-	public void move(float x, float y) {
-		super.move(x, y);
+	public <T> T move(float x, float y) {
+		T a = super.move(x, y);
+		JSONObject barcoPos = new JSONObject();
+		barcoPos.put("x", getX());
+		barcoPos.put("y", getY());
+		DatabaseHandler.writeToJSON("barcoPos", barcoPos, true);
 		refreshRange();
+		return a;
+	}
+	@Override
+	public <T> T rotate(double q) {
+		T a = super.rotate(q);
+		DatabaseHandler.writeToJSON("barcoRot", getAngle(), true);
+		return a;
 	}
 
 }

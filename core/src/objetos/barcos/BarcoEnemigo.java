@@ -102,14 +102,16 @@ public class BarcoEnemigo extends Barco{
 	}
 	
 	@Override
-	public void move(float x, float y) {
-		super.move(x, y);
+	public <T> T move(float x, float y) {
+		T a =super.move(x, y);
 		refreshLineas();
+		return a;
 	}
 	@Override
-	public void rotate(double q) {
-		super.rotate(q);
+	public <T> T rotate(double q) {
+		T a = super.rotate(q);
 		refreshLineas();
+		return a;
 	}
 	@Override
 	public void recibeDaño(Bala bullet) {

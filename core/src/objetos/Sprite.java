@@ -20,14 +20,14 @@ public abstract class Sprite {
 	private float x;
 	private float y;
 	protected float v; //velocidad
-	private float angle;
+	private float angle = 0.0f;
 	private int sizeX;
 	private int sizeY;
 	private int textureX = 0;
 	private int textureY = 0;
 	private Polygon bounds;
 	
-	protected Sprite(float x, float y, float v, float angle, int sizeX, int sizeY) {
+	protected Sprite(float x, float y, float v, int sizeX, int sizeY) {
 		try {
 			sb2 = new SpriteBatch();
 		} catch (Throwable e) {
@@ -36,12 +36,19 @@ public abstract class Sprite {
 		this.x = x;
 		this.y = y;
 		this.v = v;
-		this.angle = angle;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		refreshBounds();
 		
 	}
+	/**
+	 * Trata al Sprite como un objeto de clase hija. Sirve para metodos de Sprite que dependen de otros
+	 * @return This en modo hijo
+	 */
+	 @SuppressWarnings("unchecked")
+		private <T extends Sprite>T getAsChild(){
+			 return (T) this;
+		 }
 	
 	//DETECCIÓN
 	
@@ -147,25 +154,43 @@ public abstract class Sprite {
 	 * Mueve el objeto por velocidad en el ángulo especificado
 	 */
 	public void move() {
-		move((float)(v*Math.sin(Math.toRadians(angle))),(float)(v*Math.cos(Math.toRadians(angle))));
+		getAsChild().move((float)(v*Math.sin(Math.toRadians(angle))),(float)(v*Math.cos(Math.toRadians(angle))));
 	}
 	/**
 	 * Mueve el objeto coordenadas personalizadas
 	 * @param x movimiento en x
 	 * @param y movimiento en y
+	 * @return Sprite en clase hija
 	 */
-	public void move(float x, float y) {
+	@SuppressWarnings("unchecked")
+	public <T> T move(float x, float y) {
 		this.x+=x;
 		this.y+=y;
 		refreshBounds();
+		return (T)this;
+	}
+	/**
+	 * Teletransporta al barco
+	 * @param x pos X nueva
+	 * @param y pos Y nueva
+	 * @return Sprite en clase hija
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T tpTo(float x, float y) {
+		this.x = x;
+		this.y = y;
+		return (T)this;
 	}
 	/**
 	 * Rota el objeto q grados
 	 * @param q grados a girar
+	 * @return El propio objeto para poder ser usado para rotación inicial
 	 */
-	public void rotate(double q) {
+	@SuppressWarnings("unchecked")
+	public <T>T rotate(double q) {
 		angle = (float) ((angle + q)%360);
 		refreshBounds();
+		return (T) this;
 	}
 	
 	//LOGGER

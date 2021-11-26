@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.json.simple.JSONObject;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import DataBase.DatabaseHandler;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -29,7 +32,7 @@ import objetos.barcos.Barco.PosicionCanyon;
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
-	public static BarcoJugador barco = new BarcoJugador(10,0,0,0, 150);
+	public static BarcoJugador barco;
 	LinkedList<Isla> islaList = new LinkedList<>();
 	public static ArrayList<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static ArrayList<BarcoEnemigo> barEneBorrar = new ArrayList<>();
@@ -47,6 +50,10 @@ public class MainScreen implements Screen{
 	public void show() {
 		//Musica normal
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
+		System.out.println(pos0.values());
+		System.out.println(Float.parseFloat(pos0.get("x").toString()));
+		barco = new BarcoJugador(10,0,Float.parseFloat(pos0.get("x").toString()),Float.parseFloat(pos0.get("y").toString()), 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot")));
     	islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -61,6 +68,8 @@ public class MainScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
+		if(Gdx.input.isKeyPressed(Input.Keys.R))
+			barco.tpTo(0, 0);
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
 			barco.decelerate();
 		else if(Gdx.input.isKeyPressed(Input.Keys.W))
@@ -150,7 +159,7 @@ public class MainScreen implements Screen{
 		//TODO Prueba de lineas
 		if(barco2.tocaLinea(barco) != null) {
 			
-			System.out.println("toca");
+			//System.out.println("toca");
 		}
 		
 	}

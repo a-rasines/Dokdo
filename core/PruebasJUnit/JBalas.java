@@ -5,7 +5,7 @@ import org.junit.Test;
 import objetos.Bala;
 
 public class JBalas {
-	private Bala b1 = new Bala(1,2,3,4,5); 
+	private Bala b1 = new Bala(1,2,3,4,5, false); 
 
 	@Test
 	public void getDanyo() {

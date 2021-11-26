@@ -1,6 +1,7 @@
 package DataBase;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Clase encargada de gestionar la base de datos
@@ -126,8 +128,9 @@ public class DatabaseHandler {
 			JSONArray a = (JSONArray) json.get(key);
 			a.add(v);
 		}
-		try (FileWriter file = new FileWriter("data.json")) {
+		try (FileWriter file = new FileWriter("src/data.json")) {
             //We can write any JSONArray or JSONObject instance to the file
+			System.out.println("writing");
             file.write(json.toJSONString()); 
             file.flush();
  
@@ -158,26 +161,32 @@ public class DatabaseHandler {
 	public static void loadJSon(String def) {
 		JSONParser jsonParser = new JSONParser();
         
-        try (FileReader reader = new FileReader("data.json"))
+        try (FileReader reader = new FileReader("src/data.json"))
         {
             json = (JSONObject)jsonParser.parse(reader);
  
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
         	e.printStackTrace();
             try {
 				new File("data.json").createNewFile();
-				try (FileWriter file = new FileWriter("data.json")) {
+				try (FileWriter file = new FileWriter("src/data.json")) {
 		            //We can write any JSONArray or JSONObject instance to the file
 		            file.write(def); 
 		            file.flush();
-		 
+		            loadJSon(def);
 		        } catch (IOException e1) {
 		            e1.printStackTrace();
 		        }
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-        }
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Devuelve un JSONObject (Map de JSON)
@@ -204,5 +213,17 @@ public class DatabaseHandler {
 		if (json.containsKey(key))
 			return json.get(key).toString();
 		return null;
+	}
+	@SuppressWarnings("unchecked")
+	public static String defaultJSON() {
+		JSONObject def = new JSONObject();
+		//{
+		JSONObject barcoPos = new JSONObject();
+		barcoPos.put("x", 0.0f);
+		barcoPos.put("y", 0.0f);
+		//}
+		def.put("barcoPos", barcoPos);
+		def.put("barcoRot", 0.0f);
+		return def.toJSONString();
 	}
 }

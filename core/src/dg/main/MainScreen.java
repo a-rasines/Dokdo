@@ -159,7 +159,7 @@ public class MainScreen implements Screen{
 		//TODO Prueba de lineas
 		if(barco2.tocaLinea(barco) != null) {
 			
-			//System.out.println("toca");
+			System.out.println("toca");
 		}
 		
 	}

@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,6 +24,7 @@ import org.json.simple.parser.ParseException;
  */
 public class DatabaseHandler {
 	private static Connection connection;
+	private static Logger logger= Logger.getLogger("DatabaseHandler");
 	private static Statement statement;
 	private static JSONObject json;
 	/**
@@ -35,6 +39,7 @@ public class DatabaseHandler {
 			statement.setQueryTimeout(5);
 			return true;
 		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Error connecting to database: "+e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -51,7 +56,7 @@ public class DatabaseHandler {
 	        statement.executeUpdate(tb.build());
 	        return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Error adding table to database: "+e.getMessage());
 			return false;
 		}
 	}
@@ -103,7 +108,7 @@ public class DatabaseHandler {
 			statement.executeUpdate(code);
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Error updating database: "+e.getMessage());
 			return false;
 		}
 	}
@@ -111,7 +116,7 @@ public class DatabaseHandler {
 		try {
 			return statement.executeQuery(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Error during query to database: "+e.getMessage());
 			return null;
 		}
 	}
@@ -130,12 +135,11 @@ public class DatabaseHandler {
 		}
 		try (FileWriter file = new FileWriter("src/data.json")) {
             //We can write any JSONArray or JSONObject instance to the file
-			System.out.println("writing");
             file.write(json.toJSONString()); 
             file.flush();
  
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.WARNING, "Error writting to JSON: "+e.getMessage());
         }
 	}
 	/**
@@ -151,7 +155,7 @@ public class DatabaseHandler {
             file.flush();
  
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.WARNING, "Error removing from JSON: "+e.getMessage());
         }
 	}
 	/**
@@ -166,7 +170,6 @@ public class DatabaseHandler {
             json = (JSONObject)jsonParser.parse(reader);
  
         } catch (FileNotFoundException e) {
-        	e.printStackTrace();
             try {
 				new File("data.json").createNewFile();
 				try (FileWriter file = new FileWriter("src/data.json")) {
@@ -175,17 +178,15 @@ public class DatabaseHandler {
 		            file.flush();
 		            loadJSon(def);
 		        } catch (IOException e1) {
-		            e1.printStackTrace();
+		        	logger.log(Level.WARNING, "Error writting JSON archive: "+e.getMessage());
 		        }
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				logger.log(Level.WARNING, "Error creating JSON archive: "+e.getMessage());
 			}
         } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Error parsing JSON: "+e.getMessage());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Error parsing JSON: "+e.getMessage());
 		}
 	}
 	/**

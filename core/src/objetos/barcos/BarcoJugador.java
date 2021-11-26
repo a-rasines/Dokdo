@@ -1,4 +1,4 @@
-package objectos.barcos;
+package objetos.barcos;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;

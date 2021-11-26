@@ -17,14 +17,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import objectos.barcos.Barco;
-import objectos.barcos.Barco.PosicionCanyon;
-import objectos.barcos.BarcoEnemigo;
-import objectos.barcos.BarcoJugador;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
 import objetos.Sprite;
+import objetos.barcos.Barco;
+import objetos.barcos.BarcoEnemigo;
+import objetos.barcos.BarcoJugador;
+import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import objectos.barcos.Barco;
+import objetos.barcos.Barco;
 /**
  * Representa las islas en el mapa
  *

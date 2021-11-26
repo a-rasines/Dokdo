@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import dg.main.MainScreen;
 
 /**
- * Esta clase representa un cañon de un {@link objectos.barcos.Barco Barco}
+ * Esta clase representa un cañon de un {@link objetos.barcos.Barco Barco}
  *
  */
 public class Canyon extends Mejoras{

@@ -1,4 +1,4 @@
-package objectos.barcos;
+package objetos.barcos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +14,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
 import dg.main.MainScreen;
-import objectos.barcos.Barco.PosicionCanyon;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Municion;
 import objetos.Sprite;
+import objetos.barcos.Barco.PosicionCanyon;
 /**
  * Representa un barco, tanto el del jugador como el de los enemigos
  *
@@ -30,13 +30,13 @@ public class Barco extends Sprite{
 	 */
 	
 	/**
-	 * Tipo de {@link objectos.barcos.Barco Barco}
+	 * Tipo de {@link objetos.barcos.Barco Barco}
 	 *
 	 */
 	public static enum Tipo{
 	};
 	/**
-	 * Lado del {@link objectos.barcos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
+	 * Lado del {@link objetos.barcos.Barco Barco} en el que está el {@link objetos.Cañon Cañon}
 	 *
 	 */
 	public enum PosicionCanyon{
@@ -220,7 +220,7 @@ public class Barco extends Sprite{
 	}
 }
 /**
- * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objectos.barcos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
+ * Representa los {@link objetos.Cañon Cañon}es de un lado del {@link objetos.barcos.Barco Barco} Es una clase que une los conjuntos de {@link objetos.Cañon Cañon}es con su cooldown
  *
  */
 class CannonSide{

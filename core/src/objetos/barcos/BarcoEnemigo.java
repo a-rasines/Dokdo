@@ -1,4 +1,4 @@
-package objectos.barcos;
+package objetos.barcos;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;

@@ -2,9 +2,9 @@ package dg.main;
 
 import java.util.ArrayList;
 
-import objectos.barcos.Barco;
 import objetos.Bala;
 import objetos.Sprite;
+import objetos.barcos.Barco;
 
 public class HiloColisionBala extends Thread{
 	private ArrayList<Barco> barcoEnem;

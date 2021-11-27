@@ -1,15 +1,20 @@
 package objetos.barcos;
-
-import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 import org.json.simple.JSONObject;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import DataBase.DatabaseHandler;
+import dg.main.MainScreen;
+import dg.main.PantallaMuerte;
+import objetos.Bala;
 import objetos.Sprite;
-
 public class BarcoJugador extends Barco{
 	
 	private Circle range = new Circle();
@@ -53,6 +58,15 @@ public class BarcoJugador extends Barco{
 		T a = super.rotate(q);
 		DatabaseHandler.writeToJSON("barcoRot", getAngle(), true);
 		return a;
+	}
+	@Override
+	public void recibeDaño(Bala bullet) {
+		vida-=bullet.getDanyo();
+		MainScreen.balasBorrar.add(bullet);
+		System.out.println(vida);
+		if(vida<=0) {
+			 ((Game)Gdx.app.getApplicationListener()).setScreen(new PantallaMuerte());
+		}
 	}
 
 }

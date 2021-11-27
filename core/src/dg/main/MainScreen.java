@@ -41,9 +41,9 @@ public class MainScreen implements Screen{
 	public static List<Sprite> onRange = new ArrayList<>();
 	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0).setTexturePos(0,1);;
 	
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
-	Stage stage = new Stage(vp);
+	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
+	public static Stage stage = new Stage(vp);
 	ShapeRenderer sr = new ShapeRenderer();
 	
 	@Override
@@ -115,6 +115,8 @@ public class MainScreen implements Screen{
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.isJugador()) {
 				b.recibeDaño(i);
+			} else if(i.collidesWith(barco) && !i.isJugador()) {
+				barco.recibeDaño(i);
 			}
 			i.decelerate();
 			i.dibujar();
@@ -163,6 +165,7 @@ public class MainScreen implements Screen{
 		//TODO Prueba de lineas
 		if(barco2.tocaLinea(barco) != null) {
 			barco2.dispararLado(barco2.tocaLinea(barco));
+			
 		}
 		
 	}

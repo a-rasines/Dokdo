@@ -160,11 +160,9 @@ public class Barco extends Sprite{
 		}
 		if(v<0.1 && v>-0.1)v=0;
 	}
-	//REVISAR
 	public void recibeDaño( Bala bullet) {
 		vida -= bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
-		System.out.println(vida);
 	}
 	//DETECCIÓN
 	
@@ -306,7 +304,7 @@ class CannonSide{
 				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle(), b instanceof BarcoJugador);
 				n++;
 			}
-			setCooldown(cooldown);
+			//setCooldown(cooldown);
 			return true;
 		}
 		return false;

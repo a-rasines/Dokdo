@@ -306,7 +306,7 @@ class CannonSide{
 				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle(), b instanceof BarcoJugador);
 				n++;
 			}
-			//setCooldown(cooldown);
+			setCooldown(cooldown);
 			return true;
 		}
 		return false;

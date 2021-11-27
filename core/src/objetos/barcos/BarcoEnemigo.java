@@ -73,7 +73,7 @@ public class BarcoEnemigo extends Barco{
 	 * @return True si toca, False si no
 	 */
 	//TODO Se añade return polygon y asi sabemos que linea toca, Meterselo al hijo ;)
-	public Polygon tocaLinea(Sprite o) {
+	public PosicionCanyon tocaLinea(Sprite o) {
 		ShapeRenderer shapeRenderer = new ShapeRenderer();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 	    shapeRenderer.polygon(lineaDerecha.getTransformedVertices());
@@ -82,19 +82,19 @@ public class BarcoEnemigo extends Barco{
 	    shapeRenderer.polygon(lineaAtras.getTransformedVertices());
 	    shapeRenderer.end();
 	    if(Intersector.overlapConvexPolygons(lineaDerecha, o.getBounds())) {
-	    	return lineaDerecha;
+	    	return PosicionCanyon.DERECHA;
 	    }
 	    
 	    if(Intersector.overlapConvexPolygons(lineaIzquierda, o.getBounds())) {
-	    	return lineaIzquierda;
+	    	return PosicionCanyon.IZQUIERDA;
 	    }
 	    
 	    if(Intersector.overlapConvexPolygons(lineaFrente, o.getBounds())) {
-	    	return lineaFrente;
+	    	return PosicionCanyon.DELANTE;
 	    }
 	    
 	    if(Intersector.overlapConvexPolygons(lineaAtras, o.getBounds())) {
-	    	return lineaAtras;
+	    	return PosicionCanyon.ATRAS;
 	    }
 	    
 	    return null;

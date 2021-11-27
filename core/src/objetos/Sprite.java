@@ -178,7 +178,8 @@ public abstract class Sprite {
 	@SuppressWarnings("unchecked")
 	public <T> T tpTo(float x, float y) {
 		this.x = x;
-		this.y = y;
+		this.y = y; 
+		refreshBounds();
 		return (T)this;
 	}
 	/**

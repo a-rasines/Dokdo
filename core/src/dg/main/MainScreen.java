@@ -59,6 +59,10 @@ public class MainScreen implements Screen{
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+    	barco2.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
+    	barco2.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+    	barco2.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+    	barco2.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barcosEnemigos.add(barco2);
 	}
 
@@ -158,8 +162,7 @@ public class MainScreen implements Screen{
 		
 		//TODO Prueba de lineas
 		if(barco2.tocaLinea(barco) != null) {
-			
-			System.out.println("toca");
+			barco2.dispararLado(barco2.tocaLinea(barco));
 		}
 		
 	}

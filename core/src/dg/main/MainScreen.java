@@ -53,7 +53,7 @@ public class MainScreen implements Screen{
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
 		System.out.println(pos0.values());
 		System.out.println(Float.parseFloat(pos0.get("x").toString()));
-		barco = new BarcoJugador(10,0,Float.parseFloat(pos0.get("x").toString()),Float.parseFloat(pos0.get("y").toString()), 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot")));
+		barco = new BarcoJugador(10,0,0,0, 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
     	islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));

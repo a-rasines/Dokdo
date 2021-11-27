@@ -188,7 +188,7 @@ public abstract class Sprite {
 	 * @return El propio objeto para poder ser usado para rotación inicial
 	 */
 	@SuppressWarnings("unchecked")
-	public <T>T rotate(double q) {
+	public <T extends Sprite>T rotate(double q) {
 		angle = (float) ((angle + q)%360);
 		refreshBounds();
 		return (T) this;

@@ -108,7 +108,7 @@ public class BarcoEnemigo extends Barco{
 		return a;
 	}
 	@Override
-	public <T> T rotate(double q) {
+	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
 		refreshLineas();
 		return a;

@@ -49,7 +49,7 @@ public class BarcoJugador extends Barco{
 		return a;
 	}
 	@Override
-	public <T> T rotate(double q) {
+	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
 		DatabaseHandler.writeToJSON("barcoRot", getAngle(), true);
 		return a;

@@ -36,7 +36,6 @@ public class MainScreen implements Screen{
 	List<Isla> islaList = new LinkedList<>();
 	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
-	public static List<BarcoJugador> barcoJugEn= new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
@@ -104,7 +103,7 @@ public class MainScreen implements Screen{
 		if(barco.collidesWith(islaList))
 			barco.right();
 		//logger.info("barco: "+barco.getInfo());
-		secondShipTest();
+		secondShipTest();//TODO eliminar al terminar tests
 		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
@@ -133,7 +132,6 @@ public class MainScreen implements Screen{
 		for(Barco j: barEneBorrar) {
 			barcosEnemigos.remove(j);
 		}
-		barcoJugEn.clear();
 		barEneBorrar.clear();
 		balasBorrar.clear();
 		

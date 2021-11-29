@@ -244,7 +244,7 @@ public abstract class Sprite {
 			
 			sb2.begin();
 			//En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
-			sb2.draw(sprite, x + Gdx.graphics.getWidth() / 2 - MainScreen.barco.getX(), y + Gdx.graphics.getHeight() / 2 - MainScreen.barco.getY(), size/2, size/2, size, size, 1, 1, -angle);
+			sb2.draw(sprite, x + MainScreen.vp.getScreenWidth() / 2 - MainScreen.barco.getX(), y + MainScreen.vp.getScreenHeight() / 2 - MainScreen.barco.getY(), size/2, size/2, size, size, 1, 1, -angle);
 			sb2.end();
 		
 	}

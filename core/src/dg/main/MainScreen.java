@@ -39,6 +39,7 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasDisparadas = new ArrayList<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
+	public static List<Sprite> offRange = new ArrayList<>();
 	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0).setTexturePos(0,1);;
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -72,6 +73,9 @@ public class MainScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
+		
+		//Control de teclas
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
 			barco.tpTo(0, 0);
 		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
@@ -111,6 +115,7 @@ public class MainScreen implements Screen{
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}
 		//DAÑO A LOS BARCOS ENEMIGOS.
+		
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.isJugador()) {
@@ -131,38 +136,35 @@ public class MainScreen implements Screen{
 		barEneBorrar.clear();
 		balasBorrar.clear();
 		
-		//Si funciona con la funcion OnExitRange, esto se podria borrar seguramente
+		//Actualización de rango
 		
-		if(cambioEstado && barco.enRango(barco2)){ //TODO Hacer que cambie cuando se entre en combate
-			barco.onRangeOfPlayer();
-			cambioEstado = false;
+		List<Sprite> move = new LinkedList<>();
+		for(Sprite b : barco.getEnRango(offRange)) {
+			move.add(b);
+			b.onRangeOfPlayer();
 		}
-		barcosEnemigos.forEach((v)->{
-			if( barco.enRango(v)) {
-				v.onRangeOfPlayer();
-				onRange.add(v);
+		onRange.addAll(move);
+		offRange.removeAll(move);
+		move.clear();
+		for(Sprite s : onRange)
+			if(!barco.enRango(s)) {
+				move.add(s);
+				s.onExitFromRange();
 			}
-		});
-		List<Sprite> toRemove = new LinkedList<>();
-		onRange.forEach((v)->{
-			if( !barco.enRango(v)) {
-				v.onExitFromRange();
-				toRemove.add(v);
-			}
-		});
-		toRemove.forEach((v)->{
-			onRange.remove(v);
-		});
-				
+		offRange.addAll(move);
+		onRange.removeAll(move);
+		move.clear();
+		
+		//Dibujado
+		
 		barco.dibujar(); 
 		barco.drawCollisions(sr);
-		for(Barco j: barcosEnemigos) {
-			j.dibujar();
-		}
-		islaList.get(0).dibujar();
+		barcosEnemigos.forEach(v->v.dibujar());
+		islaList.forEach(v->v.dibujar());
 		islaList.get(0).drawCollisions(sr);
 		
 		//TODO Prueba de lineas
+		
 		if(barco2.tocaLinea(barco) != null) {
 			barco2.dispararLado(barco2.tocaLinea(barco));
 			

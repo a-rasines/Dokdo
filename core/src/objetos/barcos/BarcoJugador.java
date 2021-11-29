@@ -1,5 +1,6 @@
 package objetos.barcos;
-import javax.swing.JOptionPane;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 
@@ -7,9 +8,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
 import DataBase.DatabaseHandler;
 import dg.main.MainScreen;
 import dg.main.PantallaMuerte;
@@ -41,6 +39,18 @@ public class BarcoJugador extends Barco{
 		public boolean enRango(Sprite o) {
 			if(o==null)return false;
 			return Sprite.overlapCirclePolygon(o.getBounds(), range);
+		}
+		public boolean enRango(Iterable<? extends Sprite> l) {
+			for(Sprite s : l) {
+				if (enRango(s))return true;
+			}
+			return false;
+		}
+		
+		public <T extends Sprite> List<T> getEnRango(Iterable<T> l){
+			LinkedList<T> end = new LinkedList<>();
+			for(T s : l)if(enRango(s))end.add(s);
+			return end;
 		}
 	@SuppressWarnings("unchecked")
 	@Override

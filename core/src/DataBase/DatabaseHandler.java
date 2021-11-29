@@ -34,6 +34,7 @@ public class DatabaseHandler {
 	 */
 	public static boolean connectToDatabase(String name) {
 		try {
+			logger.log(Level.INFO, "Trying connection to: "+ name+".db");
 			connection = DriverManager.getConnection("jdbc:sqlite:"+name+".db");
 			statement = connection.createStatement();
 			statement.setQueryTimeout(5);
@@ -53,6 +54,7 @@ public class DatabaseHandler {
 		if(connection == null)return false;
 		 
 		try {
+			logger.log(Level.INFO, "Trying to update: "+tb.build());
 	        statement.executeUpdate(tb.build());
 	        return true;
 		} catch (SQLException e) {
@@ -105,6 +107,7 @@ public class DatabaseHandler {
 	 */
 	public static boolean SQLrawUpdate(String code) {
 		try {
+			logger.log(Level.INFO, "Trying to update: "+code);
 			statement.executeUpdate(code);
 			return true;
 		} catch (SQLException e) {
@@ -114,6 +117,7 @@ public class DatabaseHandler {
 	}
 	public static ResultSet SQLrawQuery(String query) {
 		try {
+			logger.log(Level.INFO, "Trying to query: "+query);
 			return statement.executeQuery(query);
 		} catch (SQLException e) {
 			logger.log(Level.WARNING, "Error during query to database: "+e.getMessage());
@@ -128,6 +132,7 @@ public class DatabaseHandler {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void writeToJSON(String key, Object v, boolean override) {
+		logger.log(Level.INFO, "Trying to insert in "+key+" a(n) "+v.getClass().getName()+".("+v.toString()+") override= "+override);
 		if(!json.containsKey(key)||override)json.put(key, v);
 		else {
 			JSONArray a = (JSONArray) json.get(key);
@@ -148,6 +153,7 @@ public class DatabaseHandler {
 	 * @param v objeto a borrar
 	 */
 	public static void removeFromJSONArray(String key, Object v) {
+		logger.log(Level.INFO, "Trying to remove a "+v.getClass().getName()+"("+v.toString()+") from "+key);
 		JSONArray a = (JSONArray) json.get(key);
 		a.remove(v);
 		try (FileWriter file = new FileWriter("data.json")) {
@@ -163,12 +169,10 @@ public class DatabaseHandler {
 	 * @param def default si falla el cargado
 	 */
 	public static void loadJSon(String def) {
+		logger.log(Level.INFO, "Loading JSON");
 		JSONParser jsonParser = new JSONParser();
-        
-        try (FileReader reader = new FileReader("src/data.json"))
-        {
+        try (FileReader reader = new FileReader("src/data.json")){
             json = (JSONObject)jsonParser.parse(reader);
- 
         } catch (FileNotFoundException e) {
             try {
 				new File("data.json").createNewFile();
@@ -195,6 +199,7 @@ public class DatabaseHandler {
 	 * @return
 	 */
 	public static JSONObject getObjectFromJSon(String key) {
+		logger.log(Level.INFO, "Trying to get JSONObject from "+key);
 		return (JSONObject) json.get(key);
 	}
 	/**
@@ -203,6 +208,7 @@ public class DatabaseHandler {
 	 * @return
 	 */
 	public static JSONArray getArrayFromJSon(String key) {
+		logger.log(Level.INFO, "Trying to get JSONArray from "+key);
 		return (JSONArray) json.get(key);
 	}
 	/**
@@ -211,6 +217,7 @@ public class DatabaseHandler {
 	 * @return
 	 */
 	public static String getStringFromJSon(String key) {
+		logger.log(Level.INFO, "Trying to get String from "+key);
 		if (json.containsKey(key))
 			return json.get(key).toString();
 		return null;

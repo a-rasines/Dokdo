@@ -33,9 +33,10 @@ import objetos.barcos.Barco.PosicionCanyon;
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
-	LinkedList<Isla> islaList = new LinkedList<>();
-	public static ArrayList<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
-	public static ArrayList<BarcoEnemigo> barEneBorrar = new ArrayList<>();
+	List<Isla> islaList = new LinkedList<>();
+	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
+	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
+	public static List<BarcoJugador> barcoJugEn= new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
@@ -132,7 +133,7 @@ public class MainScreen implements Screen{
 		for(Barco j: barEneBorrar) {
 			barcosEnemigos.remove(j);
 		}
-		
+		barcoJugEn.clear();
 		barEneBorrar.clear();
 		balasBorrar.clear();
 		

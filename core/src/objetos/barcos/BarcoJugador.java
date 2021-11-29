@@ -73,9 +73,8 @@ public class BarcoJugador extends Barco{
 	public void recibeDaño(Bala bullet) {
 		vida-=bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
-		System.out.println(vida);
 		if(vida<=0) {
-			 ((Game)Gdx.app.getApplicationListener()).setScreen(new PantallaMuerte());
+			 //((Game)Gdx.app.getApplicationListener()).setScreen(new PantallaMuerte());
 		}
 	}
 

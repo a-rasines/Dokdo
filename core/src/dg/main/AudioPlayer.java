@@ -33,4 +33,8 @@ public class AudioPlayer {
 	public static void setVolumen(float i) {
 		musica.setVolume(i);
 	}
+	
+	public static float getVolumen() {
+		return musica.getVolume();
+	}
 }

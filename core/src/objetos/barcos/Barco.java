@@ -160,7 +160,7 @@ public class Barco extends Sprite{
 		}
 		if(v<0.1 && v>-0.1)v=0;
 	}
-	public void recibeDaño( Bala bullet) {
+	public void recibeDanyo( Bala bullet) {
 		vida -= bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
 	}

@@ -119,9 +119,9 @@ public class MainScreen implements Screen{
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.isJugador()) {
-				b.recibeDaño(i);
+				b.recibeDanyo(i);
 			} else if(i.collidesWith(barco) && !i.isJugador()) {
-				barco.recibeDaño(i);
+				barco.recibeDanyo(i);
 			}
 			i.decelerate();
 			i.dibujar();

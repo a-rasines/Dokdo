@@ -118,12 +118,14 @@ public class BarcoEnemigo extends Barco{
 	}
 	private boolean improvedIntersector(Vector2 v1, Vector2 v2, Polygon p) {
 		/*
+		 * f(x) = nx + m
+		 * g(x) = ax + b
 		 * nx + m = ax + b
 		 * (n-a)x = b-m
 		 * x = b-m/(n-a)
-		 * y = ax+b
 		 * n = y2-y1/(x2-x1)
 		 * m = y1 - x1*n
+		 * 
 		 */
 		float[] v = p.getTransformedVertices();
 		float x1 = v1.x;
@@ -131,16 +133,29 @@ public class BarcoEnemigo extends Barco{
 		float x2 = v2.x;
 		float y2 = v2.y;
 		for(int i = 0; i<p.getTransformedVertices().length/2-1;i++) {
-			float x3 = v[i];
-			float y3 = v[i+1];
-			float x4 = v[i+2];
-			float y4 = v[i+3];
+			float x3 = v[i*2];
+			float y3 = v[i*2+1];
+			float x4 = v[i*2+2];
+			float y4 = v[i*2+3];
 			float n1 = (y2- y1)/(x2 - x1);
 			float n2 = (y4 - y3)/(x4 - x3);
 			float m1 = y1 - x1*n1;
 			float m2 = y3 - x3*n2;
+			
 			if (n1 == n2 && m1 == m2)return true; //Coincidentes
 			else if(n1 == n2)return false; //Paralelas no coincidentes
+			if(x1 == x2) { //Linea 1 vertical
+				if(x1*n2+m2 > Math.min(y1, y2) && x1*n2+m2 < Math.max(y1, y2)) {
+					return true;
+				}
+			}else if (x3 == x4) { //Linea 2 verical
+				if(x3*n1+m1 > Math.min(y3, y4) && x3*n1+m1 < Math.max(y3, y4)) {
+					return true;
+				}
+			}else {
+				float x = (m1 - m2)/(n2 - n1);
+				if( x> Math.min(x1, x2) && x< Math.max(x1, x2) && x>Math.min(x3, x4) && x<Math.max(x3, x4))return true;
+			}
 		}
 		return false;
 	}
@@ -148,9 +163,6 @@ public class BarcoEnemigo extends Barco{
 		Boolean end = false;
 		for(Isla i :MainScreen.islaList){
 			if(improvedIntersector(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
-				System.out.println("isla = ("+String.valueOf(i.getX())+","+String.valueOf(i.getY())+"), barco2 = ("+String.valueOf(getX())+","+String.valueOf(getY())+") barco = ("+String.valueOf(MainScreen.barco.getX())+","+String.valueOf(MainScreen.barco.getY())+")");
-				System.out.println(i.getY());
-				System.out.println();
 				end = true;
 				break;
 			}
@@ -158,7 +170,7 @@ public class BarcoEnemigo extends Barco{
 		return end;
 	}
 	public void IAMove() {
-		System.out.println(isTrackerIntersecting());
+		System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		if(playerTracker == null) {
 			playerTracker = new Vector2(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
 		}else {

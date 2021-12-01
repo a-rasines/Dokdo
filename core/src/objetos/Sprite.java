@@ -88,7 +88,7 @@ public abstract class Sprite {
 	    return poly.contains(circle.x, circle.y);
 	}
 	/**
-	 * Busca si hay interseccion entre dos segmentos
+	 * Busca si hay interseccion entre una linea compuesta por dos {@link com.badlogic.gdx.math.Vector2 Vector2} y un {@link com.badlogic.gdx.math.Polygon Polygon}
 	 * @param v1 punto 1 de linea 1
 	 * @param v2 punto 2 de linea 1
 	 * @param p poligono a intersectar

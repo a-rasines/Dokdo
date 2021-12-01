@@ -48,139 +48,57 @@ public class MainScreen implements Screen{
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
 	ShapeRenderer sr = new ShapeRenderer();
-	
+	/**
+	 * Genera un array a partir de valores
+	 * @param v valores en el array
+	 * @return Array de los objetos metidos. Si es nativo sale como su versión que extiende de Object
+	 */
+	public <T> T[] arrayBuilder(@SuppressWarnings("unchecked") T... v){
+		return v;
+	}
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public void generarIslas() {
 		Random r = new Random();
 		//Ahora mismo se generan 5 islas por cuadrante
 		
 		logger.info("Iniciada Generacion de islas");
-		
-		float mediaX = 0;
-		float mediaY = 0;
-		//Cuadrante 1
-		while(mediaX > 3500 || mediaX < 1500 && mediaY > 3500 || mediaY < 1500) {
-			if(islaList.size() == 5) {
-				islaList.remove(4);
-				islaList.remove(3);
-				islaList.remove(2);
-				islaList.remove(1);
-				islaList.remove(0);
-				logger.info("ReRoll");
+		List<Vector2> isles = new LinkedList<>();
+		Integer[][]cuadrants = arrayBuilder(arrayBuilder(1,1), arrayBuilder(-1, 1), arrayBuilder(-1, -1), arrayBuilder(1, -1));
+		for(int i = 0; i< 4; i++) {			
+			for(int j = 0; j < 5; j++) {
+				boolean next = false;
+				while (!next) {
+					int x = cuadrants[i][0]*(r.nextInt(4500)+500);
+					int y = cuadrants[i][1]*(r.nextInt(4500)+500);
+					Vector2 v = new Vector2(x, y);
+					boolean valid = true;
+					for(Vector2 k: isles) {
+						if(k.dst(v)<500) {
+							valid = false;
+							break;
+						}
+					}
+					if (valid) {
+						islaList.add(new Isla((float) x, (float) y, 0, 0, null));
+						next = true;
+					}
+				}
 			}
-			
-			
-			mediaX = 0;
-			mediaY = 0;
-			for(int i = 0; i < 5; i++) {
-				int a = r.nextInt(4500)+500;
-				int b = r.nextInt(4500)+500;
-				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
-				mediaX += a;
-				mediaY+= b;
-			}
-			
-			mediaX = mediaX / 5;
-			mediaY = mediaY / 5;
-		}
-		mediaX = 0;
-		mediaY = 0;
-		
-		logger.info("Primer Cuadrante");
-		
-		//Cuadrante 2
-		while(mediaX < -3500 || mediaX > -1500 && mediaY > 3500 || mediaY < 1500) {
-			if(islaList.size() == 10) {
-				islaList.remove(9);
-				islaList.remove(8);
-				islaList.remove(7);
-				islaList.remove(6);
-				islaList.remove(5);
-				logger.info("ReRoll");
-			}
-			mediaX = 0;
-			mediaY = 0;
-			for(int i = 0; i < 5; i++) {
-				int a = -r.nextInt(4500)+500;
-				int b = r.nextInt(4500)+500;
-				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
-				mediaX += a;
-				mediaY+= b;
-			}
-			mediaX = mediaX / 5;
-			mediaY = mediaY / 5;
-				
-		}
-		
-		logger.info("Segundo Cuadrante");
-		
-		mediaX = 0;
-		mediaY = 0;
-		//Cuadrante 3
-		while(mediaX < -3500 || mediaX > -1500 && mediaY < -3500 || mediaY > -1500) {
-			if(islaList.size() == 15) {
-				islaList.remove(14);
-				islaList.remove(13);
-				islaList.remove(12);
-				islaList.remove(11);
-				islaList.remove(10);
-				logger.info("ReRoll");
-			}
-			mediaX = 0;
-			mediaY = 0;
-			for(int i = 0; i < 5; i++) {
-				int a = -r.nextInt(4500)+500;
-				int b = -r.nextInt(4500)+500;
-				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
-				mediaX += a;
-				mediaY+= b;
-			}
-			mediaX = mediaX / 5;
-			mediaY = mediaY / 5;
-				
-		}
-		
-		logger.info("Tercer cuadrante");
-		mediaX = 0;
-		mediaY = 0;
-		//Cuadrante 4
-		while(mediaX > 3500 || mediaX < 1500 && mediaY < -3500 || mediaY > -1500) {
-			if(islaList.size() == 20) {
-				islaList.remove(19);
-				islaList.remove(18);
-				islaList.remove(17);
-				islaList.remove(16);
-				islaList.remove(15);
-				logger.info("ReRoll");
-			}
-			mediaX = 0;
-			mediaY = 0;
-			for(int i = 0; i < 5; i++) {
-				int a = r.nextInt(4500)+500;
-				int b = -r.nextInt(4500)+500;
-				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
-				mediaX += a;
-				mediaY+= b;
-			}
-			mediaX = mediaX / 5;
-			mediaY = mediaY / 5;
-				
 		}
 		
 		logger.info("Generacion completa");
 		
-		JSONObject isla = new JSONObject();
 		for(Isla i : islaList) {
+			JSONObject isla = new JSONObject();
 			isla.put("x", i.getX());
 			isla.put("y", i.getY());
 			isla.put("xText", 0);
 			isla.put("yText", 0);
-			
+			DatabaseHandler.writeToJSON("IslaListas",isla, false);
 		}
-		DatabaseHandler.writeToJSON("IslaListas",isla, false);
-		
 	}
 	
 	@Override

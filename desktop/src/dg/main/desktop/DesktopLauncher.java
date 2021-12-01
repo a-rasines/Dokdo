@@ -12,7 +12,7 @@ import java.awt.Toolkit;
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		DatabaseHandler.connectToDatabase("dokdo");
-		DatabaseHandler.loadJSon(DatabaseHandler.defaultJSON());
+		DatabaseHandler.loadJSon(DatabaseHandler.defaultJSONstr());
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		config.width = (int)screenSize.getWidth()-50;

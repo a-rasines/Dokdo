@@ -168,11 +168,18 @@ public class DatabaseHandler {
 	 * Carga el JSON
 	 * @param def default si falla el cargado
 	 */
+	@SuppressWarnings("unchecked")
 	public static void loadJSon(String def) {
 		logger.log(Level.INFO, "Loading JSON");
 		JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader("src/data.json")){
             json = (JSONObject)jsonParser.parse(reader);
+            if (!json.keySet().equals(defaultJSON().keySet())) {
+            	defaultJSON().forEach((k, v)->{
+            		if(!json.containsKey(k.toString()))
+            			writeToJSON(k.toString(), v, true);
+            	});
+            }
         } catch (FileNotFoundException e) {
             try {
 				new File("data.json").createNewFile();
@@ -223,7 +230,7 @@ public class DatabaseHandler {
 		return null;
 	}
 	@SuppressWarnings("unchecked")
-	public static String defaultJSON() {
+	public static JSONObject defaultJSON() {
 		JSONObject def = new JSONObject();
 		
 		//{
@@ -234,6 +241,9 @@ public class DatabaseHandler {
 		def.put("barcoPos", barcoPos);
 		def.put("barcoRot", 0.0f);
 		def.put("IslaListas" , new JSONArray());
-		return def.toJSONString();
+		return def;
+	}
+	public static String defaultJSONstr() {
+		return defaultJSON().toJSONString();
 	}
 }

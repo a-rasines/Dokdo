@@ -18,11 +18,24 @@ public class BarcoEnemigo extends Barco{
 	private Polygon lineaDerecha;
 	private Polygon lineaAtras;
 	private float rango = 150; //Rango de accion
+	private boolean isProtecting;
 	
-	public BarcoEnemigo(int vida, int nivel, float posX, float posY) {
+	/**
+	 * Crea un barco enemigo
+	 * @param vida vida del barco
+	 * @param nivel nivel del barco
+	 * @param posX posición X inicial
+	 * @param posY posición Y inicial
+	 * @param island esta protegiendo una isla?
+	 */
+	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island) {
 		super(vida, nivel, posX, posY);
+		isProtecting = island;
 		refreshLineas();
 	}
+	/**
+	 * Recalcula las lineas de IA de disparo
+	 */
 	protected void refreshLineas() {
 		if(lineaFrente == null) {
 			lineaFrente = new Polygon(new float[]{

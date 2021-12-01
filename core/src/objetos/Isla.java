@@ -42,9 +42,9 @@ public class Isla extends Sprite{
 	 * @param botin
 	 * @param barcosProtegiendo 
 	 */
-	public Isla(float posX, float posY, int nivel, int botin, Barco... barcosProtegiendo) {
-		this(posX, posY, nivel, botin, Arrays.asList(barcosProtegiendo));
-	}
+//	public Isla(float posX, float posY, int nivel, int botin, Barco... barcosProtegiendo) {
+//		this(posX, posY, nivel, botin, Arrays.asList(barcosProtegiendo));
+//	}
 	
 	@Override
 	public void onRangeOfPlayer() {

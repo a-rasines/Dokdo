@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import org.json.simple.JSONObject;
@@ -48,13 +49,147 @@ public class MainScreen implements Screen{
 	public static Stage stage = new Stage(vp);
 	ShapeRenderer sr = new ShapeRenderer();
 	
+	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
+	 * 
+	 */
+	public void generarIslas() {
+		Random r = new Random();
+		//Ahora mismo se generan 5 islas por cuadrante
+		
+		logger.info("Iniciada Generacion de islas");
+		
+		float mediaX = 0;
+		float mediaY = 0;
+		//Cuadrante 1
+		while(mediaX > 3500 || mediaX < 1500 && mediaY > 3500 || mediaY < 1500) {
+			if(islaList.size() == 5) {
+				islaList.remove(4);
+				islaList.remove(3);
+				islaList.remove(2);
+				islaList.remove(1);
+				islaList.remove(0);
+				logger.info("ReRoll");
+			}
+			
+			
+			mediaX = 0;
+			mediaY = 0;
+			for(int i = 0; i < 5; i++) {
+				int a = r.nextInt(4500)+500;
+				int b = r.nextInt(4500)+500;
+				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
+				mediaX += a;
+				mediaY+= b;
+			}
+			
+			mediaX = mediaX / 5;
+			mediaY = mediaY / 5;
+		}
+		mediaX = 0;
+		mediaY = 0;
+		
+		logger.info("Primer Cuadrante");
+		
+		//Cuadrante 2
+		while(mediaX < -3500 || mediaX > -1500 && mediaY > 3500 || mediaY < 1500) {
+			if(islaList.size() == 10) {
+				islaList.remove(9);
+				islaList.remove(8);
+				islaList.remove(7);
+				islaList.remove(6);
+				islaList.remove(5);
+				logger.info("ReRoll");
+			}
+			mediaX = 0;
+			mediaY = 0;
+			for(int i = 0; i < 5; i++) {
+				int a = -r.nextInt(4500)+500;
+				int b = r.nextInt(4500)+500;
+				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
+				mediaX += a;
+				mediaY+= b;
+			}
+			mediaX = mediaX / 5;
+			mediaY = mediaY / 5;
+				
+		}
+		
+		logger.info("Segundo Cuadrante");
+		
+		mediaX = 0;
+		mediaY = 0;
+		//Cuadrante 3
+		while(mediaX < -3500 || mediaX > -1500 && mediaY < -3500 || mediaY > -1500) {
+			if(islaList.size() == 15) {
+				islaList.remove(14);
+				islaList.remove(13);
+				islaList.remove(12);
+				islaList.remove(11);
+				islaList.remove(10);
+				logger.info("ReRoll");
+			}
+			mediaX = 0;
+			mediaY = 0;
+			for(int i = 0; i < 5; i++) {
+				int a = -r.nextInt(4500)+500;
+				int b = -r.nextInt(4500)+500;
+				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
+				mediaX += a;
+				mediaY+= b;
+			}
+			mediaX = mediaX / 5;
+			mediaY = mediaY / 5;
+				
+		}
+		
+		logger.info("Tercer cuadrante");
+		mediaX = 0;
+		mediaY = 0;
+		//Cuadrante 4
+		while(mediaX > 3500 || mediaX < 1500 && mediaY < -3500 || mediaY > -1500) {
+			if(islaList.size() == 20) {
+				islaList.remove(19);
+				islaList.remove(18);
+				islaList.remove(17);
+				islaList.remove(16);
+				islaList.remove(15);
+				logger.info("ReRoll");
+			}
+			mediaX = 0;
+			mediaY = 0;
+			for(int i = 0; i < 5; i++) {
+				int a = r.nextInt(4500)+500;
+				int b = -r.nextInt(4500)+500;
+				islaList.add(new Isla((float) a, (float) b, 0, 0, null));
+				mediaX += a;
+				mediaY+= b;
+			}
+			mediaX = mediaX / 5;
+			mediaY = mediaY / 5;
+				
+		}
+		
+		logger.info("Generacion completa");
+		
+		JSONObject isla = new JSONObject();
+		for(Isla i : islaList) {
+			isla.put("x", i.getX());
+			isla.put("y", i.getY());
+			isla.put("xText", 0);
+			isla.put("yText", 0);
+			
+		}
+		DatabaseHandler.writeToJSON("IslaListas",isla, false);
+		
+	}
+	
 	@Override
 	public void show() {
 		//Musica normal
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
 		barco = new BarcoJugador(10,0,0,0, 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
-		islaList.add(new Isla(100, 100, 1, 1));
+		
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
@@ -64,6 +199,18 @@ public class MainScreen implements Screen{
     	barco2.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco2.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barcosEnemigos.add(barco2);
+    	
+    	if(DatabaseHandler.getArrayFromJSon("IslaListas").size() == 0) {
+    		generarIslas();
+    	} else {
+    		for(Object j : DatabaseHandler.getArrayFromJSon("IslaListas")) {
+    			JSONObject i = (JSONObject) j;
+    			//TODO linea 209 es la q da error.
+    			islaList.add(new Isla((float) (double) i.get("x"),  (float)(double) i.get("y"), 0, 0, null));
+    			logger.info("Islas Cargadas");
+    		}
+    	}
+    	
 	}
 
 	Boolean cambioEstado = true;

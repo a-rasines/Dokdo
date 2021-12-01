@@ -225,6 +225,7 @@ public class DatabaseHandler {
 	@SuppressWarnings("unchecked")
 	public static String defaultJSON() {
 		JSONObject def = new JSONObject();
+		
 		//{
 		JSONObject barcoPos = new JSONObject();
 		barcoPos.put("x", 0.0f);
@@ -232,6 +233,7 @@ public class DatabaseHandler {
 		//}
 		def.put("barcoPos", barcoPos);
 		def.put("barcoRot", 0.0f);
+		def.put("IslaListas" , new JSONArray());
 		return def.toJSONString();
 	}
 }

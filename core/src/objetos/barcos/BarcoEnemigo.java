@@ -3,9 +3,11 @@ package objetos.barcos;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 
 import dg.main.MainScreen;
 import objetos.Bala;
+import objetos.Isla;
 import objetos.Sprite;
 /**
  * Representa un barco enemigo. Esta clase contiene un barco con herramientas para IA propia
@@ -19,6 +21,8 @@ public class BarcoEnemigo extends Barco{
 	private Polygon lineaAtras;
 	private float rango = 150; //Rango de accion
 	private boolean isProtecting;
+	private Vector2 playerTracker;
+	private boolean tracking = false;
 	
 	/**
 	 * Crea un barco enemigo
@@ -111,9 +115,57 @@ public class BarcoEnemigo extends Barco{
 	    }
 	    
 	    return null;
-		
 	}
-	
+	private boolean improvedIntersector(Vector2 v1, Vector2 v2, Polygon p) {
+		/*
+		 * nx + m = ax + b
+		 * (n-a)x = b-m
+		 * x = b-m/(n-a)
+		 * y = ax+b
+		 * n = y2-y1/(x2-x1)
+		 * m = y1 - x1*n
+		 */
+		float[] v = p.getTransformedVertices();
+		float x1 = v1.x;
+		float y1 = v1.y;
+		float x2 = v2.x;
+		float y2 = v2.y;
+		for(int i = 0; i<p.getTransformedVertices().length/2-1;i++) {
+			float x3 = v[i];
+			float y3 = v[i+1];
+			float x4 = v[i+2];
+			float y4 = v[i+3];
+			float n1 = (y2- y1)/(x2 - x1);
+			float n2 = (y4 - y3)/(x4 - x3);
+			float m1 = y1 - x1*n1;
+			float m2 = y3 - x3*n2;
+			if (n1 == n2 && m1 == m2)return true; //Coincidentes
+			else if(n1 == n2)return false; //Paralelas no coincidentes
+		}
+		return false;
+	}
+	private boolean isTrackerIntersecting() {
+		Boolean end = false;
+		for(Isla i :MainScreen.islaList){
+			if(improvedIntersector(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
+				System.out.println("isla = ("+String.valueOf(i.getX())+","+String.valueOf(i.getY())+"), barco2 = ("+String.valueOf(getX())+","+String.valueOf(getY())+") barco = ("+String.valueOf(MainScreen.barco.getX())+","+String.valueOf(MainScreen.barco.getY())+")");
+				System.out.println(i.getY());
+				System.out.println();
+				end = true;
+				break;
+			}
+		}
+		return end;
+	}
+	public void IAMove() {
+		System.out.println(isTrackerIntersecting());
+		if(playerTracker == null) {
+			playerTracker = new Vector2(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
+		}else {
+		playerTracker.set(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
+		Intersector.intersectLinePolygon(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), lineaAtras);
+		}
+	}
 	@Override
 	public <T> T move(float x, float y) {
 		T a =super.move(x, y);
@@ -133,5 +185,14 @@ public class BarcoEnemigo extends Barco{
 			MainScreen.barEneBorrar.add(this);
 		}
 	}
-
+	@Override
+	public void onRangeOfPlayer() {
+		super.onRangeOfPlayer();
+		tracking = true;
+	}
+	@Override
+	public void onExitFromRange() {
+		super.onExitFromRange();
+		tracking = false;
+	}
 }

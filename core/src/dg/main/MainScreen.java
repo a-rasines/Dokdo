@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -33,7 +34,7 @@ import objetos.barcos.Barco.PosicionCanyon;
 public class MainScreen implements Screen{
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
-	List<Isla> islaList = new LinkedList<>();
+	public static List<Isla> islaList = new LinkedList<>();
 	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
@@ -52,10 +53,8 @@ public class MainScreen implements Screen{
 		//Musica normal
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
-		System.out.println(pos0.values());
-		System.out.println(Float.parseFloat(pos0.get("x").toString()));
 		barco = new BarcoJugador(10,0,0,0, 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
-    	islaList.add(new Isla(100, 100, 1, 1));
+		islaList.add(new Isla(100, 100, 1, 1));
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
@@ -156,7 +155,7 @@ public class MainScreen implements Screen{
 		
 		//Dibujado
 		
-		barco.dibujar(); 
+		barco.dibujar();
 		barco.drawCollisions(sr);
 		barcosEnemigos.forEach(v->v.dibujar());
 		islaList.forEach(v->v.dibujar());
@@ -184,11 +183,11 @@ public class MainScreen implements Screen{
 			barco2.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			barco2.left();
-		
-		
-		
-		
-		
+		barco2.drawCollisions(sr);
+		barco2.IAMove();
+		sr.begin(ShapeRenderer.ShapeType.Line);
+	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
+	    sr.end();
 	}
 
 	@Override

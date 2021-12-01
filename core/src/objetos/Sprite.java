@@ -193,6 +193,10 @@ public abstract class Sprite {
 		refreshBounds();
 		return (T) this;
 	}
+	public void rotateTo(float q) {
+		angle = (float) (angle%360);
+		refreshBounds();
+	}
 	
 	//LOGGER
 	

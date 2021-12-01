@@ -70,7 +70,7 @@ public class BarcoJugador extends Barco{
 		return a;
 	}
 	@Override
-	public void recibeDaño(Bala bullet) {
+	public void recibeDanyo(Bala bullet) {
 		vida-=bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
 		if(vida<=0) {

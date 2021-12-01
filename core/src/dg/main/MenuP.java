@@ -28,6 +28,7 @@ public class MenuP implements Screen{
     protected Skin skin;
     private Texture bar;
     private Sprite sprite;
+    private HiloVolumen s1= new HiloVolumen();
     
     public MenuP() {
     	//musica de fondo;
@@ -83,13 +84,21 @@ public class MenuP implements Screen{
             }
         });
         
+        boton2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            		s1.setDireccion(false);
+                	s1.setvDestino(1.0f);
+                	s1.start();
+            	
+            }
+        });
+        
         boton3.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
-        		skin.dispose();
-        		batch.dispose();
-        		bar.dispose();
-        		
+        		dispose();
+        		       		
         	}
         });
         

@@ -127,8 +127,8 @@ public class BarcoEnemigo extends Barco{
 		return a;
 	}
 	@Override
-	public void recibeDaño(Bala bullet) {
-		super.recibeDaño(bullet);
+	public void recibeDanyo(Bala bullet) {
+		super.recibeDanyo(bullet);
 		if(vida<=0) {
 			MainScreen.barEneBorrar.add(this);
 		}

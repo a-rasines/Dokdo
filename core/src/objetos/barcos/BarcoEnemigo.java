@@ -116,7 +116,7 @@ public class BarcoEnemigo extends Barco{
 	    
 	    return null;
 	}
-	private boolean improvedIntersector(Vector2 v1, Vector2 v2, Polygon p) {
+	public boolean linePoligonIntersection(Vector2 v1, Vector2 v2, Polygon p) {
 		/*
 		 * f(x) = nx + m
 		 * g(x) = ax + b
@@ -162,7 +162,7 @@ public class BarcoEnemigo extends Barco{
 	private boolean isTrackerIntersecting() {
 		Boolean end = false;
 		for(Isla i :MainScreen.islaList){
-			if(improvedIntersector(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
+			if(linePoligonIntersection(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
 				end = true;
 				break;
 			}
@@ -170,12 +170,23 @@ public class BarcoEnemigo extends Barco{
 		return end;
 	}
 	public void IAMove() {
-		System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		if(playerTracker == null) {
 			playerTracker = new Vector2(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
 		}else {
-		playerTracker.set(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
-		Intersector.intersectLinePolygon(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), lineaAtras);
+			playerTracker.set(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
+			System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
+		}
+		if(isTrackerIntersecting()) { //Hay isla en el camino
+			//TODO esquivar la isla de la forma mas eficiente
+		}else { //Camino despejado
+			PosicionCanyon p = tocaLinea(MainScreen.barco);
+			if(p != null) { //Posición de ataque
+				rotate(Math.max(-this.vAng, Math.min(this.vAng, MainScreen.barco.getAngle()-getAngle())));
+				forward();
+			}else{ //Persecucion
+				rotate(Math.max(-this.vAng, Math.min(this.vAng, playerTracker.angleDeg()-getAngle())));
+				forward();
+			}
 		}
 	}
 	@Override

@@ -1,13 +1,16 @@
 package dg.main;
 
 import java.awt.desktop.ScreenSleepEvent;
+import java.util.logging.Logger;
 
 import objetos.Sprite;
 import objetos.barcos.Barco;
 
 public class HiloVolumen extends Thread {
 	private float vDestino;
-	private boolean x;
+	private boolean DirVol;
+	private boolean cambios=false;
+	private static Logger logger= Logger.getLogger("MenuOp");
 	
 	/**public HiloVolumen(boolean subirObajar, int v) {
 		this.vDestino=v;
@@ -17,35 +20,41 @@ public class HiloVolumen extends Thread {
 		this.vDestino=v;
 	}
 	public void setDireccion(boolean sOb){
-		this.x=sOb;
+		this.DirVol=sOb;
 	}
 	
-	
+	public void setCambios(boolean SiNo){
+		this.cambios=SiNo;
+	}
+		
 	public void run() {
-		System.out.println(x);
-		if(x) {
-			bajarVolumen(this.vDestino);
-
-		}else {
-			System.out.println("prueba");
-			subirVolumen(this.vDestino);
-		}
-		System.out.println("acabado");
-		Thread.currentThread().interrupt();
+		while(true){
+			if(cambios==true) {
+				if(DirVol==true ) {
+					cambios=bajarVolumen(this.vDestino);	
+				}else{
+					cambios=subirVolumen(this.vDestino);
+				}currentThread().interrupt();
+				
+			}
+				
+		}	
+		
 	}
 
-	public void bajarVolumen(float v ) {
-		for(float i = AudioPlayer.getVolumen();i>v;i-=0.01) {
+	public boolean bajarVolumen(float v ) {
+		for(float i = AudioPlayer.getVolumen();i>v;i-=0.1) {
 			try {
-				sleep(100);
+				sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");
 			}
 			AudioPlayer.setVolumen(i);
 		}System.out.println("Acabado bajada");
+		return false;
 	}
-	public void subirVolumen(float v) {
+	public boolean subirVolumen(float v) {
 		for(float i = AudioPlayer.getVolumen();i<v;i+=0.01) {
 			try {
 				sleep(100);
@@ -55,6 +64,7 @@ public class HiloVolumen extends Thread {
 			}
 			AudioPlayer.setVolumen(i);
 		}System.out.println("Acabado Subida");
+		return false;
 	}
 
 	

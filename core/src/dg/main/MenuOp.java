@@ -5,9 +5,7 @@ import java.util.logging.Logger;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,35 +18,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MenuP implements Screen{
+public class MenuOp implements Screen {
 	private final Dokdo game;
-	private Screen padre;
-	private Screen mar;
+	private final Screen Origen;
 	private static Logger logger= Logger.getLogger("Menu");
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
-    private Texture bar;
     private Sprite sprite;
-    private HiloVolumen s1= new HiloVolumen();
+    private HiloVolumen sonido;
+ //   private Screen menu;
 
     
-    public MenuP(Dokdo juego, MainScreen ventana2) {
-    	this.padre = this;
-    	this.mar=ventana2;
+    public MenuOp(Screen origen ,Dokdo juego ,HiloVolumen sonido) {   
+    	this.Origen=origen;
     	this.game=juego;
-    	s1.start();
-    	//musica de fondo;
-    	try {
-    		AudioPlayer.Reproducir("Sonidos//DrunkenSailor.mp3");
-        	logger.info("Cancion cargada sin problemas");
-		} catch (Exception e) {
-			// TODO: handle exception
-        	logger.info("Fallo al cargar la Cancion");
-		}
-    	
-    	
+    	this.sonido=sonido;
+    	    	
     	//dibujador de sprites
     	batch = new SpriteBatch();
     	viewport = new FitViewport(400, 400);
@@ -59,10 +46,7 @@ public class MenuP implements Screen{
     
     	
     	//dibujo barco 
-        bar= new Texture(Gdx.files.internal("Barco.png"));
-        sprite = new Sprite(bar);
-        sprite.setPosition((Gdx.graphics.getWidth()/2)-(sprite.getWidth()/2), Gdx.graphics.getHeight()/1.5f);
-    	
+
     }
  
 	@Override
@@ -79,45 +63,24 @@ public class MenuP implements Screen{
         menu.center();
 
         //Create buttons
-        TextButton boton1 = new TextButton("Jugar", skin);
-        TextButton boton2 = new TextButton("Opciones", skin);
-        TextButton boton3 = new TextButton("Salir", skin);
+        TextButton boton1 = new TextButton("Volver", skin);
+
         
       //listeners
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	AudioPlayer.detener();
-            	game.setScreen(mar);
+            game.setScreen(Origen); 
+        	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuP());
             }
         });
         
-        boton2.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
-            		/**s1.setCambios(true);
-            		s1.setDireccion(true);
-                	s1.setvDestino(0.1f);**/
-            	
-            }
-        });
-        
-        boton3.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		dispose();
-        		       		
-        	}
-        });
+
         
        // menu.add(sprite);
         menu.add(boton1).width(100);
         menu.row();
-        menu.add(boton2).width(100);
-        menu.row();
-        menu.add(boton3).width(100);
-        
+       
         
         
         stage.addActor(menu);
@@ -130,9 +93,6 @@ public class MenuP implements Screen{
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        batch.begin();
-        sprite.draw(batch);
-        batch.end();
         
         stage.act();
         stage.draw();
@@ -166,12 +126,8 @@ public class MenuP implements Screen{
 
 	@Override
 	public void dispose() {
-		AudioPlayer.detener();
 		skin.dispose();
 		batch.dispose();
-		bar.dispose();
-	
-		
 		
 	}
 }

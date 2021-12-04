@@ -168,16 +168,14 @@ public class Barco extends Sprite{
 	
 	@Override
 	public void onRangeOfPlayer() {
-		AudioPlayer.detener();
-		AudioPlayer.Reproducir("Sonidos//Battle.mp3");
+		
 		
 	}
 	
 	@Override
 	public void onExitFromRange() {
 		if(MainScreen.onRange.size() == 0) {
-			AudioPlayer.detener();
-			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+			
 		}
 	}
 	//CANYONES

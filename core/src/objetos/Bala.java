@@ -3,6 +3,7 @@ package objetos;
 import com.badlogic.gdx.graphics.Texture;
 
 import dg.main.MainScreen;
+import objetos.barcos.Barco;
 
 /**
  * Representa una bala disparada por un {@link objetos.Cañon}.
@@ -11,6 +12,7 @@ import dg.main.MainScreen;
 public class Bala extends Sprite{
 	private float decelerate = 0.1f; 
 	private static Texture t ;
+	
 	private boolean jugador;
 	static {
 		try {
@@ -54,6 +56,10 @@ public class Bala extends Sprite{
 			move();
 		}
 		if(v<decelerate && v>-decelerate)MainScreen.balasBorrar.add(this);
+	}
+	
+	public float getDanyoVel(Barco residente) {
+		return residente.getNivelDelBarco() * this.getVelocidad();
 	}
 	/*
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 

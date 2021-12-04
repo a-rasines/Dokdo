@@ -43,11 +43,14 @@ public class MainScreen implements Screen{
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
 	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false).setTexturePos(0,1);;
+
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
 	ShapeRenderer sr = new ShapeRenderer();
+	
+	public static boolean entraRango = false;
 	/**
 	 * Genera un array a partir de valores
 	 * @param v valores en el array
@@ -104,7 +107,9 @@ public class MainScreen implements Screen{
 	@Override
 	public void show() {
 		//Musica normal
+		
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+		
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
 		barco = new BarcoJugador(10,0,0,0, 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
 		
@@ -226,6 +231,44 @@ public class MainScreen implements Screen{
 		islaList.forEach(v->v.dibujar());
 		islaList.get(0).drawCollisions(sr);
 		
+		//Cambio de Audio
+		HiloVolumen hv = new HiloVolumen();
+		//TODO prueba con nuestro unico barco
+		//TODO lagea terrible
+		//He probado ha acer que AudioPlayer tengas que instanciarlo
+		//(qutarle el static) y asi tener dos audios a la vez, pero el solo reproduce uno y da un lag terrible
+		//esto se supone que baja el volumen de la musica anterior, pero se muere (Genera hilos a saco)
+		
+//		if(barco.enRango(barco2) && !entraRango) {
+//			
+//			
+//			hv.setvDestino(0);
+//			hv.setDireccion(true);
+//			hv.start();
+//			
+//			
+//			entraRango = !entraRango;
+//		} else if (barco.enRango(move) && !hv.isAlive()) {
+//			AudioPlayer.Reproducir("Sonido//Battle.mp3");
+//			hv.setvDestino(0.5f);
+//			hv.setDireccion(false);
+//			hv.start();
+//		}
+//		if(!barco.enRango(barco2) && entraRango) {
+//			
+//			hv.setvDestino(0);
+//			hv.setDireccion(true);
+//			hv.start();
+//			
+//			
+//			entraRango = !entraRango;
+//		} else if (!barco.enRango(barco2) && !hv.isAlive()) {
+//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+//			hv.setvDestino(0.5f);
+//			hv.setDireccion(false);
+//			hv.start();
+//		}
+//		
 		//TODO Prueba de lineas
 		
 		if(barco2.tocaLinea(barco) != null) {

@@ -29,15 +29,16 @@ public class MenuP implements Screen{
     private Texture bar;
     private Sprite sprite;
     private HiloVolumen s1= new HiloVolumen();
+
     
     public MenuP() {
     	//musica de fondo;
     	try {
     		AudioPlayer.Reproducir("Sonidos//DrunkenSailor.mp3");
-        	logger.info("Cación cargada sin problemas");
+        	logger.info("Caciï¿½n cargada sin problemas");
 		} catch (Exception e) {
 			// TODO: handle exception
-        	logger.info("Fallo al cargar la canción");
+        	logger.info("Fallo al cargar la canciï¿½n");
 		}
     	
     	

@@ -20,10 +20,12 @@ public class HiloVolumen extends Thread {
 		this.x=sOb;
 	}
 	
+	
 	public void run() {
 		System.out.println(x);
-		if(x==true) {
+		if(x) {
 			bajarVolumen(this.vDestino);
+
 		}else {
 			System.out.println("prueba");
 			subirVolumen(this.vDestino);
@@ -32,10 +34,10 @@ public class HiloVolumen extends Thread {
 		Thread.currentThread().interrupt();
 	}
 
-	public void bajarVolumen(float v) {
-		for(float i = AudioPlayer.getVolumen();i>v;i-=0.1) {
+	public void bajarVolumen(float v ) {
+		for(float i = AudioPlayer.getVolumen();i>v;i-=0.01) {
 			try {
-				sleep(1000);
+				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");
@@ -44,9 +46,9 @@ public class HiloVolumen extends Thread {
 		}System.out.println("Acabado bajada");
 	}
 	public void subirVolumen(float v) {
-		for(float i = AudioPlayer.getVolumen();i<v;i+=0.1) {
+		for(float i = AudioPlayer.getVolumen();i<v;i+=0.01) {
 			try {
-				sleep(1000);
+				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");

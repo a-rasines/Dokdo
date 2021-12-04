@@ -17,6 +17,7 @@ public class AudioPlayer {
 		musica.play();
 		musica.setLooping(true);
 		musica.setVolume(0.5f);
+		
 	}
 	
 	/**

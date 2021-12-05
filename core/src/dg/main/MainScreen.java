@@ -284,9 +284,6 @@ public class MainScreen implements Screen{
 			barco2.forward();
 		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
 			barco2.backwards();
-		else 
-			//barco2.decelerate();
-			barco2.stop();
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 			barco2.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 

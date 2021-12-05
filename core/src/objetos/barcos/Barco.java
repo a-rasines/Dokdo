@@ -128,11 +128,11 @@ public class Barco extends Sprite{
 	//MOVIMIENTO
 	
 	public void right() {
-		rotate(vAng*Gdx.graphics.getDeltaTime());
+		rotate(vAng);
 		
 	}
 	public void left() {
-		rotate(-vAng*Gdx.graphics.getDeltaTime());
+		rotate(-vAng);
 	}
 	public void forward() {
 		if(v < vMax)v+=a;
@@ -159,6 +159,16 @@ public class Barco extends Sprite{
 			move();
 		}
 		if(v<0.1 && v>-0.1)v=0;
+	}
+	@Override
+	public <T extends Sprite> T rotate(double q){
+		if(Math.abs(q)>180) 
+			return rotate(((360-q)%360)*Gdx.graphics.getDeltaTime());
+		if (Math.abs(q)>=vAng)
+			return super.rotate((q<0?-1:1)*vAng*Gdx.graphics.getDeltaTime());
+		if(Math.abs(q)<=vAng*Gdx.graphics.getDeltaTime())
+			return super.rotate(q);
+		return super.rotate(q*Gdx.graphics.getDeltaTime());
 	}
 	public void recibeDanyo( Bala bullet) {
 		vida -= bullet.getDanyo();

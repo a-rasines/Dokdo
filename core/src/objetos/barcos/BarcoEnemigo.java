@@ -1,5 +1,6 @@
 package objetos.barcos;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -121,6 +122,8 @@ public class BarcoEnemigo extends Barco{
 		Boolean end = false;
 		for(Isla i :MainScreen.islaList){
 			if(linePoligonIntersection(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
+				System.out.println(i.getX());
+				System.out.println(i.getY());
 				end = true;
 				break;
 			}
@@ -129,22 +132,32 @@ public class BarcoEnemigo extends Barco{
 	}
 	public void IAMove() {
 		if(playerTracker == null) {
-			playerTracker = new Vector2(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
+			playerTracker = new Vector2(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}else {
-			playerTracker.set(getX()+MainScreen.barco.getX(), getY()+MainScreen.barco.getY());
+			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 			System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		}
 		if(isTrackerIntersecting()) { //Hay isla en el camino
 			//TODO esquivar la isla de la forma mas eficiente
 		}else { //Camino despejado
-			PosicionCanyon p = tocaLinea(MainScreen.barco);
-			if(p != null) { //Posición de ataque
-				rotate(Math.max(-this.vAng, Math.min(this.vAng, MainScreen.barco.getAngle()-getAngle())));
-				forward();
-			}else{ //Persecucion
-				rotate(Math.max(-this.vAng, Math.min(this.vAng, playerTracker.angleDeg()-getAngle())));
-				forward();
+			float angFin;
+			if(playerTracker.len()<rango) { //Atacar
+				angFin = MainScreen.barco.getAngle();
+				
+			}else {
+				System.out.println(playerTracker.angleDeg());
+				angFin = (180+playerTracker.angleDeg())%360;
+				//angFin = playerTracker.angleDeg();
+				System.out.println(angFin);
+				System.out.println(getAngle());
 			}
+			System.out.println((angFin-getAngle()));
+			if(angFin-getAngle()<30) {
+				forward();
+			}else {
+				decelerate();
+			}
+			rotate((angFin-getAngle()));
 		}
 	}
 	@Override

@@ -122,10 +122,12 @@ public abstract class Sprite {
 			if (n1 == n2 && m1 == m2)return true; //Coincidentes
 			else if(n1 == n2)return false; //Paralelas no coincidentes
 			if(x1 == x2) { //Linea 1 vertical
+				if(x1 > Math.max(x3, x4) || x1 < Math.min(x3, x4)) return false;
 				if(x1*n2+m2 > Math.min(y1, y2) && x1*n2+m2 < Math.max(y1, y2)) {
 					return true;
 				}
-			}else if (x3 == x4) { //Linea 2 verical
+			}else if (x3 == x4) { //Linea 2 vertical
+				if(x3 > Math.max(x1, x2) || x3 < Math.min(x1, x2)) return false;//No se que he hecho mal en la siguiente fila, pero esto deberia arreglarlo
 				if(x3*n1+m1 > Math.min(y3, y4) && x3*n1+m1 < Math.max(y3, y4)) {
 					return true;
 				}
@@ -238,7 +240,7 @@ public abstract class Sprite {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Sprite>T rotate(double q) {
-		angle = (float) ((angle + q)%360);
+		angle = (float) ((360+angle + q)%360);
 		refreshBounds();
 		return (T) this;
 	}

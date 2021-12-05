@@ -4,15 +4,19 @@ import com.badlogic.gdx.Game;
 
 
 public class Dokdo extends Game{
+	private static MainScreen mapaC;
+	private static MenuP menu ;
+	private HiloVolumen s1= new HiloVolumen();
 	
 	@Override
 	public void create() {
 		//TODO Crear todas las ventnas que se van a usar para poder cambiar entre ellas
 		MainScreen mapaC= new MainScreen();
-		MenuP menu = new MenuP(this,mapaC);
+		MenuP menu = new MenuP(this,mapaC,s1);
 		//setScreen(new MainScreen() ); //pruebas de juego
 		setScreen(menu); //no borrar por favor--> pruebas del menu
 	}
+	
 	
 
 }

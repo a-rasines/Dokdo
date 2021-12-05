@@ -31,20 +31,19 @@ public class MenuP implements Screen{
     protected Skin skin;
     private Texture bar;
     private Sprite sprite;
-    private HiloVolumen s1= new HiloVolumen();
+    private HiloVolumen s1;
 
     
-    public MenuP(Dokdo juego, MainScreen ventana2) {
+    public MenuP(Dokdo juego, MainScreen ventana2,HiloVolumen hiloVol) {
+    	this.s1=hiloVol;
     	this.padre = this;
     	this.mar=ventana2;
     	this.game=juego;
     	s1.start();
-    	//musica de fondo;
     	try {
     		AudioPlayer.Reproducir("Sonidos//DrunkenSailor.mp3");
         	logger.info("Cancion cargada sin problemas");
 		} catch (Exception e) {
-			// TODO: handle exception
         	logger.info("Fallo al cargar la Cancion");
 		}
     	
@@ -67,7 +66,7 @@ public class MenuP implements Screen{
  
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
         
@@ -112,11 +111,12 @@ public class MenuP implements Screen{
         });
         
        // menu.add(sprite);
-        menu.add(boton1).width(100);
+    
+        menu.add(boton1).width(100).pad(10);
         menu.row();
-        menu.add(boton2).width(100);
+        menu.add(boton2).width(100).pad(10);
         menu.row();
-        menu.add(boton3).width(100);
+        menu.add(boton3).width(100).pad(10);
         
         
         
@@ -141,7 +141,6 @@ public class MenuP implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		viewport.update(width, height);
     	
 	}
@@ -167,9 +166,14 @@ public class MenuP implements Screen{
 	@Override
 	public void dispose() {
 		AudioPlayer.detener();
+		stage.dispose();
 		skin.dispose();
 		batch.dispose();
 		bar.dispose();
+		//padre.dispose();
+		//mar.dispose();
+		s1.interrupt();
+		Gdx.app.exit();
 	
 		
 		

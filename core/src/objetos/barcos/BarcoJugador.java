@@ -12,13 +12,14 @@ import DataBase.DatabaseHandler;
 import dg.main.MainScreen;
 import dg.main.PantallaMuerte;
 import objetos.Bala;
+import objetos.Municion;
 import objetos.Sprite;
 public class BarcoJugador extends Barco{
 	
 	private Circle range = new Circle();
 
-	public BarcoJugador(int vida, int nivel, float posX, float posY, int rango) {
-		super(vida, nivel, posX, posY);
+	public BarcoJugador(int vida, int nivel, float posX, float posY, int rango, Municion municionEnUso) {
+		super(vida, nivel, posX, posY, municionEnUso);
 		range.setRadius(rango);
 		range.setPosition(new Vector2(getX(),getY()));
 		// TODO Auto-generated constructor stub

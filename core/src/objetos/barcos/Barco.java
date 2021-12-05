@@ -171,8 +171,20 @@ public class Barco extends Sprite{
 		return super.rotate(q*Gdx.graphics.getDeltaTime());
 	}
 	public void recibeDanyo( Bala bullet) {
-		vida -= bullet.getDanyo();
-		MainScreen.balasBorrar.add(bullet);
+			vida -= bullet.getDanyo();
+			MainScreen.balasBorrar.add(bullet);
+	}
+	public void recibeDanyoContinuo(Bala bullet) {
+		long antes=System.currentTimeMillis();
+		while(this.getMunicionEnUso().getVeces()>0) {
+			long ahora=System.currentTimeMillis();
+			if((ahora-antes)*1000 == this.getMunicionEnUso().getCoolDown()) {
+				this.setVidaDelBarco((int) (this.getVidaDelBarco() - bullet.getDanyo()*0.5));
+				this.getMunicionEnUso().setVeces(this.getMunicionEnUso().getVeces()-1);
+				antes=ahora;
+				System.out.println(this.vida);
+			}
+		}
 	}
 	//DETECCIÓN
 	

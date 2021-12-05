@@ -4,22 +4,43 @@ package objetos;
  *
  */
 public enum Municion {
-	NORMAL(1, true),
-	EXPLOSIVA(2, true),
-	INCENDIARIA(2, false),
-	VENENOSA(1, false),
-	ENCADENADA(1, false);
+	NORMAL(1, true,0,3),
+	EXPLOSIVA(2, true,0,3),
+	INCENDIARIA(2, false,3,3),
+	VENENOSA(1, false,3,3),
+	ENCADENADA(1, false,3,3);
+	
+	public int getCoolDown() {
+		return coolDown;
+	}
+	public void setCoolDown(int coolDown) {
+		this.coolDown = coolDown;
+	}
+	public int getVeces() {
+		return veces;
+	}
+	public void setVeces(int veces) {
+		this.veces = veces;
+	}
 	public int getDanyo() {
 		return danyo;
 	}
 	public void setDanyo(int danyo) {
 		this.danyo = danyo;
 	}
+	public boolean getInstantaneo() {
+		if(this.instantaneo) return false;
+		else return true;
+	}
 	public final boolean instantaneo;
 	private int danyo;
-	Municion(int danyo, boolean instantaneo){
+	private int veces;
+	private int coolDown;
+	Municion(int danyo, boolean instantaneo, int veces, int coolDown){
 		this.instantaneo = instantaneo;
 		this.danyo=danyo;
+		this.veces=veces;
+		this.coolDown=coolDown;
 	}
 	
 }

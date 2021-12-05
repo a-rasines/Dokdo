@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import dg.main.MainScreen;
 import objetos.Bala;
 import objetos.Isla;
+import objetos.Municion;
 import objetos.Sprite;
 /**
  * Representa un barco enemigo. Esta clase contiene un barco con herramientas para IA propia
@@ -33,8 +34,8 @@ public class BarcoEnemigo extends Barco{
 	 * @param posY posición Y inicial
 	 * @param island esta protegiendo una isla?
 	 */
-	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island) {
-		super(vida, nivel, posX, posY);
+	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island, Municion municionEnUso) {
+		super(vida, nivel, posX, posY, municionEnUso);
 		isProtecting = island;
 		refreshLineas();
 	}
@@ -178,6 +179,11 @@ public class BarcoEnemigo extends Barco{
 		if(vida<=0) {
 			MainScreen.barEneBorrar.add(this);
 		}
+	}
+	@Override
+	public void recibeDanyoContinuo(Bala bullet) {
+		super.recibeDanyoContinuo(bullet);
+		
 	}
 	@Override
 	public void onRangeOfPlayer() {

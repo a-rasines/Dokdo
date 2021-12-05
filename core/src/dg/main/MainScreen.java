@@ -25,6 +25,7 @@ import DataBase.DatabaseHandler;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
+import objetos.Municion;
 import objetos.Sprite;
 import objetos.barcos.Barco;
 import objetos.barcos.BarcoEnemigo;
@@ -42,7 +43,7 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false).setTexturePos(0,1);;
+	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false, Municion.NORMAL).setTexturePos(0,1);;
 	
 	public static HiloVolumen hv = new HiloVolumen();
 
@@ -113,7 +114,7 @@ public class MainScreen implements Screen{
 		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 		
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
-		barco = new BarcoJugador(10,0,0,0, 150).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
+		barco = new BarcoJugador(10,0,0,0, 150, Municion.INCENDIARIA).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
 		
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -190,7 +191,11 @@ public class MainScreen implements Screen{
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.isJugador()) {
-				b.recibeDanyo(i);
+				if(barco.getMunicionEnUso().getInstantaneo())
+					b.recibeDanyo(i);
+				else{
+					b.recibeDanyoContinuo(i);
+				}
 			} else if(i.collidesWith(barco) && !i.isJugador()) {
 				barco.recibeDanyo(i);
 			}
@@ -284,7 +289,8 @@ public class MainScreen implements Screen{
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			barco2.left();
 		barco2.drawCollisions(sr);
-		barco2.IAMove();
+		//HAY QUE CAMBIARLO
+		//barco2.IAMove();
 		sr.begin(ShapeRenderer.ShapeType.Line);
 	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
 	    sr.end();

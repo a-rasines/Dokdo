@@ -2,6 +2,8 @@ package dg.main;
 
 import java.util.logging.Logger;
 
+import javax.swing.JRadioButton;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -28,7 +32,6 @@ public class MenuOp implements Screen {
     protected Skin skin;
     private Sprite sprite;
     private HiloVolumen sonido;
- //   private Screen menu;
 
     
     public MenuOp(Screen origen ,Dokdo juego ,HiloVolumen sonido) {   
@@ -63,7 +66,9 @@ public class MenuOp implements Screen {
         menu.center();
 
         //Create buttons
+  
         TextButton boton1 = new TextButton("Volver", skin);
+        //TODO Buscar como hacer el sistema de volumen 
 
         
       //listeners
@@ -80,7 +85,7 @@ public class MenuOp implements Screen {
        // menu.add(sprite);
         menu.add(boton1).width(100);
         menu.row();
-       
+    
         
         
         stage.addActor(menu);
@@ -90,7 +95,7 @@ public class MenuOp implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         

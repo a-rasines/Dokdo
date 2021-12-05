@@ -43,6 +43,8 @@ public class MainScreen implements Screen{
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
 	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false).setTexturePos(0,1);;
+	
+	public static HiloVolumen hv = new HiloVolumen();
 
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -232,43 +234,36 @@ public class MainScreen implements Screen{
 		islaList.get(0).drawCollisions(sr);
 		
 		//Cambio de Audio
-		HiloVolumen hv = new HiloVolumen();
+		
 		//TODO prueba con nuestro unico barco
 		//TODO lagea terrible
 		//He probado ha acer que AudioPlayer tengas que instanciarlo
 		//(qutarle el static) y asi tener dos audios a la vez, pero el solo reproduce uno y da un lag terrible
 		//esto se supone que baja el volumen de la musica anterior, pero se muere (Genera hilos a saco)
 		
-//		if(barco.enRango(barco2) && !entraRango) {
+		if(barco.enRango(barco2) && !entraRango) {
+//			if(hv.isAlive()) {
+//				hv.interrupt();
+//			} 
 //			
-//			
-//			hv.setvDestino(0);
-//			hv.setDireccion(true);
+//			hv.setFichero("Sonidos//Battle.mp3");
 //			hv.start();
+			AudioPlayer.detener();
+			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
+			
+			entraRango = !entraRango;
+		} 
+		if(!barco.enRango(barco2) && entraRango) {
+//			if(hv.isAlive()) {
+//				hv.interrupt();
+//			}
 //			
-//			
-//			entraRango = !entraRango;
-//		} else if (barco.enRango(move) && !hv.isAlive()) {
-//			AudioPlayer.Reproducir("Sonido//Battle.mp3");
-//			hv.setvDestino(0.5f);
-//			hv.setDireccion(false);
+//			hv.setFichero("Sonidos//Overworld.mp3");
 //			hv.start();
-//		}
-//		if(!barco.enRango(barco2) && entraRango) {
-//			
-//			hv.setvDestino(0);
-//			hv.setDireccion(true);
-//			hv.start();
-//			
-//			
-//			entraRango = !entraRango;
-//		} else if (!barco.enRango(barco2) && !hv.isAlive()) {
-//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-//			hv.setvDestino(0.5f);
-//			hv.setDireccion(false);
-//			hv.start();
-//		}
-//		
+			AudioPlayer.detener();
+			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+			entraRango = !entraRango;
+		} 
 		//TODO Prueba de lineas
 		
 		if(barco2.tocaLinea(barco) != null) {

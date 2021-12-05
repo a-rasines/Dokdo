@@ -9,8 +9,9 @@ import objetos.barcos.Barco;
 public class HiloVolumen extends Thread {
 	private float vDestino;
 	private boolean DirVol;
-	private boolean cambios=false;
+	private boolean cambios=true;
 	private static Logger logger= Logger.getLogger("MenuOp");
+	private static String audio;
 	
 	/**public HiloVolumen(boolean subirObajar, int v) {
 		this.vDestino=v;
@@ -26,15 +27,18 @@ public class HiloVolumen extends Thread {
 	public void setCambios(boolean SiNo){
 		this.cambios=SiNo;
 	}
+	
+	public void setFichero(String f) {
+		audio = f;
+	}
 		
 	public void run() {
 		while(true){
 			if(cambios==true) {
-				if(DirVol==true ) {
-					cambios=bajarVolumen(this.vDestino);	
-				}else{
-					cambios=subirVolumen(this.vDestino);
-				}currentThread().interrupt();
+				bajarVolumen(0);
+				AudioPlayer.Reproducir(audio);
+				subirVolumen(0.5f);
+				currentThread().interrupt();
 				
 			}
 				
@@ -43,9 +47,9 @@ public class HiloVolumen extends Thread {
 	}
 
 	public boolean bajarVolumen(float v ) {
-		for(float i = AudioPlayer.getVolumen();i>v;i-=0.1) {
+		for(float i = AudioPlayer.getVolumen();i>v;i-=0.01) {
 			try {
-				sleep(1000);
+				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");

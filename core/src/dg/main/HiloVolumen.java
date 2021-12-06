@@ -7,9 +7,10 @@ import objetos.Sprite;
 import objetos.barcos.Barco;
 
 public class HiloVolumen extends Thread {
+	private AudioPlayer selCancion;
 	private float vDestino;
 	private boolean DirVol;
-	private boolean cambios=true;
+	private boolean cambios=false;
 	private static Logger logger= Logger.getLogger("MenuOp");
 	private static String audio;
 	
@@ -20,6 +21,22 @@ public class HiloVolumen extends Thread {
 	public void setvDestino(float v){
 		this.vDestino=v;
 	}
+	
+	
+	public AudioPlayer getSelCancion() {
+		return this.selCancion;
+	}
+
+
+	public void setSelCancion(AudioPlayer selCancion) {
+		this.selCancion = selCancion;
+	}
+
+
+	/**
+	 * Se usa para definir si se sube o se baja el volumen
+	 * @param sOb true para bajar, false para subir
+	 */
 	public void setDireccion(boolean sOb){
 		this.DirVol=sOb;
 	}
@@ -33,18 +50,18 @@ public class HiloVolumen extends Thread {
 	}
 		
 	public void run() {
-		AudioPlayer.Reproducir(audio);
+		//AudioPlayer.Reproducir(audio);
 		while(true){
-			if(cambios=true) {
-				System.out.println(cambios);
+			if(cambios==true) {
 				if(DirVol=true) {					
 					cambios=bajarVolumen(this.vDestino);
 				}else {
 					cambios=subirVolumen(this.vDestino);
 				}				
-			}
-		}	
+			}	
+		}
 	}
+	
 
 	public boolean bajarVolumen(float v ) {
 		for(float i = AudioPlayer.getVolumen();i>v;i-=0.01) {

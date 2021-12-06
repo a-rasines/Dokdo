@@ -24,17 +24,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuP implements Screen{
-	private Image fondo;
+	
 	private final Dokdo game;
 	private Screen padre;
 	private Screen mar;
+	public static AudioPlayer cMenu;
 	private static Logger logger= Logger.getLogger("Menu");
     private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
-    private Texture bar;
-    private Sprite sprite;
     private HiloVolumen s1;
 
     
@@ -45,7 +44,7 @@ public class MenuP implements Screen{
     	this.game=juego;
     	s1.start();
     	try {
-    		AudioPlayer.Reproducir("Sonidos//DrunkenSailor.mp3");
+    		cMenu.Reproducir("Sonidos//DrunkenSailor.mp3");
         	logger.info("Cancion cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion");
@@ -95,6 +94,8 @@ public class MenuP implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
+            	
+            		//s1.setCancion(AudioPlayer);
             		s1.setCambios(true);
             		s1.setDireccion(true);
                 	s1.setvDestino(0.1f);
@@ -132,10 +133,6 @@ public class MenuP implements Screen{
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        batch.begin();
-        //sprite.draw(batch);
-        batch.end();
-        
         stage.act();
         stage.draw();
 	
@@ -167,7 +164,7 @@ public class MenuP implements Screen{
 
 	@Override
 	public void dispose() {
-		AudioPlayer.detener();
+		cMenu.detener();
 		stage.dispose();
 		skin.dispose();
 		batch.dispose();

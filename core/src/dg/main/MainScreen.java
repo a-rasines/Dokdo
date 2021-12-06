@@ -247,26 +247,26 @@ public class MainScreen implements Screen{
 		//esto se supone que baja el volumen de la musica anterior, pero se muere (Genera hilos a saco)
 		
 		if(barco.enRango(barco2) && !entraRango) {
-//			if(hv.isAlive()) {
-//				hv.interrupt();
-//			} 
-//			
-//			hv.setFichero("Sonidos//Battle.mp3");
-//			hv.start();
-			AudioPlayer.detener();
-			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
+			if(hv.isAlive()) {
+				hv.interrupt();
+			} 
+			
+			hv.setFichero("Sonidos//Battle.mp3");
+			hv.start();
+//			AudioPlayer.detener();
+//			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 			
 			entraRango = !entraRango;
 		} 
 		if(!barco.enRango(barco2) && entraRango) {
-//			if(hv.isAlive()) {
-//				hv.interrupt();
-//			}
-//			
-//			hv.setFichero("Sonidos//Overworld.mp3");
-//			hv.start();
-			AudioPlayer.detener();
-			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+			if(hv.isAlive()) {
+				hv.interrupt();
+			}
+			
+			hv.setFichero("Sonidos//Overworld.mp3");
+			hv.start();
+//			AudioPlayer.detener();
+//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
 			entraRango = !entraRango;
 		} 
 		//TODO Prueba de lineas

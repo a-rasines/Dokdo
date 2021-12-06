@@ -36,6 +36,7 @@ public class HiloVolumen extends Thread {
 		while(true){
 			if(cambios==true) {
 				bajarVolumen(0);
+				AudioPlayer.detener();
 				AudioPlayer.Reproducir(audio);
 				subirVolumen(0.5f);
 				currentThread().interrupt();

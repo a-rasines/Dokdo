@@ -52,8 +52,9 @@ public class HiloVolumen extends Thread {
 	public void run() {
 		//AudioPlayer.Reproducir(audio);
 		while(true){
-			if(cambios==true) {
-				if(DirVol=true) {					
+			System.out.println(cambios);
+			if(cambios) {
+				if(DirVol) {					
 					cambios=bajarVolumen(this.vDestino);
 				}else {
 					cambios=subirVolumen(this.vDestino);

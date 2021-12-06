@@ -11,16 +11,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuP implements Screen{
+	private Image fondo;
 	private final Dokdo game;
 	private Screen padre;
 	private Screen mar;
@@ -50,17 +54,12 @@ public class MenuP implements Screen{
     	
     	//dibujador de sprites
     	batch = new SpriteBatch();
-    	viewport = new FitViewport(400, 400);
+    	viewport = new FitViewport(480, 280);
     	viewport.apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(viewport,batch);
     	batch = new SpriteBatch();
-    
-    	
-    	//dibujo barco 
-        bar= new Texture(Gdx.files.internal("Barco.png"));
-        sprite = new Sprite(bar);
-        sprite.setPosition((Gdx.graphics.getWidth()/2)-(sprite.getWidth()/2), Gdx.graphics.getHeight()/1.5f);
+
     	
     }
  
@@ -69,6 +68,7 @@ public class MenuP implements Screen{
 
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
+        menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
         
         //Set table to fill stage
         menu.setFillParent(true);
@@ -94,10 +94,10 @@ public class MenuP implements Screen{
         boton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
-            		/**s1.setCambios(true);
+            	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
+            		s1.setCambios(true);
             		s1.setDireccion(true);
-                	s1.setvDestino(0.1f);**/
+                	s1.setvDestino(0.1f);
             	
             }
         });
@@ -111,12 +111,14 @@ public class MenuP implements Screen{
         });
         
        // menu.add(sprite);
-    
-        menu.add(boton1).width(100).pad(10);
+        Actor barco = new Image(new Texture(Gdx.files.internal("Barco.png")));
+        menu.add(barco).width(100).height(100);
         menu.row();
-        menu.add(boton2).width(100).pad(10);
+        menu.add(boton1).width(80).pad(5);
         menu.row();
-        menu.add(boton3).width(100).pad(10);
+        menu.add(boton2).width(80).pad(5);
+        menu.row();
+        menu.add(boton3).width(80).pad(5);
         
         
         
@@ -131,7 +133,7 @@ public class MenuP implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        sprite.draw(batch);
+        //sprite.draw(batch);
         batch.end();
         
         stage.act();
@@ -169,9 +171,6 @@ public class MenuP implements Screen{
 		stage.dispose();
 		skin.dispose();
 		batch.dispose();
-		bar.dispose();
-		//padre.dispose();
-		//mar.dispose();
 		s1.interrupt();
 		Gdx.app.exit();
 	

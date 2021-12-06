@@ -33,17 +33,17 @@ public class HiloVolumen extends Thread {
 	}
 		
 	public void run() {
+		AudioPlayer.Reproducir(audio);
 		while(true){
-			if(cambios==true) {
-				bajarVolumen(0);
-				AudioPlayer.Reproducir(audio);
-				subirVolumen(0.5f);
-				currentThread().interrupt();
-				
+			if(cambios=true) {
+				System.out.println(cambios);
+				if(DirVol=true) {					
+					cambios=bajarVolumen(this.vDestino);
+				}else {
+					cambios=subirVolumen(this.vDestino);
+				}				
 			}
-				
 		}	
-		
 	}
 
 	public boolean bajarVolumen(float v ) {

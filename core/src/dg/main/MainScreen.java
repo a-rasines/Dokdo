@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import DataBase.DatabaseHandler;
+import hilos.HiloVolumen;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -238,37 +239,6 @@ public class MainScreen implements Screen{
 		islaList.forEach(v->v.dibujar());
 		islaList.get(0).drawCollisions(sr);
 		
-		//Cambio de Audio
-		
-		//TODO prueba con nuestro unico barco
-		//TODO lagea terrible
-		//He probado ha acer que AudioPlayer tengas que instanciarlo
-		//(qutarle el static) y asi tener dos audios a la vez, pero el solo reproduce uno y da un lag terrible
-		//esto se supone que baja el volumen de la musica anterior, pero se muere (Genera hilos a saco)
-		
-		if(barco.enRango(barco2) && !entraRango) {
-			if(hv.isAlive()) {
-				hv.interrupt();
-			} 
-			
-			hv.setFichero("Sonidos//Battle.mp3");
-			hv.start();
-//			AudioPlayer.detener();
-//			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
-			
-			entraRango = !entraRango;
-		} 
-		if(!barco.enRango(barco2) && entraRango) {
-			if(hv.isAlive()) {
-				hv.interrupt();
-			}
-			
-			hv.setFichero("Sonidos//Overworld.mp3");
-			hv.start();
-//			AudioPlayer.detener();
-//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-			entraRango = !entraRango;
-		} 
 		//TODO Prueba de lineas
 		
 		if(barco2.tocaLinea(barco) != null) {
@@ -290,7 +260,7 @@ public class MainScreen implements Screen{
 			barco2.left();
 		barco2.drawCollisions(sr);
 		//HAY QUE CAMBIARLO
-		//barco2.IAMove();
+		barco2.IAMove();
 		sr.begin(ShapeRenderer.ShapeType.Line);
 	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
 	    sr.end();

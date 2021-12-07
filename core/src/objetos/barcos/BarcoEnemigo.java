@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import dg.main.MainScreen;
+import hilos.HiloVolumen;
 import objetos.Bala;
 import objetos.Isla;
 import objetos.Municion;
@@ -123,8 +124,6 @@ public class BarcoEnemigo extends Barco{
 		Boolean end = false;
 		for(Isla i :MainScreen.islaList){
 			if(linePoligonIntersection(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
-				System.out.println(i.getX());
-				System.out.println(i.getY());
 				end = true;
 				break;
 			}
@@ -146,11 +145,11 @@ public class BarcoEnemigo extends Barco{
 				angFin = MainScreen.barco.getAngle();
 				
 			}else {
-				System.out.println(playerTracker.angleDeg());
-				angFin = (180+playerTracker.angleDeg())%360;
-				//angFin = playerTracker.angleDeg();
-				System.out.println(angFin);
-				System.out.println(getAngle());
+				if(playerTracker.x/(playerTracker.y==0?1:playerTracker.y) >=0) {
+					angFin = (180+playerTracker.angleDeg())%360;
+				}else {
+					angFin = playerTracker.angleDeg();
+				}
 			}
 			System.out.println((angFin-getAngle()));
 			if(angFin-getAngle()<30) {
@@ -187,12 +186,30 @@ public class BarcoEnemigo extends Barco{
 	}
 	@Override
 	public void onRangeOfPlayer() {
-		super.onRangeOfPlayer();
-		tracking = true;
+		HiloVolumen hv = MainScreen.hv;
+		if(hv.isAlive()) {
+			hv.interrupt();
+		} 
+		
+		hv.setFichero("Sonidos//Battle.mp3");
+		hv.start();
+//		AudioPlayer.detener();
+//		AudioPlayer.Reproducir("Sonidos//Battle.mp3");
 	}
 	@Override
 	public void onExitFromRange() {
-		super.onExitFromRange();
+		HiloVolumen hv = MainScreen.hv;
 		tracking = false;
+		if(MainScreen.onRange.size() == 0) {
+			if(hv.isAlive()) {
+				hv.interrupt();
+			}
+			
+			hv.setFichero("Sonidos//Overworld.mp3");
+			hv.start();
+//			AudioPlayer.detener();
+//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+		}
+		
 	}
 }

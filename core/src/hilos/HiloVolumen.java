@@ -1,8 +1,9 @@
-package dg.main;
+package hilos;
 
 import java.awt.desktop.ScreenSleepEvent;
 import java.util.logging.Logger;
 
+import dg.main.AudioPlayer;
 import objetos.Sprite;
 import objetos.barcos.Barco;
 
@@ -52,7 +53,6 @@ public class HiloVolumen extends Thread {
 	public void run() {
 		//AudioPlayer.Reproducir(audio);
 		while(true){
-			System.out.println(cambios);
 			if(cambios) {
 				if(DirVol) {					
 					cambios=bajarVolumen(this.vDestino);

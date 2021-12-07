@@ -2,6 +2,8 @@ package dg.main;
 
 import com.badlogic.gdx.Game;
 
+import hilos.HiloVolumen;
+
 
 public class Dokdo extends Game{
 	private static MainScreen mapaC;

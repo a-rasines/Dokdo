@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import DataBase.DatabaseHandler;
+import hilos.HiloVolumen;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -34,6 +35,8 @@ import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
+	public static HiloVolumen s1;
+	public static AudioPlayer cFondo = new AudioPlayer();
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
 	public static List<Isla> islaList = new LinkedList<>();
@@ -43,9 +46,7 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false, Municion.NORMAL).setTexturePos(0,1);;
-	
-	public static HiloVolumen hv = new HiloVolumen();
+	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false, Municion.NORMAL).setTexturePos(0,1);
 
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,6 +55,10 @@ public class MainScreen implements Screen{
 	ShapeRenderer sr = new ShapeRenderer();
 	
 	public static boolean entraRango = false;
+	public MainScreen(HiloVolumen hiloDeSonido) {
+		this.s1=hiloDeSonido;
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * Genera un array a partir de valores
 	 * @param v valores en el array
@@ -111,7 +116,7 @@ public class MainScreen implements Screen{
 	public void show() {
 		//Musica normal
 		
-		AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+		cFondo.Reproducir("Sonidos//Overworld.mp3");
 		
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
 		barco = new BarcoJugador(10,0,0,0, 150, Municion.INCENDIARIA).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
@@ -238,37 +243,6 @@ public class MainScreen implements Screen{
 		islaList.forEach(v->v.dibujar());
 		islaList.get(0).drawCollisions(sr);
 		
-		//Cambio de Audio
-		
-		//TODO prueba con nuestro unico barco
-		//TODO lagea terrible
-		//He probado ha acer que AudioPlayer tengas que instanciarlo
-		//(qutarle el static) y asi tener dos audios a la vez, pero el solo reproduce uno y da un lag terrible
-		//esto se supone que baja el volumen de la musica anterior, pero se muere (Genera hilos a saco)
-		
-		if(barco.enRango(barco2) && !entraRango) {
-			if(hv.isAlive()) {
-				hv.interrupt();
-			} 
-			
-			hv.setFichero("Sonidos//Battle.mp3");
-			hv.start();
-//			AudioPlayer.detener();
-//			AudioPlayer.Reproducir("Sonidos//Battle.mp3");
-			
-			entraRango = !entraRango;
-		} 
-		if(!barco.enRango(barco2) && entraRango) {
-			if(hv.isAlive()) {
-				hv.interrupt();
-			}
-			
-			hv.setFichero("Sonidos//Overworld.mp3");
-			hv.start();
-//			AudioPlayer.detener();
-//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-			entraRango = !entraRango;
-		} 
 		//TODO Prueba de lineas
 		
 		if(barco2.tocaLinea(barco) != null) {
@@ -290,7 +264,7 @@ public class MainScreen implements Screen{
 			barco2.left();
 		barco2.drawCollisions(sr);
 		//HAY QUE CAMBIARLO
-		//barco2.IAMove();
+		barco2.IAMove();
 		sr.begin(ShapeRenderer.ShapeType.Line);
 	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
 	    sr.end();

@@ -1,8 +1,9 @@
-package dg.main;
+package hilos;
 
 import java.awt.desktop.ScreenSleepEvent;
 import java.util.logging.Logger;
 
+import dg.main.AudioPlayer;
 import objetos.Sprite;
 import objetos.barcos.Barco;
 

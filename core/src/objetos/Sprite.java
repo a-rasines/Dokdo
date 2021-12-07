@@ -244,6 +244,10 @@ public abstract class Sprite {
 		refreshBounds();
 		return (T) this;
 	}
+	/**
+	 * Establece la rotación. Como un rotate pero que siempre comienza en 0
+	 * @param q nuevo angulo
+	 */
 	public void rotateTo(float q) {
 		angle = (float) (angle%360);
 		refreshBounds();

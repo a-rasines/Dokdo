@@ -162,9 +162,10 @@ public class Barco extends Sprite{
 	}
 	@Override
 	public <T extends Sprite> T rotate(double q){
+		System.out.println("Rotate: "+String.valueOf(q));
 		if(Math.abs(q)>180) 
 			return rotate(((360-q)%360)*Gdx.graphics.getDeltaTime());
-		if (Math.abs(q)>=vAng)
+		if (Math.abs(q)>=vAng*Gdx.graphics.getDeltaTime())
 			return super.rotate((q<0?-1:1)*vAng*Gdx.graphics.getDeltaTime());
 		if(Math.abs(q)<=vAng*Gdx.graphics.getDeltaTime())
 			return super.rotate(q);
@@ -196,9 +197,7 @@ public class Barco extends Sprite{
 	
 	@Override
 	public void onExitFromRange() {
-		if(MainScreen.onRange.size() == 0) {
-			
-		}
+		
 	}
 	//CANYONES
 	public boolean dispararLado(PosicionCanyon lc) {

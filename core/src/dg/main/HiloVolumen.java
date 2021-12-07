@@ -12,7 +12,6 @@ public class HiloVolumen extends Thread {
 	private boolean DirVol;
 	private boolean cambios=false;
 	private static Logger logger= Logger.getLogger("MenuOp");
-	private static String audio;
 	
 	/**public HiloVolumen(boolean subirObajar, int v) {
 		this.vDestino=v;
@@ -45,46 +44,42 @@ public class HiloVolumen extends Thread {
 		this.cambios=SiNo;
 	}
 	
-	public void setFichero(String f) {
-		audio = f;
-	}
 		
 	public void run() {
 		//AudioPlayer.Reproducir(audio);
 		while(true){
-			System.out.println(cambios);
 			if(cambios) {
 				if(DirVol) {					
-					cambios=bajarVolumen(this.vDestino);
+					cambios=bajarVolumen(this.vDestino, this.selCancion);
 				}else {
-					cambios=subirVolumen(this.vDestino);
+					cambios=subirVolumen(this.vDestino,this.selCancion);
 				}				
 			}	
 		}
 	}
 	
 
-	public boolean bajarVolumen(float v ) {
-		for(float i = AudioPlayer.getVolumen();i>v;i-=0.01) {
+	public boolean bajarVolumen(float v, AudioPlayer c ) {
+		for(float i = c.getVolumen();i>v;i-=0.01) {
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");
 			}
-			AudioPlayer.setVolumen(i);
+			c.setVolumen(i);
 		}System.out.println("Acabado bajada");
 		return false;
 	}
-	public boolean subirVolumen(float v) {
-		for(float i = AudioPlayer.getVolumen();i<v;i+=0.01) {
+	public boolean subirVolumen(float v, AudioPlayer c ) {
+		for(float i = c.getVolumen();i<v;i+=0.01) {
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.out.println("No se pudo detener el hilo");
 			}
-			AudioPlayer.setVolumen(i);
+			c.setVolumen(i);
 		}System.out.println("Acabado Subida");
 		return false;
 	}

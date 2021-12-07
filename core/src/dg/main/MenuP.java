@@ -25,10 +25,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuP implements Screen{
 	
+	private static boolean orden=true;
 	private final Dokdo game;
 	private Screen padre;
 	private Screen mar;
-	public static AudioPlayer cMenu;
+	public static AudioPlayer cMenu= new AudioPlayer();
+	public static AudioPlayer Menu8Bits= new AudioPlayer();
 	private static Logger logger= Logger.getLogger("Menu");
     private SpriteBatch batch;
     protected Stage stage;
@@ -45,9 +47,16 @@ public class MenuP implements Screen{
     	s1.start();
     	try {
     		cMenu.Reproducir("Sonidos//DrunkenSailor.mp3");
-        	logger.info("Cancion cargada sin problemas");
+        	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
-        	logger.info("Fallo al cargar la Cancion");
+        	logger.info("Fallo al cargar la Cancion principal");
+		}
+    	try {
+    		Menu8Bits.Reproducir("Sonidos//Drunken8bits.mp3");
+    		Menu8Bits.setVolumen(0);
+        	logger.info("Cancion secundaria cargada sin problemas");
+		} catch (Exception e) {
+        	logger.info("Fallo al cargar la Cancion secundaria");
 		}
     	
     	
@@ -85,7 +94,7 @@ public class MenuP implements Screen{
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	AudioPlayer.detener();
+            	cMenu.detener();
             	game.setScreen(mar);
             }
         });
@@ -122,7 +131,21 @@ public class MenuP implements Screen{
         menu.add(boton3).width(80).pad(5);
         
         
-        
+        barco.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(orden) {
+        			cMenu.setVolumen(0);
+            		Menu8Bits.setVolumen(0.5f);
+            		orden=false;
+        		}else {
+        			cMenu.setVolumen(0.5f);
+            		Menu8Bits.setVolumen(0);
+            		orden=true;
+        		}
+        	}
+        });
+                        
         stage.addActor(menu);
       
 	}

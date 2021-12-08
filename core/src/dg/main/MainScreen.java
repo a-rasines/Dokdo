@@ -22,7 +22,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import DataBase.DatabaseHandler;
-import hilos.HiloVolumen;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -35,7 +34,6 @@ import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
-	public static HiloVolumen s1;
 	public static AudioPlayer cFondo = new AudioPlayer();
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
@@ -56,10 +54,6 @@ public class MainScreen implements Screen{
 	ShapeRenderer sr = new ShapeRenderer();
 	
 	public static boolean entraRango = false;
-	public MainScreen(HiloVolumen hiloDeSonido) {
-		this.s1=hiloDeSonido;
-		// TODO Auto-generated constructor stub
-	}
 	/**
 	 * Genera un array a partir de valores
 	 * @param v valores en el array

@@ -6,17 +6,15 @@ import hilos.HiloVolumen;
 
 
 public class Dokdo extends Game{
-	private static MainScreen mapaC;
-	private static MenuP menu ;
-	private HiloVolumen s1= new HiloVolumen();
-	
+	private static Dokdo instance;
+	public static Dokdo getInstance() {
+		if(instance == null)instance = new Dokdo();
+		return instance;
+	}
 	@Override
 	public void create() {
 		//TODO Crear todas las ventnas que se van a usar para poder cambiar entre ellas
-		MainScreen mapaC= new MainScreen(s1);
-		MenuP menu = new MenuP(this,mapaC,s1);
-		//setScreen(new MainScreen() ); //pruebas de juego
-		setScreen(menu); //no borrar por favor--> pruebas del menu
+		setScreen(new MenuP()); //no borrar por favor--> pruebas del menu
 	}
 	
 	

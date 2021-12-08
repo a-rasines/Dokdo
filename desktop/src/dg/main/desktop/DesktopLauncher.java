@@ -19,7 +19,6 @@ public class DesktopLauncher {
 		config.height = (int)screenSize.getHeight()-50;
 		config.x = 0;
 		config.y = 0;
-		//new LwjglApplication(new DokdoCore(), config);
-		new LwjglApplication(new Dokdo(),config); // juego auxiliar de prueba
+		new LwjglApplication(Dokdo.getInstance(),config);
 	}
 }

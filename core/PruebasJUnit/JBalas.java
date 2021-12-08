@@ -3,9 +3,10 @@ import org.junit.Test;
 
 
 import objetos.Bala;
+import objetos.barcos.Barco;
 
 public class JBalas {
-	private Bala b1 = new Bala(1,2,3,4,5, false); 
+	private Bala b1 = new Bala(1,2,3,4,5, new Barco(0, 0, 0, 0)); 
 
 	@Test
 	public void getDanyo() {

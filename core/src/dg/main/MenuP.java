@@ -38,14 +38,13 @@ public class MenuP implements Screen{
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
-    private HiloVolumen s1;
+    private HiloVolumen s1 = HiloVolumen.getInstance();
 
     
-    public MenuP(Dokdo juego, MainScreen ventana2,HiloVolumen hiloVol) {
-    	this.s1=hiloVol;
+    public MenuP() {
     	this.padre = this;
-    	this.mar=ventana2;
-    	this.game=juego;
+    	this.mar= new MainScreen();
+    	this.game=Dokdo.getInstance();
     	s1.start();
     	try {
     		cMenu.Reproducir("Sonidos//DrunkenSailor.mp3");
@@ -54,10 +53,11 @@ public class MenuP implements Screen{
         	logger.info("Fallo al cargar la Cancion principal");
 		}
     	try {
-    		Menu8Bits.Reproducir("Sonidos//Drunken8bits.mp3");
+    		Menu8Bits.Reproducir("Sonidos//D8Bits.mp3");
     		Menu8Bits.setVolumen(0);
         	logger.info("Cancion secundaria cargada sin problemas");
 		} catch (Exception e) {
+			e.printStackTrace();
         	logger.info("Fallo al cargar la Cancion secundaria");
 		}
     	

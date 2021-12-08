@@ -8,6 +8,13 @@ import objetos.Sprite;
 import objetos.barcos.Barco;
 
 public class HiloVolumen extends Thread {
+	private static HiloVolumen instance;
+	public static HiloVolumen getInstance() {
+		if(instance == null) instance = new HiloVolumen();
+		return instance;
+	}
+	
+	
 	private AudioPlayer selCancion;
 	private float vDestino;
 	private boolean DirVol;

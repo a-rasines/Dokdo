@@ -43,6 +43,7 @@ public class MainScreen implements Screen{
 	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
+	public static List<Bala> balasDañoContinuo = new ArrayList<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
@@ -195,24 +196,36 @@ public class MainScreen implements Screen{
 		
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
-			if(b != null && i.isJugador()) {
+			if(b != null && i.barcoDisparo(barco)) {
 				if(barco.getMunicionEnUso().getInstantaneo())
 					b.recibeDanyo(i);
 				else{
-					b.recibeDanyoContinuo(i);
+					b.recibeDanyo(i);
+					balasDañoContinuo.add(i);
 				}
-			} else if(i.collidesWith(barco) && !i.isJugador()) {
+			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
 				barco.recibeDanyo(i);
 			}
 			i.decelerate();
 			i.dibujar();
 		}
+		for(Bala z:balasDañoContinuo) {
+			balasDisparadas.remove(z);
+			if(z.getVeces()==0) {
+				balasBorrar.add(z);
+			}else {
+				if(z.barcoDisparo(barco)) barco2.recibeDanyoContinuo(z);
+				else barco.recibeDanyoContinuo(z);
+			}
+		}
 		for(Bala i: balasBorrar) {
 			balasDisparadas.remove(i);
+			balasDañoContinuo.remove(i);
 		}
 		for(Barco j: barEneBorrar) {
 			barcosEnemigos.remove(j);
 		}
+		
 		barEneBorrar.clear();
 		balasBorrar.clear();
 		
@@ -264,7 +277,7 @@ public class MainScreen implements Screen{
 			barco2.left();
 		barco2.drawCollisions(sr);
 		//HAY QUE CAMBIARLO
-		barco2.IAMove();
+		//barco2.IAMove();
 		sr.begin(ShapeRenderer.ShapeType.Line);
 	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
 	    sr.end();

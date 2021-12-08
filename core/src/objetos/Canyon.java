@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 
 import dg.main.MainScreen;
+import objetos.barcos.Barco;
 
 /**
  * Esta clase representa un cañon de un {@link objetos.barcos.Barco Barco}
@@ -25,7 +26,7 @@ public class Canyon extends Mejoras{
 	 * @param posY
 	 * @param angle
 	 */
-	public void disparar(Municion m, float posX, float posY, float angle, boolean jugador) {
-		MainScreen.balasDisparadas.add(new Bala(posX, posY, 10f, angle, m.getDanyo(), jugador));
+	public void disparar(Municion m, float posX, float posY, float angle, Barco barco) {
+		MainScreen.balasDisparadas.add(new Bala(posX, posY, 10f, angle, m.getDanyo(), barco));
 	}
 }

@@ -7,12 +7,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
-
-import dg.main.AudioPlayer;
 import dg.main.MainScreen;
 import objetos.Bala;
 import objetos.Canyon;
@@ -162,7 +156,7 @@ public class Barco extends Sprite{
 	}
 	@Override
 	public <T extends Sprite> T rotate(double q){
-		System.out.println("Rotate: "+String.valueOf(q));
+		//System.out.println("Rotate: "+String.valueOf(q));
 		if(Math.abs(q)>180) 
 			return rotate(((360-q)%360)*Gdx.graphics.getDeltaTime());
 		if (Math.abs(q)>=vAng*Gdx.graphics.getDeltaTime())
@@ -174,21 +168,20 @@ public class Barco extends Sprite{
 	public void recibeDanyo( Bala bullet) {
 			vida -= bullet.getDanyo();
 			MainScreen.balasBorrar.add(bullet);
-	}
-	public void recibeDanyoContinuo(Bala bullet) {
-		long antes=System.currentTimeMillis();
-		while(this.getMunicionEnUso().getVeces()>0) {
-			long ahora=System.currentTimeMillis();
-			if((ahora-antes)*1000 == this.getMunicionEnUso().getCoolDown()) {
-				this.setVidaDelBarco((int) (this.getVidaDelBarco() - bullet.getDanyo()*0.5));
-				this.getMunicionEnUso().setVeces(this.getMunicionEnUso().getVeces()-1);
-				antes=ahora;
-				System.out.println(this.vida);
+			System.out.println(vida);
+			if(bullet.getBarco().getMunicionEnUso().getInstantaneo()) {
+				MainScreen.balasDañoContinuo.add(bullet);
 			}
+	}
+	
+	public void recibeDanyoContinuo(Bala bullet) {
+		if(bullet.canDamage()) {
+			this.setVidaDelBarco((int) (this.getVidaDelBarco() - bullet.getDanyo()*0.5));
+			bullet.setVeces(bullet.getVeces()-1);
+			System.out.println(this.vida);
 		}
 	}
 	//DETECCIÓN
-	
 	@Override
 	public void onRangeOfPlayer() {
 		
@@ -319,11 +312,10 @@ class CannonSide{
 		float y1 = v[2*pc.getSecond()+1];
 		if(canShoot()) {
 			for(Canyon c: c) {
-				
-				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle(), b instanceof BarcoJugador);
+				c.disparar(m,n*(x0+x1)/(s+1), n*(y0+y1)/(s+1),b.getAngle()+ pc.getAngle(), b);
 				n++;
 			}
-			//setCooldown(cooldown);
+			setCooldown(cooldown);
 			return true;
 		}
 		return false;

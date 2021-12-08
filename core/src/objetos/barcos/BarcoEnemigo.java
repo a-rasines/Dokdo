@@ -141,7 +141,7 @@ public class BarcoEnemigo extends Barco{
 			playerTracker = new Vector2(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}else {
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
-			System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
+			//System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		}
 		if(isTrackerIntersecting()) { //Hay isla en el camino
 			//TODO esquivar la isla de la forma mas eficiente
@@ -157,7 +157,7 @@ public class BarcoEnemigo extends Barco{
 					angFin = playerTracker.angleDeg();
 				}
 			}
-			System.out.println((angFin-getAngle()));
+			//System.out.println((angFin-getAngle()));
 			if(angFin-getAngle()<30) {
 				forward();
 			}else {
@@ -188,7 +188,9 @@ public class BarcoEnemigo extends Barco{
 	@Override
 	public void recibeDanyoContinuo(Bala bullet) {
 		super.recibeDanyoContinuo(bullet);
-		
+		if(vida<=0) {
+			MainScreen.barEneBorrar.add(this);
+		}
 	}
 	@Override
 	public void onRangeOfPlayer() {

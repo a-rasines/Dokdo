@@ -13,7 +13,10 @@ public class Bala extends Sprite{
 	private float decelerate = 0.1f; 
 	private static Texture t ;
 	
-	private boolean jugador;
+	private Barco barcoDisparo;
+	private int veces;
+	private int cd;
+	private long t0 = 0;
 	static {
 		try {
 		t = new Texture("tileSetBala.png");
@@ -28,15 +31,25 @@ public class Bala extends Sprite{
 	 * @param angulo Angulo de disparo de la bala
 	 * @param daño daño que ocasiona al colisionar
 	 */
-	public Bala(float x0, float y0, float vel, float angulo, int danyo, boolean jugador) {
+	public Bala(float x0, float y0, float vel, float angulo, int danyo, Barco barco) {
 		super(x0, y0, vel, 8, 8);
 		rotate(angulo);
 		super.tMap = t;
 		this.danyo = danyo;
-		this.jugador = jugador;
+		this.barcoDisparo = barco;
+		this.veces = barco.getMunicionEnUso().getVeces();
+		this.cd = barco.getMunicionEnUso().getCoolDown();
 		//TODO hacer el bucle de movimiento
 	}
 	
+	public int getVeces() {
+		return veces;
+	}
+
+	public void setVeces(int veces) {
+		this.veces = veces;
+	}
+
 	@Override
 	public void onRangeOfPlayer() {
 		// TODO Auto-generated method stub
@@ -65,12 +78,19 @@ public class Bala extends Sprite{
 	 * ▓▓▓▓▓▓▓▓▓▓ GETTERS/SETTERS ▓▓▓▓▓▓▓▓▓▓ 
 	 */
 	public int getDanyo() {
+		t0 = System.currentTimeMillis();
 		return danyo;
+	}
+	public boolean canDamage() {
+		return System.currentTimeMillis()-t0 >=cd*1000;
 	}
 	public float getVelocidad() {
 		return v;
 	}
-	public boolean isJugador() {
-		return jugador;
+	public Barco getBarco() {
+		return this.barcoDisparo;
+	}
+	public boolean barcoDisparo(Barco barcoComparado) {
+		return this.barcoDisparo.equals(barcoComparado);
 	}
 }

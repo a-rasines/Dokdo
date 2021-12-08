@@ -40,7 +40,7 @@ public class DatabaseHandler {
 			statement.setQueryTimeout(5);
 			return true;
 		} catch (SQLException e) {
-			logger.log(Level.WARNING, "Error connecting to database: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error connecting to database: "+e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -58,7 +58,7 @@ public class DatabaseHandler {
 	        statement.executeUpdate(tb.build());
 	        return true;
 		} catch (SQLException e) {
-			logger.log(Level.WARNING, "Error adding table to database: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error adding table to database: "+e.getMessage());
 			return false;
 		}
 	}
@@ -111,7 +111,7 @@ public class DatabaseHandler {
 			statement.executeUpdate(code);
 			return true;
 		} catch (SQLException e) {
-			logger.log(Level.WARNING, "Error updating database: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error updating database: "+e.getMessage());
 			return false;
 		}
 	}
@@ -120,7 +120,7 @@ public class DatabaseHandler {
 			logger.log(Level.INFO, "Trying to query: "+query);
 			return statement.executeQuery(query);
 		} catch (SQLException e) {
-			logger.log(Level.WARNING, "Error during query to database: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error during query to database: "+e.getMessage());
 			return null;
 		}
 	}
@@ -144,7 +144,7 @@ public class DatabaseHandler {
             file.flush();
  
         } catch (IOException e) {
-        	logger.log(Level.WARNING, "Error writting to JSON: "+e.getMessage());
+        	logger.log(Level.SEVERE, "Error writting to JSON: "+e.getMessage());
         }
 	}
 	/**
@@ -161,7 +161,7 @@ public class DatabaseHandler {
             file.flush();
  
         } catch (IOException e) {
-        	logger.log(Level.WARNING, "Error removing from JSON: "+e.getMessage());
+        	logger.log(Level.SEVERE, "Error removing from JSON: "+e.getMessage());
         }
 	}
 	/**
@@ -181,6 +181,7 @@ public class DatabaseHandler {
             	});
             }
         } catch (FileNotFoundException e) {
+        	logger.log(Level.WARNING, "JSON not found, generating new");
             try {
 				new File("data.json").createNewFile();
 				try (FileWriter file = new FileWriter("src/data.json")) {
@@ -189,15 +190,15 @@ public class DatabaseHandler {
 		            file.flush();
 		            loadJSon(def);
 		        } catch (IOException e1) {
-		        	logger.log(Level.WARNING, "Error writting JSON archive: "+e.getMessage());
+		        	logger.log(Level.SEVERE, "Error writting JSON archive: "+e.getMessage());
 		        }
 			} catch (IOException e1) {
-				logger.log(Level.WARNING, "Error creating JSON archive: "+e.getMessage());
+				logger.log(Level.SEVERE, "Error creating JSON archive: "+e.getMessage());
 			}
         } catch (IOException e) {
-			logger.log(Level.WARNING, "Error parsing JSON: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error parsing JSON: "+e.getMessage());
 		} catch (ParseException e) {
-			logger.log(Level.WARNING, "Error parsing JSON: "+e.getMessage());
+			logger.log(Level.SEVERE, "Error parsing JSON: "+e.getMessage());
 		}
 	}
 	/**

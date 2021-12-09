@@ -6,7 +6,7 @@ import objetos.barcos.Barco;
 
 public class JBarco {
 	
-	private Barco b1 = new Barco(5, 1, 0, 3, Municion.EXPLOSIVA);
+	private Barco b1 = new Barco(5, 1, 0, 0, Municion.EXPLOSIVA);
 	
 	@Test
 	public void Vida() {

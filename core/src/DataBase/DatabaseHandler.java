@@ -132,7 +132,6 @@ public class DatabaseHandler {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void writeToJSON(String key, Object v, boolean override) {
-		logger.log(Level.INFO, "Trying to insert in "+key+" a(n) "+v.getClass().getName()+".("+v.toString()+") override= "+override);
 		if(!json.containsKey(key)||override)json.put(key, v);
 		else {
 			JSONArray a = (JSONArray) json.get(key);
@@ -144,7 +143,7 @@ public class DatabaseHandler {
             file.flush();
  
         } catch (IOException e) {
-        	logger.log(Level.SEVERE, "Error writting to JSON: "+e.getMessage());
+        	logger.log(Level.SEVERE, "Error writting to JSON: "+e.getMessage()+" Tried to insert in "+key+" a(n) "+v.getClass().getName()+".("+v.toString()+") override= "+override);
         }
 	}
 	/**

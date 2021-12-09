@@ -16,12 +16,11 @@ import objetos.Municion;
 import objetos.Sprite;
 public class BarcoJugador extends Barco{
 	
-	private Circle range = new Circle();
+	private Circle range;
 
-	public BarcoJugador(int vida, int nivel, float posX, float posY, int rango, Municion municionEnUso) {
+	public BarcoJugador(int vida, int nivel, float posX, float posY, Municion municionEnUso) {
 		super(vida, nivel, posX, posY, municionEnUso);
-		range.setRadius(rango);
-		range.setPosition(new Vector2(getX(),getY()));
+		refreshRange();
 		// TODO Auto-generated constructor stub
 	}
 	/**Refresca la posicion del rango(Circulo)
@@ -29,7 +28,8 @@ public class BarcoJugador extends Barco{
 	 */
 	protected void refreshRange() {
 		if(range == null) {
-			range.setRadius(150);
+			range = new Circle();
+			range.setRadius(600);
 			range.setPosition(new Vector2(getX(),getY()));
 		} else {
 			range.setPosition(new Vector2(getX(),getY()));

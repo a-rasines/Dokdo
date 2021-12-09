@@ -143,6 +143,7 @@ public class BarcoEnemigo extends Barco{
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 			//System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		}
+		if(tracking)
 		if(isTrackerIntersecting()) { //Hay isla en el camino
 			//TODO esquivar la isla de la forma mas eficiente
 		}else { //Camino despejado
@@ -196,6 +197,7 @@ public class BarcoEnemigo extends Barco{
 	public void onRangeOfPlayer() {
 		cCombate.setVolumen(0.5f);
 		MainScreen.cFondo.setVolumen(0);
+		tracking = true;
 		/**HiloVolumen hv = MainScreen.s1;
 		if(hv.isAlive()) {
 			hv.interrupt();

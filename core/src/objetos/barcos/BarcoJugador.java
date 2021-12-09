@@ -18,10 +18,9 @@ public class BarcoJugador extends Barco{
 	
 	private Circle range;
 
-	public BarcoJugador(int vida, int nivel, float posX, float posY, Municion municionEnUso) {
-		super(vida, nivel, posX, posY, municionEnUso);
+	public BarcoJugador(int vida, int nivel, Municion municionEnUso) {
+		super(vida, nivel, 0, 0, municionEnUso);
 		refreshRange();
-		// TODO Auto-generated constructor stub
 	}
 	/**Refresca la posicion del rango(Circulo)
 	 * 

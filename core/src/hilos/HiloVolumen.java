@@ -56,7 +56,9 @@ public class HiloVolumen extends Thread {
 	public void run() {
 		//AudioPlayer.Reproducir(audio);
 		while(true){
+			
 			if(cambios) {
+				System.out.println("se cami");
 				if(DirVol) {					
 					cambios=bajarVolumen(this.vDestino, this.selCancion);
 				}else {
@@ -69,6 +71,7 @@ public class HiloVolumen extends Thread {
 
 	public boolean bajarVolumen(float v, AudioPlayer c ) {
 		for(float i = c.getVolumen();i>v;i-=0.01) {
+			System.out.println("bajo");
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {
@@ -80,7 +83,9 @@ public class HiloVolumen extends Thread {
 		return false;
 	}
 	public boolean subirVolumen(float v, AudioPlayer c ) {
+		c.setVolumen(0f);
 		for(float i = c.getVolumen();i<v;i+=0.01) {
+			System.out.println("subo");
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {

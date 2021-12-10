@@ -8,6 +8,11 @@ import com.badlogic.gdx.audio.Music;
 public class AudioPlayer {
 	
 	private  Music musica;
+	private String cancion;
+	
+	public void setCancion(String cancion) {
+		this.cancion = cancion;
+	}
 	
 	public Music getMusica() {
 		return this.musica;
@@ -21,13 +26,19 @@ public class AudioPlayer {
 	 * Agrega un sonido a la ventana
 	 * @param cancion
 	 */
-	public void Reproducir(String cancion) {
+	public void Reproducir() {
 		musica = Gdx.audio.newMusic(Gdx.files.internal(cancion));
 		musica.play();
 		musica.setLooping(true);
 		musica.setVolume(0.5f);
+		rep = true;
 	}
 	
+	boolean rep = false;
+	
+	public boolean reproduciendo() {
+		return rep;
+	}
 	/**
 	 * Detiene el sonido actual
 	 */

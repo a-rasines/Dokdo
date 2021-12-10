@@ -47,19 +47,23 @@ public class MenuP implements Screen{
     	this.game=Dokdo.getInstance();
     	s1.start();
     	try {
-    		cMenu.Reproducir("Sonidos//DrunkenSailor.mp3");
+    		cMenu.setCancion("Sonidos//DrunkenSailor.mp3");
+    		cMenu.Reproducir();
         	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion principal");
+        	//En caso de que falle la primera
+        	try {
+        		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
+        		Menu8Bits.Reproducir();
+        		Menu8Bits.setVolumen(0.5f);
+            	logger.info("Cancion secundaria cargada sin problemas");
+    		} catch (Exception a) {
+    			e.printStackTrace();
+            	logger.info("Fallo al cargar la Cancion secundaria");
+    		}
 		}
-    	try {
-    		Menu8Bits.Reproducir("Sonidos//D8Bits.mp3");
-    		Menu8Bits.setVolumen(0);
-        	logger.info("Cancion secundaria cargada sin problemas");
-		} catch (Exception e) {
-			e.printStackTrace();
-        	logger.info("Fallo al cargar la Cancion secundaria");
-		}
+    	
     	
     	
     	//dibujador de sprites

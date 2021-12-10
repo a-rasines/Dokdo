@@ -109,9 +109,12 @@ public class MainScreen implements Screen{
 	@Override
 	public void show() {
 		//Musica normal
+		cFondo.setCancion("Sonidos//Overworld.mp3");
 		
-		cFondo.Reproducir("Sonidos//Overworld.mp3");
-		
+		cFondo.Reproducir();
+		cFondo.setVolumen(0.5f);
+		BarcoEnemigo.hv.start();
+		BarcoEnemigo.hv.setCambios(false);
 		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
 		barco = new BarcoJugador(10,0, Municion.INCENDIARIA).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
 		

@@ -20,6 +20,7 @@ import objetos.Sprite;
  */
 public class BarcoEnemigo extends Barco{
 	public static AudioPlayer cCombate= new AudioPlayer();
+	public static HiloVolumen hv = new HiloVolumen();
 	private Polygon lineaFrente;
 	private Polygon lineaIzquierda;
 	private Polygon lineaDerecha;
@@ -42,8 +43,12 @@ public class BarcoEnemigo extends Barco{
 		isProtecting = island;
 		refreshLineas();
 		
-		cCombate.Reproducir("Sonidos//Battle.mp3");
-		cCombate.setVolumen(0);
+		cCombate.setCancion("Sonidos//Battle.mp3");
+		
+		hv.setSelCancion(cCombate);
+		
+
+		
 	
 	}
 	/**
@@ -195,8 +200,21 @@ public class BarcoEnemigo extends Barco{
 	}
 	@Override
 	public void onRangeOfPlayer() {
-		cCombate.setVolumen(0.5f);
-		MainScreen.cFondo.setVolumen(0);
+		
+		
+		MainScreen.cFondo.setVolumen(0f);
+		if(cCombate.reproduciendo()) {
+			cCombate.setVolumen(0.5f);
+			
+		} else {
+			cCombate.Reproducir();
+		}
+		
+//		BarcoEnemigo.hv.setSelCancion(cCombate);
+//		BarcoEnemigo.hv.setCambios(true);
+//		BarcoEnemigo.hv.setDireccion(true);
+//		
+		
 		tracking = true;
 		/**HiloVolumen hv = MainScreen.s1;
 		if(hv.isAlive()) {
@@ -211,12 +229,20 @@ public class BarcoEnemigo extends Barco{
 	@Override
 	public void onExitFromRange() {
 		tracking = false;
-		if(MainScreen.onRange.size() == 0) {
-			cCombate.setVolumen(0);
-			MainScreen.cFondo.setVolumen(0.5f);
-//			AudioPlayer.detener();
-//			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
-		}
-		
+		cCombate.setVolumen(0f);
+		MainScreen.cFondo.setVolumen(0.5f);
+//		BarcoEnemigo.hv.setSelCancion(MainScreen.cFondo);
+//		BarcoEnemigo.hv.setCambios(true);
+//		BarcoEnemigo.hv.setDireccion(false);
+//		if(MainScreen.onRange.size() == 0) {
+//			
+//			cCombate.detener();
+//			hv.setDireccion(false);
+//			hv.setCambios(true);
+//			MainScreen.cFondo.setVolumen(0.5f);
+////			AudioPlayer.detener();
+////			AudioPlayer.Reproducir("Sonidos//Overworld.mp3");
+//		}
+//		
 	}
 }

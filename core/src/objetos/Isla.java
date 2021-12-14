@@ -15,6 +15,7 @@ public class Isla extends Sprite{
 	protected int nivelRecomendado;
 	protected List<Barco> barcos;
 	protected int botin;
+	protected boolean liberada = false;
 	private static Texture t;
 	static {
 		try {
@@ -75,5 +76,12 @@ public class Isla extends Sprite{
 	}
 	public void setBotin(int botin) {
 		this.botin = botin;
+	}
+	
+	public void setLiberada(boolean lib) {
+		liberada = lib;
+	}
+	public boolean getLiberada() {
+		return liberada;
 	}
 }

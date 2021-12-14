@@ -25,6 +25,7 @@ import DataBase.DatabaseHandler;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
+import objetos.MiniMapa;
 import objetos.Municion;
 import objetos.Sprite;
 import objetos.barcos.Barco;
@@ -140,6 +141,8 @@ public class MainScreen implements Screen{
     		}
     	}
     	
+    	MiniMapa.setPosIslas(islaList);
+    	
 	}
 
 	Boolean cambioEstado = true;
@@ -254,6 +257,10 @@ public class MainScreen implements Screen{
 		barcosEnemigos.forEach(v->v.dibujar());
 		islaList.forEach(v->v.dibujar());
 		islaList.get(0).drawCollisions(sr);
+		
+		//Minimapa
+		MiniMapa.mapaRenderer();
+		MiniMapa.setPosBarco(barco);
 		
 		//TODO Prueba de lineas
 		

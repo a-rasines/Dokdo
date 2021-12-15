@@ -40,6 +40,9 @@ public abstract class Sprite {
 		refreshBounds();
 		
 	}
+	
+
+	
 	/**
 	 * Trata al Sprite como un objeto de clase hija. Sirve para metodos de Sprite que dependen de otros
 	 * @return This en modo hijo

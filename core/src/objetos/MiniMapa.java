@@ -72,7 +72,6 @@ public class MiniMapa {
 		srIL.begin(ShapeRenderer.ShapeType.Filled);
 		srIO.begin(ShapeRenderer.ShapeType.Filled);
 	    sr.polygon(vertices);
-	    System.out.println(barcoY);
 	    srB.setColor(Color.BROWN);
 	    srB.circle(Gdx.graphics.getWidth() - 100 + barcoX, 100 + barcoY, 2);
 	    for(int i = 0; i< listaIslasEstado.size(); i++) {

@@ -62,6 +62,26 @@ public class MainScreen implements Screen{
 	public <T> T[] arrayBuilder(@SuppressWarnings("unchecked") T... v){
 		return v;
 	}
+	public void asignarTexturasAIslas() {
+		int x = 0;
+		//primeras 10 islas
+		for (int i = 0; i<10; i++) {
+			islaList.get(i).setTexturePos(x, i%7);
+			if(i == 6) {
+				x++;
+			}
+		}
+		//segundas 10 islas
+		x = 0;
+		for (int i = 0; i<10; i++) {
+			islaList.get(i+10).setTexturePos(x, i%7);
+			
+			if(i == 6) {
+				x++;
+			}
+		}
+	}
+	
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
 	 * 
 	 */
@@ -94,6 +114,8 @@ public class MainScreen implements Screen{
 				}
 			}
 		}
+		
+		asignarTexturasAIslas();
 		
 		logger.info("Generacion completa");
 		
@@ -142,6 +164,7 @@ public class MainScreen implements Screen{
     	}
     	
     	MiniMapa.setPosIslas(islaList);
+    	asignarTexturasAIslas(); //TODO guardar la textura utilizada en el JSON
     	
 	}
 

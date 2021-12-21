@@ -157,14 +157,14 @@ public class BarcoEnemigo extends Barco{
 				angFin = MainScreen.barco.getAngle();
 				
 			}else {
-				angFin = (180-(playerTracker.angleDeg()-90)%180);
+				angFin = 360-(playerTracker.angleDeg()+90);
 			}
 			if(angFin-getAngle()<30) {
 				forward();
 			}else {
 				decelerate();
 			}
-			rotate((angFin-getAngle())%360);
+			rotate(angFin-getAngle());
 		}
 	}
 	@Override

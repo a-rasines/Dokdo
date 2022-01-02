@@ -52,16 +52,15 @@ public class MenuP implements Screen{
         	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion principal");
-        	//En caso de que falle la primera
-        	try {
-        		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
-        		Menu8Bits.Reproducir();
-        		Menu8Bits.setVolumen(0.5f);
-            	logger.info("Cancion secundaria cargada sin problemas");
-    		} catch (Exception a) {
-    			e.printStackTrace();
-            	logger.info("Fallo al cargar la Cancion secundaria");
-    		}
+		}
+    	try {
+    		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
+    		Menu8Bits.Reproducir();
+    		Menu8Bits.setVolumen(0.5f);
+        	logger.info("Cancion secundaria cargada sin problemas");
+		} catch (Exception a) {
+			a.printStackTrace();
+        	logger.info("Fallo al cargar la Cancion secundaria");
 		}
     	
     	

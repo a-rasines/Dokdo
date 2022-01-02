@@ -47,21 +47,23 @@ public class MenuP implements Screen{
     	this.game=Dokdo.getInstance();
     	s1.start();
     	try {
-    		cMenu.setCancion("Sonidos//DrunkenSailor.mp3");
-    		cMenu.Reproducir();
-        	logger.info("Cancion principal cargada sin problemas");
-		} catch (Exception e) {
-        	logger.info("Fallo al cargar la Cancion principal");
-		}
-    	try {
     		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
     		Menu8Bits.Reproducir();
-    		Menu8Bits.setVolumen(0.5f);
+    		Menu8Bits.setVolumen(0f);
         	logger.info("Cancion secundaria cargada sin problemas");
 		} catch (Exception a) {
 			a.printStackTrace();
         	logger.info("Fallo al cargar la Cancion secundaria");
 		}
+    	try {
+    		cMenu.setCancion("Sonidos//DrunkenSailor.mp3");
+    		cMenu.Reproducir();
+        	logger.info("Cancion principal cargada sin problemas");
+		} catch (Exception e) {
+        	logger.info("Fallo al cargar la Cancion principal");
+        	Menu8Bits.setVolumen(0.5f);
+		}
+    	
     	
     	
     	
@@ -100,6 +102,7 @@ public class MenuP implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	cMenu.detener();
+            	Menu8Bits.detener();
             	game.setScreen(mar);
             }
         });

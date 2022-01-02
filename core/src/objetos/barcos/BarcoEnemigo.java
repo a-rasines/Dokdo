@@ -121,13 +121,6 @@ public class BarcoEnemigo extends Barco{
 	 */
 	//TODO Se añade return polygon y asi sabemos que linea toca, Meterselo al hijo ;)
 	public PosicionCanyon tocaLinea(Sprite o) {
-		ShapeRenderer shapeRenderer = new ShapeRenderer();
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-	    shapeRenderer.polygon(lineaDerecha.getTransformedVertices());
-	    shapeRenderer.polygon(lineaIzquierda.getTransformedVertices());
-	    shapeRenderer.polygon(lineaFrente.getTransformedVertices());
-	    shapeRenderer.polygon(lineaAtras.getTransformedVertices());
-	    shapeRenderer.end();
 	    if(Intersector.overlapConvexPolygons(lineaDerecha, o.getBounds())) {
 	    	return PosicionCanyon.DERECHA;
 	    }
@@ -147,15 +140,13 @@ public class BarcoEnemigo extends Barco{
 	    return null;
 	}
 
-	private boolean isTrackerIntersecting() {
-		Boolean end = false;
+	private Isla isTrackerIntersecting() {
 		for(Isla i :MainScreen.islaList){
 			if(linePoligonIntersection(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()), i.getBounds())) {
-				end = true;
-				break;
+				return i;
 			}
 		}
-		return end;
+		return null;
 	}
 	public void IAMove() {
 		if(playerTracker == null) {
@@ -164,15 +155,26 @@ public class BarcoEnemigo extends Barco{
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 			//System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		}
-		if(tracking)
-		if(isTrackerIntersecting()) { //Hay isla en el camino
-			//TODO esquivar la isla de la forma mas eficiente
-		}else { //Camino despejado
-			float angFin;
-			if(playerTracker.len()<rango) { //Atacar
+		if(tracking) {
+			float angFin; //Angulo al que rotar (absoluto)
+			Isla inters = isTrackerIntersecting(); //Isla con la que intersecta el tracker
+			if(playerTracker.len()<rango && inters == null) { //Atacar sin obstrucciones
 				angFin = MainScreen.barco.getAngle();
 				
-			}else {
+			}else if (inters != null) { //Intersecta una isla
+				Face f = inters.getFirstCollidingFace(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()));
+				if(f == Face.N || f == Face.S) 
+					if(MainScreen.barco.getX() > getX())
+						angFin = 90;
+					else
+						angFin = -90;
+				else if (f == Face.E || f == Face.W)
+					if(MainScreen.barco.getY() > getY())
+						angFin = 0;
+					else
+						angFin = 180;
+				angFin = 0;//TODO calcular el angulo a seguir en caso de haber una isla de por medio
+			}else { //Perseguir sin obstrucciones
 				angFin = -((playerTracker.angleDeg()+90)%360);
 			}
 			if(angFin>180) {
@@ -180,17 +182,21 @@ public class BarcoEnemigo extends Barco{
 			}else if(angFin<-180) {
 				angFin = angFin+360;
 			}
-			float angRot = (angFin-getAngle())%360;
+			float angRot = (angFin-getAngle())%360; //Angulo a rotar (relativo)
 			if(angRot>180) {
 				angRot-=360;	
 			}else if(angRot<-180) {
 				angRot+=360;
 			}
 			rotate(angRot);
-			if(Math.abs((angFin-getAngle())%360)<30) {
-				forward();
+			if(!collidesWith(MainScreen.islaList)) {
+				if(Math.abs((angFin-getAngle())%360)<30) {
+					forward();
+				}else {
+					decelerate();
+				}
 			}else {
-				decelerate();
+				backwards();
 			}
 		}
 	}

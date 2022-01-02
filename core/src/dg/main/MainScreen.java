@@ -52,7 +52,6 @@ public class MainScreen implements Screen{
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
-	ShapeRenderer sr = new ShapeRenderer();
 	
 	/**
 	 * Genera un array a partir de valores
@@ -153,7 +152,6 @@ public class MainScreen implements Screen{
     	} else {
     		for(Object j : DatabaseHandler.getArrayFromJSon("IslaListas")) {
     			JSONObject i = (JSONObject) j;
-    			//TODO linea 209 es la q da error.
     			islaList.add(new Isla((float) (double) i.get("x"),  (float)(double) i.get("y"), 0, 0, null));
     			logger.info("Islas Cargadas");
     		}
@@ -272,10 +270,8 @@ public class MainScreen implements Screen{
 		//Dibujado
 		
 		barco.dibujar();
-		barco.drawCollisions(sr);
 		barcosEnemigos.forEach(v->v.dibujar());
 		islaList.forEach(v->v.dibujar());
-		islaList.get(0).drawCollisions(sr);
 		
 		//Minimapa
 		MiniMapa.mapaRenderer();
@@ -300,12 +296,7 @@ public class MainScreen implements Screen{
 			barco2.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			barco2.left();
-		barco2.drawCollisions(sr);
-		//HAY QUE CAMBIARLO
 		barco2.IAMove();
-		sr.begin(ShapeRenderer.ShapeType.Line);
-	    sr.line(new Vector2(barco.getX(), barco.getY()), new Vector2(barco2.getX(), barco2.getY()));
-	    sr.end();
 	}
 
 	@Override

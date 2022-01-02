@@ -63,7 +63,7 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T> T tpTo(float x, float y) {
 		T a= super.tpTo(x, y);
-		refreshBounds();
+		refreshRange();
 		return a;
 	}
 	@Override

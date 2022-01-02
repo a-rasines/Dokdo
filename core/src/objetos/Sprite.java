@@ -1,5 +1,10 @@
 package objetos;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -89,6 +94,71 @@ public abstract class Sprite {
 	    
 	    return poly.contains(circle.x, circle.y);
 	}
+	public enum Face{N, W, S, E}
+	/**
+	 * Devuelve la primera cara en la que intersecta con las colisiones del Sprite
+	 * @param first punto de salida
+	 * @param end punto de llegada
+	 * @return
+	 */
+	public Face getFirstCollidingFace(Vector2 first, Vector2 end) {
+		float[] bounds = getBounds().getVertices();
+		ArrayList<float[]> points =new ArrayList<>( Arrays.asList(new float[][]{{bounds[0], bounds[1]},{bounds[2], bounds[3]},{bounds[4], bounds[5]},{bounds[6], bounds[7]}}));
+		float[] point;
+		HashMap<String, float[]> pointMap = new HashMap<>();
+		for (int i = 0; i<4; i++) {
+			ArrayList<String> pos = new ArrayList<>(Arrays.asList(new String[] {"ne", "nw", "se", "sw"}));
+			pos.removeAll(pointMap.keySet());
+			point = points.get(0);
+			points.remove(0);
+			for (float[] p :points) {
+				if(point[0] > p[0]) {
+					pos.remove("ne");
+					pos.remove("se");
+				}else if(point[0] < p[0]){
+					pos.remove("nw");
+					pos.remove("sw");
+				}if(point[1] > p[1]) {
+					pos.remove("ne");
+					pos.remove("nw");
+				}else if(point[1] < p[1]) {
+					pos.remove("se");
+					pos.remove("sw");
+				}
+			}
+			pointMap.put(pos.get(0), point);
+		}
+		List<Face> faces = new ArrayList<>(Arrays.asList(Face.values()));
+		/*
+		 * y = mx + n
+		 * y' = mx' + n
+		 * y - mx = y' - mx'
+		 * mx' - mx = y' - y
+		 * m = (y' - y)/(x' - x)
+		 * n = y - mx
+		 * (y-n)/m = x
+		*/
+		float m = (end.y-first.y)/(end.x-first.x);
+		float n = end.y - end.x * m;
+		if(pointMap.get("nw")[1] > Math.max(first.y, end.y) || (pointMap.get("nw")[1]-n)/m > pointMap.get("nw")[0] || (pointMap.get("nw")[1]-n)/m < pointMap.get("ne")[0]){
+			faces.remove(Face.N);
+		}
+		if(pointMap.get("se")[1] < Math.min(first.y, end.y) || (pointMap.get("sw")[1]-n)/m > pointMap.get("sw")[0] || (pointMap.get("sw")[1]-n)/m < pointMap.get("se")[0]){
+			faces.remove(Face.S);
+		}
+		if(first.y < end.y && faces.contains(Face.S)) {
+			return Face.S;
+		}
+		if(first.y > end.y && faces.contains(Face.N)) {
+			return Face.N;
+		}
+		if(first.x < end.x) {
+			return Face.E;
+		}else {
+			return Face.W;
+		}
+	}
+	
 	/**
 	 * Busca si hay interseccion entre una linea compuesta por dos {@link com.badlogic.gdx.math.Vector2 Vector2} y un {@link com.badlogic.gdx.math.Polygon Polygon}
 	 * @param v1 punto 1 de linea 1

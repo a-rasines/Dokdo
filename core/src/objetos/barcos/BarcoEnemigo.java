@@ -1,6 +1,5 @@
 package objetos.barcos;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -14,7 +13,6 @@ import objetos.Canyon;
 import objetos.Isla;
 import objetos.Municion;
 import objetos.Sprite;
-import objetos.barcos.Barco.PosicionCanyon;
 /**
  * Representa un barco enemigo. Esta clase contiene un barco con herramientas para IA propia
  * @author algtc
@@ -172,30 +170,23 @@ public class BarcoEnemigo extends Barco{
 		}else { //Camino despejado
 			float angFin;
 			if(playerTracker.len()<rango) { //Atacar
-				System.out.println("a");
 				angFin = MainScreen.barco.getAngle();
 				
 			}else {
 				angFin = -((playerTracker.angleDeg()+90)%360);
 			}
 			if(angFin>180) {
-				System.out.println("+Angfin="+String.valueOf(angFin));
 				angFin= angFin-360;	
 			}else if(angFin<-180) {
-				System.out.println("-Angfin="+String.valueOf(angFin));
 				angFin = angFin+360;
 			}
 			float angRot = (angFin-getAngle())%360;
 			if(angRot>180) {
-				System.out.println("+Angfin="+String.valueOf(angFin));
 				angRot-=360;	
 			}else if(angRot<-180) {
-				System.out.println("-Angfin="+String.valueOf(angFin));
 				angRot+=360;
 			}
-			System.out.println((angFin-getAngle())%360);
 			rotate(angRot);
-			System.out.println(Math.abs(angFin-getAngle())<30);
 			if(Math.abs((angFin-getAngle())%360)<30) {
 				forward();
 			}else {

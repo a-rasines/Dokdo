@@ -46,7 +46,7 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	BarcoEnemigo barco2 = new BarcoEnemigo(10,0,0,0, false, Municion.NORMAL).setTexturePos(0,1);
+	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
 
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -145,10 +145,6 @@ public class MainScreen implements Screen{
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
-    	barco2.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
-    	barco2.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
-    	barco2.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
-    	barco2.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barcosEnemigos.add(barco2);
     	offRange.add(barco2);
     	

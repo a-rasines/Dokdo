@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import DataBase.DatabaseHandler;
 import dg.main.MainScreen;
-import dg.main.PantallaMuerte;
 import objetos.Bala;
 import objetos.Municion;
 import objetos.Sprite;
@@ -61,6 +58,12 @@ public class BarcoJugador extends Barco{
 		barcoPos.put("y", getY());
 		DatabaseHandler.writeToJSON("barcoPos", barcoPos, true);
 		refreshRange();
+		return a;
+	}
+	@Override
+	public <T> T tpTo(float x, float y) {
+		T a= super.tpTo(x, y);
+		refreshBounds();
 		return a;
 	}
 	@Override

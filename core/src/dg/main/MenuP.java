@@ -2,6 +2,8 @@ package dg.main;
 
 import java.util.logging.Logger;
 
+import javax.swing.JRadioButton;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -38,6 +40,7 @@ public class MenuP implements Screen{
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
+    private static boolean visible = false;
     private HiloVolumen s1 = HiloVolumen.getInstance();
 
     
@@ -83,6 +86,8 @@ public class MenuP implements Screen{
 
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
+        Table volumenM = new Table();
+        volumenM.setVisible(visible);
         menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
         
         //Set table to fill stage
@@ -94,8 +99,17 @@ public class MenuP implements Screen{
 
         //Create buttons
         TextButton boton1 = new TextButton("Jugar", skin);
-        TextButton boton2 = new TextButton("Opciones", skin);
+        TextButton boton2 = new TextButton("Volumen", skin);
         TextButton boton3 = new TextButton("Salir", skin);
+        
+        //botones del sonido
+        TextButton cero = new TextButton("0%", skin);
+        TextButton v25 = new TextButton("25%", skin);
+        TextButton v50 = new TextButton("50%", skin);
+        TextButton v75 = new TextButton("75%", skin);
+        TextButton v100 = new TextButton("100%", skin);
+        
+        
         
       //listeners
         boton1.addListener(new ClickListener(){
@@ -111,11 +125,15 @@ public class MenuP implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
+            	if(visible) {
+            		visible=false;
+            		volumenM.setVisible(visible);
+            	}else {
+            		visible=true;
+            		volumenM.setVisible(visible);
+            	}
             	
-            		//s1.setCancion(AudioPlayer);
-            		s1.setCambios(true);
-            		s1.setDireccion(true);
-                	s1.setvDestino(0.1f);
+            	
             	
             }
         });
@@ -128,13 +146,24 @@ public class MenuP implements Screen{
         	}
         });
         
-       // menu.add(sprite);
+     
         Actor barco = new Image(new Texture(Gdx.files.internal("Barco.png")));
+        Actor sonido = new Image(new Texture(Gdx.files.internal("sondido2.png")));
+        
+        volumenM.add(sonido).width(40).height(20);
+        volumenM.add(cero).pad(5).width(40);
+        volumenM.add(v25).pad(5).width(40);
+        volumenM.add(v50).pad(5).width(40);
+        volumenM.add(v75).pad(5).width(40);
+        volumenM.add(v100).pad(5).width(40);
+        
         menu.add(barco).width(100).height(100);
         menu.row();
         menu.add(boton1).width(80).pad(5);
         menu.row();
         menu.add(boton2).width(80).pad(5);
+        menu.row();
+        menu.add(volumenM);
         menu.row();
         menu.add(boton3).width(80).pad(5);
         

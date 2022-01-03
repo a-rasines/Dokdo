@@ -14,7 +14,7 @@ public class Dokdo extends Game{
 	@Override
 	public void create() {
 		//TODO Crear todas las ventnas que se van a usar para poder cambiar entre ellas
-		setScreen(new MenuP()); //no borrar por favor--> pruebas del menu
+		setScreen(new MenuP()); 
 	}
 	
 	

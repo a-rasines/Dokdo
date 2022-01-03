@@ -42,7 +42,7 @@ public class MainScreen implements Screen{
 	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
-	public static List<Bala> balasDañoContinuo = new ArrayList<>();
+	public static List<Bala> balasDannyoContinuo = new ArrayList<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
@@ -64,7 +64,7 @@ public class MainScreen implements Screen{
 	public void asignarTexturasAIslas() {
 		int x = 0;
 		//primeras 10 islas
-		for (int i = 0; i<10; i++) {
+		for (int i = 0; i<islaList.size(); i++) {
 			islaList.get(i).setTexturePos(x, i%7);
 			if(i == 6) {
 				x++;
@@ -79,6 +79,7 @@ public class MainScreen implements Screen{
 				x++;
 			}
 		}
+
 	}
 	
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
@@ -218,7 +219,7 @@ public class MainScreen implements Screen{
 					b.recibeDanyo(i);
 				else{
 					b.recibeDanyo(i);
-					balasDañoContinuo.add(i);
+					 balasDannyoContinuo.add(i);
 				}
 			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
 				barco.recibeDanyo(i);
@@ -226,7 +227,7 @@ public class MainScreen implements Screen{
 			i.decelerate();
 			i.dibujar();
 		}
-		for(Bala z:balasDañoContinuo) {
+		for(Bala z: balasDannyoContinuo) {
 			balasDisparadas.remove(z);
 			if(z.getVeces()==0) {
 				balasBorrar.add(z);
@@ -237,7 +238,7 @@ public class MainScreen implements Screen{
 		}
 		for(Bala i: balasBorrar) {
 			balasDisparadas.remove(i);
-			balasDañoContinuo.remove(i);
+			 balasDannyoContinuo.remove(i);
 		}
 		for(Barco j: barEneBorrar) {
 			barcosEnemigos.remove(j);

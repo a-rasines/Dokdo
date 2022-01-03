@@ -170,7 +170,7 @@ public class Barco extends Sprite{
 			MainScreen.balasBorrar.add(bullet);
 			System.out.println(vida);
 			if(bullet.getBarco().getMunicionEnUso().getInstantaneo()) {
-				MainScreen.balasDañoContinuo.add(bullet);
+				MainScreen.balasDannyoContinuo.add(bullet);
 			}
 	}
 	

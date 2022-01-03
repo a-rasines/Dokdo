@@ -6,8 +6,8 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="assets"/>
 	<classpathentry kind="src" path="PruebasJUnit"/>
+	<classpathentry kind="src" path="assets"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>

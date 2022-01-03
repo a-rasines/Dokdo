@@ -47,7 +47,8 @@ public class MainScreen implements Screen{
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
 	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
-
+	
+	public static Random ran = new Random();
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
@@ -61,6 +62,28 @@ public class MainScreen implements Screen{
 	public <T> T[] arrayBuilder(@SuppressWarnings("unchecked") T... v){
 		return v;
 	}
+	
+	public void barcosAltaMar() {
+		Random r = new Random();
+		
+		BarcoEnemigo b = new BarcoEnemigo(1, 2, barco.getX() + r.nextInt(500), barco.getY() + r.nextInt(500), false, null);
+		b.setTexturePos(0, 1);
+		barcosEnemigos.add(b);
+	}
+	
+	public void generarBarcosEnIslas() {
+		for (Isla i : islaList) {
+			ArrayList<Barco> lb = new ArrayList<Barco>();
+			lb.add(new BarcoEnemigo(1, 1, i.getX() + 25, i.getY() + 80, true, null));
+			lb.add(new BarcoEnemigo(1, 1, i.getX() + 50, i.getY() - 50, true, null));
+			lb.add(new BarcoEnemigo(1, 1, i.getX() - 50, i.getY() - 50, true, null));
+			for (Barco b : lb) {
+				b.setTexturePos(0, 2);
+			}
+			i.setBarcos(lb);
+		}
+	}
+	
 	public void asignarTexturasAIslas() {
 		int x = 0;
 		//primeras 10 islas
@@ -116,6 +139,7 @@ public class MainScreen implements Screen{
 		}
 		
 		asignarTexturasAIslas();
+		generarBarcosEnIslas();
 		
 		logger.info("Generacion completa");
 		
@@ -160,6 +184,8 @@ public class MainScreen implements Screen{
     	
     	MiniMapa.setPosIslas(islaList);
     	asignarTexturasAIslas(); //TODO guardar la textura utilizada en el JSON
+    	generarBarcosEnIslas(); //TODO supongo q al jotason tmb
+		
     	
 	}
 
@@ -283,6 +309,17 @@ public class MainScreen implements Screen{
 		if(barco2.tocaLinea(barco) != null) {
 			barco2.dispararLado(barco2.tocaLinea(barco));
 			
+		}
+		
+		for (Isla i : islaList) {
+			for (Barco b : i.getBarcos()) {
+				b.dibujar();
+			}
+		}
+		
+		
+		if (ran.nextInt(1000) > 998) {
+			barcosAltaMar();
 		}
 		
 	}

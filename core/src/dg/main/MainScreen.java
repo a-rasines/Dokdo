@@ -17,6 +17,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -35,6 +38,7 @@ import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen implements Screen{
+	protected Skin skin;
 	public static AudioPlayer cFondo = new AudioPlayer();
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
@@ -46,7 +50,10 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
+	private static Screen menuP;
+	private static Table menuPausa;
 	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
+
 	
 	public static Random ran = new Random();
 	
@@ -54,6 +61,10 @@ public class MainScreen implements Screen{
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
 	
+	public MainScreen(Screen padre) {
+		this.menuP= padre;
+	}
+
 	/**
 	 * Genera un array a partir de valores
 	 * @param v valores en el array
@@ -155,6 +166,27 @@ public class MainScreen implements Screen{
 	
 	@Override
 	public void show() {
+		System.out.println("pausap");
+		//Bontón para regresar al menu principal
+    	skin = new Skin(Gdx.files.internal("uiskin.json"));
+    	menuPausa = new Table();
+    	menuPausa.setFillParent(true);
+    	menuPausa.center();
+        TextButton boton1 = new TextButton("Jugar", skin);
+        TextButton boton2 = new TextButton("Volumen", skin);
+        TextButton boton3 = new TextButton("Salir", skin);
+        
+        menuPausa.add(boton1).width(80).pad(5);
+        menuPausa.row();
+        menuPausa.add(boton2).width(80).pad(5);
+        menuPausa.row();
+        menuPausa.add(boton3).width(80).pad(5);
+        
+    	stage.addActor(menuPausa);
+    	
+    	
+	
+		
 		//Musica normal
 		cFondo.setCancion("Sonidos//Overworld.mp3");
 		
@@ -171,6 +203,8 @@ public class MainScreen implements Screen{
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
     	barcosEnemigos.add(barco2);
     	offRange.add(barco2);
+    	
+    	
     	
     	if(DatabaseHandler.getArrayFromJSon("IslaListas").size() == 0) {
     		generarIslas();
@@ -195,7 +229,6 @@ public class MainScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
-		
 		//Control de teclas
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
@@ -235,6 +268,9 @@ public class MainScreen implements Screen{
 			barco.dispararLado(PosicionCanyon.ATRAS);
 		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
+		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+			stage.draw();
+			System.out.println("Pausa");
 		}
 		//DAÃ‘O A LOS BARCOS ENEMIGOS.
 		
@@ -321,6 +357,8 @@ public class MainScreen implements Screen{
 		if (ran.nextInt(1000) > 998) {
 			barcosAltaMar();
 		}
+		
+		//stage.draw();
 		
 	}
 	public void secondShipTest() {

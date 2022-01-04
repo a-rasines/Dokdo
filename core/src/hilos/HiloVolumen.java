@@ -17,14 +17,11 @@ public class HiloVolumen extends Thread {
 	
 	private AudioPlayer selCancion;
 	private float vDestino;
-	private boolean DirVol;
+	//private boolean DirVol;
 	private boolean cambios=false;
 	private static Logger logger= Logger.getLogger("MenuOp");
 	
-	/**public HiloVolumen(boolean subirObajar, int v) {
-		this.vDestino=v;
-		this.x=subirObajar;		
-	}**/
+	
 	public void setvDestino(float v){
 		this.vDestino=v;
 	}
@@ -43,10 +40,10 @@ public class HiloVolumen extends Thread {
 	/**
 	 * Se usa para definir si se sube o se baja el volumen
 	 * @param sOb true para bajar, false para subir
-	 */
+	 *
 	public void setDireccion(boolean sOb){
 		this.DirVol=sOb;
-	}
+	}**/
 	
 	public void setCambios(boolean SiNo){
 		this.cambios=SiNo;
@@ -54,12 +51,15 @@ public class HiloVolumen extends Thread {
 	
 		
 	public void run() {
-		//AudioPlayer.Reproducir(audio);
 		while(true){
-			
+			try {
+				sleep(1);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			//TODO si no se imprime nada por pantalla, no se hacen los cambios revisar
 			if(cambios) {
-				System.out.println("se cami");
-				if(DirVol) {					
+				if(vDestino<selCancion.getVolumen()) {					
 					cambios=bajarVolumen(this.vDestino, this.selCancion);
 				}else {
 					cambios=subirVolumen(this.vDestino,this.selCancion);
@@ -83,9 +83,8 @@ public class HiloVolumen extends Thread {
 		return false;
 	}
 	public boolean subirVolumen(float v, AudioPlayer c ) {
-		c.setVolumen(0f);
 		for(float i = c.getVolumen();i<v;i+=0.01) {
-			System.out.println("subo");
+			System.out.println("subo"+c.getVolumen());
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {

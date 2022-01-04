@@ -1,18 +1,10 @@
 package dg.main;
 
 import java.util.logging.Logger;
-
-import javax.swing.JRadioButton;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,30 +21,39 @@ import hilos.HiloVolumen;
 
 public class MenuP implements Screen{
 	
-	private static boolean orden=true;
+	public static boolean orden;
 	private final Dokdo game;
 	private Screen padre;
 	private Screen mar;
+	//TODO declaración de la ventana de los distintos incicios de seción
+	private Screen PantallaGuardados;
+	private Screen opciones; 
 	public static AudioPlayer cMenu= new AudioPlayer();
 	public static AudioPlayer Menu8Bits= new AudioPlayer();
 	private static Logger logger= Logger.getLogger("Menu");
-    private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
     private static boolean visible = false;
-    private HiloVolumen s1 = HiloVolumen.getInstance();
+    public HiloVolumen s1 = HiloVolumen.getInstance();
+    public static float[] volumenes = {0.5f,0.0f};
 
     
-    public MenuP() {
+    public MenuP(Dokdo juego, HiloVolumen sonido,AudioPlayer cancion1,AudioPlayer cancion2, float[] volumen,boolean ordencanciones) {
     	this.padre = this;
-    	this.mar= new MainScreen();
+    	this.mar= new MainScreen(padre);
     	this.game=Dokdo.getInstance();
+    	this.opciones= new MenuOp(this, juego, sonido, volumen);
+    	this.orden=true;
+    	this.s1=sonido;
+    	//TODO ordenar esto en la la clase Dorko
     	s1.start();
+    	
+    	
     	try {
     		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
     		Menu8Bits.Reproducir();
-    		Menu8Bits.setVolumen(0f);
+    		Menu8Bits.setVolumen(volumenes[1]);
         	logger.info("Cancion secundaria cargada sin problemas");
 		} catch (Exception a) {
 			a.printStackTrace();
@@ -64,19 +65,17 @@ public class MenuP implements Screen{
         	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion principal");
-        	Menu8Bits.setVolumen(0.5f);
+        	Menu8Bits.setVolumen(volumenes[0]);
 		}
     	
     	
     	
     	
     	//dibujador de sprites
-    	batch = new SpriteBatch();
     	viewport = new FitViewport(480, 280);
     	viewport.apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
-    	stage = new Stage(viewport,batch);
-    	batch = new SpriteBatch();
+    	stage = new Stage(viewport);
 
     	
     }
@@ -99,7 +98,7 @@ public class MenuP implements Screen{
 
         //Create buttons
         TextButton boton1 = new TextButton("Jugar", skin);
-        TextButton boton2 = new TextButton("Volumen", skin);
+        TextButton boton2 = new TextButton("Opciones", skin);
         TextButton boton3 = new TextButton("Salir", skin);
         
         //botones del sonido
@@ -124,14 +123,15 @@ public class MenuP implements Screen{
         boton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuOp(padre,game,s1));
+            	game.setScreen(opciones);
+            	/**
             	if(visible) {
             		visible=false;
             		volumenM.setVisible(visible);
             	}else {
             		visible=true;
             		volumenM.setVisible(visible);
-            	}
+            	}**/
             	
             	
             	
@@ -146,9 +146,77 @@ public class MenuP implements Screen{
         	}
         });
         
-     
+        cero.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0);
+    			volumenes[0]=0;
+        		s1.setCambios(true);
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v25.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.25f);
+        		s1.setCambios(true);
+    			volumenes[0]=0.25f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v50.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.50f);
+        		s1.setCambios(true);
+    			volumenes[0]=0.50f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v75.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.75f);
+        		s1.setCambios(true);
+        		volumenes[0]=0.75f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v100.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(1);
+        		s1.setCambios(true);
+        		volumenes[0]=1;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        
+        
+        
+        //parte visual del menu
         Actor barco = new Image(new Texture(Gdx.files.internal("Barco.png")));
-        Actor sonido = new Image(new Texture(Gdx.files.internal("sondido2.png")));
+        Actor sonido = new Image(new Texture(Gdx.files.internal("sonido2.png")));
         
         volumenM.add(sonido).width(40).height(20);
         volumenM.add(cero).pad(5).width(40);
@@ -172,12 +240,12 @@ public class MenuP implements Screen{
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
         		if(orden) {
-        			cMenu.setVolumen(0);
-            		Menu8Bits.setVolumen(0.5f);
+        			cMenu.setVolumen(volumenes[1]);
+            		Menu8Bits.setVolumen(volumenes[0]);
             		orden=false;
         		}else {
-        			cMenu.setVolumen(0.5f);
-            		Menu8Bits.setVolumen(0);
+        			cMenu.setVolumen(volumenes[0]);
+            		Menu8Bits.setVolumen(volumenes[1]);
             		orden=true;
         		}
         	}
@@ -192,8 +260,6 @@ public class MenuP implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        stage.act();
         stage.draw();
 	
 	}
@@ -227,7 +293,6 @@ public class MenuP implements Screen{
 		cMenu.detener();
 		stage.dispose();
 		skin.dispose();
-		batch.dispose();
 		s1.interrupt();
 		Gdx.app.exit();
 	

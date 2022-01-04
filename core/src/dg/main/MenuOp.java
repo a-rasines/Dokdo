@@ -24,33 +24,28 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hilos.HiloVolumen;
 
-public class MenuOp implements Screen {
+public class MenuOp extends MenuP{
 	private final Dokdo game;
 	private final Screen Origen;
 	private static Logger logger= Logger.getLogger("Menu");
-    private SpriteBatch batch;
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
     private Sprite sprite;
-    private HiloVolumen sonido;
+ 
 
     
-    public MenuOp(Screen origen ,Dokdo juego ,HiloVolumen sonido) {   
-    	this.Origen=origen;
-    	this.game=juego;
-    	this.sonido=sonido;
+    public MenuOp(Screen superior ,Dokdo juego ,HiloVolumen sonido,float[] volumen) {   
+    	super(juego,sonido, cMenu, Menu8Bits, volumen, orden);
+		this.game = new Dokdo();
+    	this.Origen=superior;
+    	this.s1=sonido;
     	    	
     	//dibujador de sprites
-    	batch = new SpriteBatch();
     	viewport = new FitViewport(400, 400);
     	viewport.apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
-    	stage = new Stage(viewport,batch);
-    	batch = new SpriteBatch();
-    
-    	
-    	//dibujo barco 
+    	stage = new Stage(viewport);
 
     }
  
@@ -59,18 +54,25 @@ public class MenuOp implements Screen {
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
+        Table contenedor = new Table();
         
         //Set table to fill stage
         menu.setFillParent(true);
              
-        
         //Set alignment of contents in the table.
+        contenedor.center();
         menu.center();
 
-        //Create buttons
   
         TextButton boton1 = new TextButton("Volver", skin);
-        //TODO Buscar como hacer el sistema de volumen 
+        TextButton boton2 = new TextButton("Volumen", skin);
+        //botones del sonido
+        TextButton cero = new TextButton("0%", skin);
+        TextButton v25 = new TextButton("25%", skin);
+        TextButton v50 = new TextButton("50%", skin);
+        TextButton v75 = new TextButton("75%", skin);
+        TextButton v100 = new TextButton("100%", skin);
+        
 
         
       //listeners
@@ -78,15 +80,80 @@ public class MenuOp implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             game.setScreen(Origen); 
-        	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuP());
             }
         });
         
-
+        cero.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0);
+    			volumenes[0]=0;
+        		s1.setCambios(true);
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v25.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.25f);
+        		s1.setCambios(true);
+    			volumenes[0]=0.25f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v50.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.50f);
+        		s1.setCambios(true);
+    			volumenes[0]=0.50f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v75.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(0.75f);
+        		s1.setCambios(true);
+        		volumenes[0]=0.75f;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
+        v100.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		s1.setvDestino(1);
+        		s1.setCambios(true);
+        		volumenes[0]=1;
+        		if(orden) {
+        			s1.setSelCancion(cMenu);
+        		}else {
+        			s1.setSelCancion(Menu8Bits);
+        		}
+        	}
+        });
         
-       // menu.add(sprite);
+        
+        //distribucion menu de opciones
         menu.add(boton1).width(100);
         menu.row();
+        contenedor.add(menu);
     
         
         
@@ -134,7 +201,6 @@ public class MenuOp implements Screen {
 	@Override
 	public void dispose() {
 		skin.dispose();
-		batch.dispose();
 		
 	}
 }

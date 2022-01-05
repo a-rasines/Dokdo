@@ -53,10 +53,7 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T> T move(float x, float y) {
 		T a = super.move(x, y);
-		JSONObject barcoPos = new JSONObject();
-		barcoPos.put("x", getX());
-		barcoPos.put("y", getY());
-		DatabaseHandler.writeToJSON("barcoPos", barcoPos, true);
+		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		refreshRange();
 		return a;
 	}
@@ -69,7 +66,7 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
-		DatabaseHandler.writeToJSON("barcoRot", getAngle(), true);
+		DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		return a;
 	}
 	@Override

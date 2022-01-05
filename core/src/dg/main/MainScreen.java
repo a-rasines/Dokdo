@@ -3,7 +3,10 @@ package dg.main;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +28,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import DataBase.DatabaseHandler;
+import DataBase.TableBuilder;
+import DataBase.TableBuilder.DataType;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -50,7 +55,6 @@ public class MainScreen implements Screen{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	private static Screen menuP;
 	private static Table menuPausa;
 	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
 
@@ -60,9 +64,10 @@ public class MainScreen implements Screen{
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
-	
-	public MainScreen(Screen padre) {
-		this.menuP= padre;
+	private static MainScreen instance;
+	public static MainScreen getInstance() {
+		if (instance == null) instance = new MainScreen();
+		return instance;
 	}
 
 	/**
@@ -76,42 +81,38 @@ public class MainScreen implements Screen{
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
-		BarcoEnemigo b = BarcoEnemigo.lvl1((int) barco.getX() + r.nextInt(1000) -500,  (int) barco.getY() + r.nextInt(1000) - 500, false);
-		b.setTexturePos(0, 1);
+		BarcoEnemigo b = BarcoEnemigo.lvl1((int) barco.getX() + r.nextInt(1000) -500,  (int) barco.getY() + r.nextInt(1000) - 500, false).setTexturePos(0, 1);
 		barcosEnemigos.add(b);
 		offRange.add(b);
-	}
-	
-	public void generarBarcosEnIslas() {
-		for (Isla i : islaList) {
-			ArrayList<BarcoEnemigo> lb = new ArrayList<BarcoEnemigo>();
-			lb.add(BarcoEnemigo.lvl1((int) i.getX() + 25, (int) i.getY() + 80, true));
-			lb.add(BarcoEnemigo.lvl1((int) i.getX() + 50, (int) i.getY() - 50, true));
-			lb.add(BarcoEnemigo.lvl1((int) i.getX() - 50, (int) i.getY() - 50, true));
-			for (Barco b : lb) {
-				b.setTexturePos(0, 2);
-			}
-			i.setBarcos(lb);
-		}
-	}
+	} 
 	
 	public void asignarTexturasAIslas() {
-		int x = 0;
-		//primeras 10 islas
 		for (int i = 0; i<islaList.size(); i++) {
-			islaList.get(i).setTexturePos(x, i%7);
-			if(i == 6) {
-				x++;
-			}
-		}
-		//segundas 10 islas
-		x = 0;
-		for (int i = 0; i<10; i++) {
-			islaList.get(i+10).setTexturePos(x, i%7);
-			
-			if(i == 6) {
-				x++;
-			}
+			int text = new Random().nextInt(10);
+			Isla is = islaList.get(i); 
+			is.setTexturePos(text>=7?1:0, text%7);
+			/*
+			 * new TableBuilder("Islas")
+				.addColumn("ID", DataType.INT, "2")
+				.addColumn("ID_Jugador", "Player1", DataType.INT, "6")
+				.addColumn("X", "0.0", DataType.DEC, "9", "4")
+				.addColumn("Y", "0.0", DataType.DEC, "9", "4")
+				.addColumn("Conquistada", "0", DataType.INT, "1")
+				.addColumn("Nivel", "0", DataType.INT, "2")
+				.addColumn("Botin", "0", DataType.INT, "5")
+				.addColumn("Textura", DataType.INT, "2")
+			 */
+			DatabaseHandler.SQL.addValue(
+					"Islas", 
+					String.valueOf(i), 
+					String.valueOf(DatabaseHandler.JSON.getString("actualUser")), 
+					String.valueOf(is.getX()), 
+					String.valueOf(is.getY()), 
+					is.isConquistada()?"1":"0",
+					String.valueOf(is.getNivelRecomendado()),
+					String.valueOf(is.getBotin()),
+					String.valueOf(text)
+			);
 		}
 
 	}
@@ -142,7 +143,9 @@ public class MainScreen implements Screen{
 						}
 					}
 					if (valid) {
-						islaList.add(new Isla((float) x, (float) y, 0, 0, null));
+						islaList.add(
+							new Isla((float) x,(float) y, 0, 0, false)
+						);
 						next = true;
 					}
 				}
@@ -150,18 +153,8 @@ public class MainScreen implements Screen{
 		}
 		
 		asignarTexturasAIslas();
-		generarBarcosEnIslas();
 		
 		logger.info("Generacion completa");
-		
-		for(Isla i : islaList) {
-			JSONObject isla = new JSONObject();
-			isla.put("x", i.getX());
-			isla.put("y", i.getY());
-			isla.put("xText", 0);
-			isla.put("yText", 0);
-			DatabaseHandler.writeToJSON("IslaListas",isla, false);
-		}
 	}
 	
 	@Override
@@ -194,9 +187,13 @@ public class MainScreen implements Screen{
 		cFondo.setVolumen(0.5f);
 		BarcoEnemigo.hv.start();
 		BarcoEnemigo.hv.setCambios(false);
-		JSONObject pos0 = DatabaseHandler.getObjectFromJSon("barcoPos");
-		barco = new BarcoJugador(10,0, Municion.INCENDIARIA).rotate(Float.parseFloat(DatabaseHandler.getStringFromJSon("barcoRot"))).tpTo(Float.parseFloat(pos0.get("x").toString()), Float.parseFloat(pos0.get("y").toString()));
-		
+		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		try {
+			barco = new BarcoJugador(pos0.getInt("Vida"),0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
+		} catch (NumberFormatException | SQLException e1) {
+			logger.severe("Error cargando el barco principal: "+e1.getMessage());
+			e1.printStackTrace();
+		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
@@ -206,19 +203,24 @@ public class MainScreen implements Screen{
     	
     	
     	
-    	if(DatabaseHandler.getArrayFromJSon("IslaListas").size() == 0) {
+    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", DatabaseHandler.JSON.getString("actualUser"))) {
     		generarIslas();
     	} else {
-    		for(Object j : DatabaseHandler.getArrayFromJSon("IslaListas")) {
-    			JSONObject i = (JSONObject) j;
-    			islaList.add(new Isla((float) (double) i.get("x"),  (float)(double) i.get("y"), 0, 0, null));
-    			logger.info("Islas Cargadas");
-    		}
+    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
+    		try {
+				while (res.next()) {
+					islaList.add(new Isla(res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1));
+				}
+				logger.info("Islas Cargadas");
+			} catch (SQLException e) {
+				logger.severe("Error Cargando las islas: "+e.getMessage());
+				e.printStackTrace();
+			}
+    		
     	}
     	
     	MiniMapa.setPosIslas(islaList);
     	asignarTexturasAIslas(); //TODO guardar la textura utilizada en el JSON
-    	generarBarcosEnIslas(); //TODO supongo q al jotason tmb
 		
     	
 	}

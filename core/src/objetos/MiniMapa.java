@@ -35,7 +35,7 @@ public class MiniMapa {
 		for(Isla i : lista) {
 			listaIslas.add(i.getX() / FACTOR); //Escalarlo a un tamaño menor
 			listaIslas.add(i.getY() / FACTOR); //Escalarlo a un tamaño menor
-			listaIslasEstado.add(i.getLiberada());
+			listaIslasEstado.add(i.isConquistada());
 		}
 		setBordeMapa();
 		srB.setColor(Color.BROWN);

@@ -16,13 +16,14 @@ public class Isla extends Sprite{
 	protected int nivelRecomendado;
 	protected List<BarcoEnemigo> barcos;
 	protected int botin;
-	protected boolean liberada = false;
+	protected boolean conquistada = false;
 	private static Texture t;
 	static {
 		try {
 			t = new Texture("tileSetIsla.png");
 		}catch(Exception e) {}
 	}
+	
 	/** Islas generales del juego.
 	 * @param posX
 	 * @param posY
@@ -30,11 +31,16 @@ public class Isla extends Sprite{
 	 * @param botin
 	 * @param barcosProtegiendo
 	 */
-	public Isla(float posX, float posY, int nivel, int botin,List<BarcoEnemigo> barcosProtegiendo) {
+	public Isla(float posX, float posY, int nivel, int botin, boolean conquistada) {
 		super(posX, posY, 0, 64, 64);
 		this.nivelRecomendado=nivel;
+		this.conquistada = conquistada;
 		super.tMap = t;
-		this.barcos=barcosProtegiendo;
+		this.barcos=Arrays.asList(
+				BarcoEnemigo.lvl1((int) posX + 25, (int) posY + 80, true).setTexturePos(0, 2),
+				BarcoEnemigo.lvl1((int) posX + 50, (int) posY - 50, true).setTexturePos(0, 2),
+				BarcoEnemigo.lvl1((int) posX - 50, (int) posY - 50, true).setTexturePos(0, 2)
+			);
 		this.botin=botin;
 	}
 	/** Islas generales del juego.
@@ -69,8 +75,11 @@ public class Isla extends Sprite{
 	public List<BarcoEnemigo> getBarcos() {
 		return barcos;
 	}
-	public void setBarcos(ArrayList<BarcoEnemigo> barcos) {
+	public void setBarcos(List<BarcoEnemigo> barcos) {
 		this.barcos = barcos;
+	}
+	public void setBarcos(BarcoEnemigo... barcos) {
+		this.barcos = Arrays.asList(barcos);
 	}
 	public int getBotin() {
 		return botin;
@@ -79,10 +88,10 @@ public class Isla extends Sprite{
 		this.botin = botin;
 	}
 	
-	public void setLiberada(boolean lib) {
-		liberada = lib;
+	public void conquistar() {
+		conquistada = true;
 	}
-	public boolean getLiberada() {
-		return liberada;
+	public boolean isConquistada() {
+		return conquistada;
 	}
 }

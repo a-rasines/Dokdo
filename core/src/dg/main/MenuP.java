@@ -22,45 +22,28 @@ import hilos.HiloVolumen;
 public class MenuP implements Screen{
 	
 	private  boolean orden;
-	private  Dokdo game;
-	private Screen mar;
-	//TODO declaración de la ventana de los distintos incicios de seción
-	private Screen PantallaGuardados;
-	private Screen opciones; 
-	private   AudioPlayer cPrincipal;
-	private   AudioPlayer cSecundaria;
+	//TODO declaraciï¿½n de la ventana de los distintos incicios de seciï¿½n 
+	private   AudioPlayer cPrincipal= new AudioPlayer();
+	private   AudioPlayer cSecundaria= new AudioPlayer();
 	private  Logger logger= Logger.getLogger("Menu");
     protected Stage stage;
     private Viewport viewport;
+	public static float[] volumenes = {0.5f,0.0f};
+	public static boolean ordenCanciones = true;
     protected Skin skin;
-	public  HiloVolumen s1;
+	public  HiloVolumen s1 = HiloVolumen.getInstance();
     private boolean visible = false;
    
-    public static float[] volumenes;
-
-    /**param
-     * @param juego Instancia de dorko (administra las pantallas)
-     * @param sonido Hilo del sonido
-     * @param cancion1 cancion principal de la ventana
-     * @param cancion2 cancion secundaria de la ventana
-     * @param volumen control de volumen para las canciones
-     * @param ordencanciones booleano con el orden de las caciones (true para ir de 1 a 2)
-     */
-    public MenuP(Dokdo juego, HiloVolumen sonido,AudioPlayer cancion1,AudioPlayer cancion2, float[] volumen,boolean ordencanciones) {
+    private static MenuP instance;
+    public static MenuP getInstance() {
+    	if(instance == null) instance = new MenuP();
+    	return instance;
+    }
+    public MenuP() {
     	//si quiero conservar la herencia, crear una nueva clase hija para el menu y mover las canciones
-    	this.mar= new MainScreen(this);
-    	this.game=juego;
-    	this.orden=ordencanciones;
-    	this.s1=sonido;
-    	this.cPrincipal=cancion1;
-    	this.cSecundaria=cancion2;
-    	this.volumenes=volumen;
     	//s1.start();
-    	//opciones= new MenuOp(juego, sonido, cancion1, cancion2,volumen, ordencanciones,padre);
-    	
     	
     	try {
-    		System.out.println("paso1");
     		cSecundaria.setCancion("Sonidos//D8Bits.mp3");
     		cSecundaria.Reproducir();
     		cSecundaria.setVolumen(volumenes[1]);
@@ -130,14 +113,14 @@ public class MenuP implements Screen{
             public void clicked(InputEvent event, float x, float y) {
             	cPrincipal.detener();
             	cSecundaria.detener();
-            	game.setScreen(mar);
+            	Dokdo.getInstance().setScreen(MainScreen.getInstance());
             }
         });
         
         boton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	game.setScreen(opciones);
+            	Dokdo.getInstance().setScreen(MenuOp.getInstance());
             	/**
             	if(visible) {
             		visible=false;
@@ -276,14 +259,6 @@ public class MenuP implements Screen{
 
 	public void setOrden(boolean orden) {
 		this.orden = orden;
-	}
-
-	public Dokdo getGame() {
-		return game;
-	}
-
-	public void setGame(Dokdo game) {
-		this.game = game;
 	}
 
 	public AudioPlayer getcPrincipal() {

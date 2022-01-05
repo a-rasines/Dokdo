@@ -1,28 +1,14 @@
 package dg.main;
 
-import java.util.logging.Logger;
-
-import javax.swing.JRadioButton;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import hilos.HiloVolumen;
 
 public class MenuOp extends MenuP{
 	//private static Logger logger= Logger.getLogger("Menu");
@@ -30,11 +16,15 @@ public class MenuOp extends MenuP{
     private Viewport viewport;
     protected Skin skin;
     private Sprite sprite;
-	private Screen padre;
+	
+    private static MenuOp instance;
+    public static MenuOp getInstance() {
+    	if(instance == null) instance = new MenuOp();
+    	return instance;
+    }
 
-    public MenuOp(Dokdo juego, HiloVolumen sonido,AudioPlayer cancion1,AudioPlayer cancion2, float[] volumen,boolean ordencanciones,Screen superior) {   
-    	super(juego, sonido, cancion1, cancion2, volumen, ordencanciones);    
-    	this.padre=superior;
+    public MenuOp() {   
+    	super();  
     	//dibujador de sprites
     	viewport = new FitViewport(400, 400);
     	viewport.apply();

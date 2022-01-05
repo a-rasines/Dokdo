@@ -3,17 +3,12 @@ package dg.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
+import DataBase.DatabaseHandler;
 import hilos.HiloVolumen;
 
 
 public class Dokdo extends Game{
 	private static Dokdo instance;
-	public HiloVolumen s1 = HiloVolumen.getInstance();
-	public AudioPlayer cMenu= new AudioPlayer();
-	public AudioPlayer Menu8Bits= new AudioPlayer();
-	public float[] volumenes = {0.5f,0.0f};
-	private Screen MenuP;
-	private Screen menuOp;
 	
 	
 	public static Dokdo getInstance() {
@@ -22,13 +17,17 @@ public class Dokdo extends Game{
 	}
 	@Override
 	public void create() {
-		s1.start();
-		MenuP = new MenuP(Dokdo.getInstance(), s1, cMenu, Menu8Bits, volumenes, true);
+		HiloVolumen.getInstance().start();
 		//menuOp= new MenuOp(Dokdo.getInstance(), s1, cMenu, Menu8Bits, volumenes, false, MenuP);
 		//TODO Crear todas las ventnas que se van a usar para poder cambiar entre ellas
 		//setScreen(new MenuP(Dokdo.getInstance(), s1, cMenu, Menu8Bits, volumenes, true)); 
-		setScreen(MenuP);
+		setScreen(MenuP.getInstance());
 		//setScreen(new MainScreen(new MenuP()));
+	}
+	@Override
+	public void dispose () {
+		if (screen != null) screen.hide();
+		System.exit(0);
 	}
 	
 	

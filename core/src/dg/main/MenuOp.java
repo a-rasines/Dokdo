@@ -25,28 +25,21 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import hilos.HiloVolumen;
 
 public class MenuOp extends MenuP{
-	private final Dokdo game;
-	private final Screen Origen;
-	private static Logger logger= Logger.getLogger("Menu");
-    protected Stage stage;
+	//private static Logger logger= Logger.getLogger("Menu");
+	protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
     private Sprite sprite;
- 
+	private Screen padre;
 
-    
-    public MenuOp(Screen superior ,Dokdo juego ,HiloVolumen sonido,float[] volumen) {   
-    	super(juego,sonido, cMenu, Menu8Bits, volumen, orden);
-		this.game = new Dokdo();
-    	this.Origen=superior;
-    	this.s1=sonido;
-    	    	
+    public MenuOp(Dokdo juego, HiloVolumen sonido,AudioPlayer cancion1,AudioPlayer cancion2, float[] volumen,boolean ordencanciones,Screen superior) {   
+    	super(juego, sonido, cancion1, cancion2, volumen, ordencanciones);    
+    	this.padre=superior;
     	//dibujador de sprites
     	viewport = new FitViewport(400, 400);
     	viewport.apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(viewport);
-
     }
  
 	@Override
@@ -74,12 +67,12 @@ public class MenuOp extends MenuP{
         TextButton v100 = new TextButton("100%", skin);
         
 
-        
+      /**  
       //listeners
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            game.setScreen(Origen); 
+            getGame().setScreen(padre); 
             }
         });
         
@@ -149,7 +142,7 @@ public class MenuOp extends MenuP{
         	}
         });
         
-        
+        **/
         //distribucion menu de opciones
         menu.add(boton1).width(100);
         menu.row();

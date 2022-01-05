@@ -21,51 +21,62 @@ import hilos.HiloVolumen;
 
 public class MenuP implements Screen{
 	
-	public static boolean orden;
-	private final Dokdo game;
-	private Screen padre;
+	private  boolean orden;
+	private  Dokdo game;
 	private Screen mar;
 	//TODO declaración de la ventana de los distintos incicios de seción
 	private Screen PantallaGuardados;
 	private Screen opciones; 
-	public static AudioPlayer cMenu= new AudioPlayer();
-	public static AudioPlayer Menu8Bits= new AudioPlayer();
-	private static Logger logger= Logger.getLogger("Menu");
+	private   AudioPlayer cPrincipal;
+	private   AudioPlayer cSecundaria;
+	private  Logger logger= Logger.getLogger("Menu");
     protected Stage stage;
     private Viewport viewport;
     protected Skin skin;
-    private static boolean visible = false;
-    public HiloVolumen s1 = HiloVolumen.getInstance();
-    public static float[] volumenes = {0.5f,0.0f};
+	public  HiloVolumen s1;
+    private boolean visible = false;
+   
+    public static float[] volumenes;
 
-    
+    /**param
+     * @param juego Instancia de dorko (administra las pantallas)
+     * @param sonido Hilo del sonido
+     * @param cancion1 cancion principal de la ventana
+     * @param cancion2 cancion secundaria de la ventana
+     * @param volumen control de volumen para las canciones
+     * @param ordencanciones booleano con el orden de las caciones (true para ir de 1 a 2)
+     */
     public MenuP(Dokdo juego, HiloVolumen sonido,AudioPlayer cancion1,AudioPlayer cancion2, float[] volumen,boolean ordencanciones) {
-    	this.padre = this;
-    	this.mar= new MainScreen(padre);
-    	this.game=Dokdo.getInstance();
-    	this.opciones= new MenuOp(this, juego, sonido, volumen);
-    	this.orden=true;
+    	//si quiero conservar la herencia, crear una nueva clase hija para el menu y mover las canciones
+    	this.mar= new MainScreen(this);
+    	this.game=juego;
+    	this.orden=ordencanciones;
     	this.s1=sonido;
-    	//TODO ordenar esto en la la clase Dorko
-    	s1.start();
+    	this.cPrincipal=cancion1;
+    	this.cSecundaria=cancion2;
+    	this.volumenes=volumen;
+    	//s1.start();
+    	//opciones= new MenuOp(juego, sonido, cancion1, cancion2,volumen, ordencanciones,padre);
     	
     	
     	try {
-    		Menu8Bits.setCancion("Sonidos//D8Bits.mp3");
-    		Menu8Bits.Reproducir();
-    		Menu8Bits.setVolumen(volumenes[1]);
+    		System.out.println("paso1");
+    		cSecundaria.setCancion("Sonidos//D8Bits.mp3");
+    		cSecundaria.Reproducir();
+    		cSecundaria.setVolumen(volumenes[1]);
         	logger.info("Cancion secundaria cargada sin problemas");
 		} catch (Exception a) {
 			a.printStackTrace();
         	logger.info("Fallo al cargar la Cancion secundaria");
 		}
     	try {
-    		cMenu.setCancion("Sonidos//DrunkenSailor.mp3");
-    		cMenu.Reproducir();
+    		System.out.println("paso2");
+    		cPrincipal.setCancion("Sonidos//DrunkenSailor.mp3");
+    		cPrincipal.Reproducir();
         	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion principal");
-        	Menu8Bits.setVolumen(volumenes[0]);
+        	cSecundaria.setVolumen(volumenes[0]);
 		}
     	
     	
@@ -80,6 +91,9 @@ public class MenuP implements Screen{
     	
     }
  
+    //getters y setters
+    
+    
 	@Override
 	public void show() {
 
@@ -114,8 +128,8 @@ public class MenuP implements Screen{
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	cMenu.detener();
-            	Menu8Bits.detener();
+            	cPrincipal.detener();
+            	cSecundaria.detener();
             	game.setScreen(mar);
             }
         });
@@ -153,9 +167,9 @@ public class MenuP implements Screen{
     			volumenes[0]=0;
         		s1.setCambios(true);
         		if(orden) {
-        			s1.setSelCancion(cMenu);
+        			s1.setSelCancion(cPrincipal);
         		}else {
-        			s1.setSelCancion(Menu8Bits);
+        			s1.setSelCancion(cSecundaria);
         		}
         	}
         });
@@ -166,9 +180,9 @@ public class MenuP implements Screen{
         		s1.setCambios(true);
     			volumenes[0]=0.25f;
         		if(orden) {
-        			s1.setSelCancion(cMenu);
+        			s1.setSelCancion(cPrincipal);
         		}else {
-        			s1.setSelCancion(Menu8Bits);
+        			s1.setSelCancion(cSecundaria);
         		}
         	}
         });
@@ -179,9 +193,9 @@ public class MenuP implements Screen{
         		s1.setCambios(true);
     			volumenes[0]=0.50f;
         		if(orden) {
-        			s1.setSelCancion(cMenu);
+        			s1.setSelCancion(cPrincipal);
         		}else {
-        			s1.setSelCancion(Menu8Bits);
+        			s1.setSelCancion(cSecundaria);
         		}
         	}
         });
@@ -192,9 +206,9 @@ public class MenuP implements Screen{
         		s1.setCambios(true);
         		volumenes[0]=0.75f;
         		if(orden) {
-        			s1.setSelCancion(cMenu);
+        			s1.setSelCancion(cPrincipal);
         		}else {
-        			s1.setSelCancion(Menu8Bits);
+        			s1.setSelCancion(cSecundaria);
         		}
         	}
         });
@@ -205,9 +219,9 @@ public class MenuP implements Screen{
         		s1.setCambios(true);
         		volumenes[0]=1;
         		if(orden) {
-        			s1.setSelCancion(cMenu);
+        			s1.setSelCancion(cPrincipal);
         		}else {
-        			s1.setSelCancion(Menu8Bits);
+        			s1.setSelCancion(cSecundaria);
         		}
         	}
         });
@@ -240,12 +254,12 @@ public class MenuP implements Screen{
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
         		if(orden) {
-        			cMenu.setVolumen(volumenes[1]);
-            		Menu8Bits.setVolumen(volumenes[0]);
+        			cPrincipal.setVolumen(volumenes[1]);
+            		cSecundaria.setVolumen(volumenes[0]);
             		orden=false;
         		}else {
-        			cMenu.setVolumen(volumenes[0]);
-            		Menu8Bits.setVolumen(volumenes[1]);
+        			cPrincipal.setVolumen(volumenes[0]);
+            		cSecundaria.setVolumen(volumenes[1]);
             		orden=true;
         		}
         	}
@@ -256,6 +270,54 @@ public class MenuP implements Screen{
 	}
 	
 	
+	public boolean isOrden() {
+		return orden;
+	}
+
+	public void setOrden(boolean orden) {
+		this.orden = orden;
+	}
+
+	public Dokdo getGame() {
+		return game;
+	}
+
+	public void setGame(Dokdo game) {
+		this.game = game;
+	}
+
+	public AudioPlayer getcPrincipal() {
+		return cPrincipal;
+	}
+
+	public void setcPrincipal(AudioPlayer cPrincipal) {
+		this.cPrincipal = cPrincipal;
+	}
+
+	public AudioPlayer getcSecundaria() {
+		return cSecundaria;
+	}
+
+	public void setcSecundaria(AudioPlayer cSecundaria) {
+		this.cSecundaria = cSecundaria;
+	}
+
+	public HiloVolumen getS1() {
+		return s1;
+	}
+
+	public void setS1(HiloVolumen s1) {
+		this.s1 = s1;
+	}
+
+	public static float[] getVolumenes() {
+		return volumenes;
+	}
+
+	public static void setVolumenes(float[] volumenes) {
+		MenuP.volumenes = volumenes;
+	}
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
@@ -290,7 +352,7 @@ public class MenuP implements Screen{
 
 	@Override
 	public void dispose() {
-		cMenu.detener();
+		cPrincipal.detener();
 		stage.dispose();
 		skin.dispose();
 		s1.interrupt();

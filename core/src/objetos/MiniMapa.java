@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import objetos.barcos.Barco;
@@ -18,7 +21,7 @@ public class MiniMapa {
 	private static float barcoX;
 	private static float barcoY;
 	private static ShapeRenderer srB =  new ShapeRenderer();
-	private static ShapeRenderer sr = new ShapeRenderer();//Prueba
+	
 	private static ShapeRenderer srIL = new ShapeRenderer(); //Isla Liberada
 	private static ShapeRenderer srIO = new ShapeRenderer(); //Isla Ocupada
 	
@@ -51,6 +54,7 @@ public class MiniMapa {
 	/** Metodo para dibujar el borde de manera provisional
 	 * Se cambiara por una textura mas bonita
 	 */
+	private static SpriteBatch sb = new SpriteBatch();
 	private static void setBordeMapa() {
 		//Vertice 1
 		vertices[0] = Gdx.graphics.getWidth();
@@ -67,11 +71,12 @@ public class MiniMapa {
 		
 	}
 	public static void mapaRenderer() {
-		sr.begin(ShapeRenderer.ShapeType.Line);
+		sb.begin();
 		srB.begin(ShapeRenderer.ShapeType.Filled);
 		srIL.begin(ShapeRenderer.ShapeType.Filled);
 		srIO.begin(ShapeRenderer.ShapeType.Filled);
-	    sr.polygon(vertices);
+		
+	    
 	    srB.setColor(Color.BROWN);
 	    srB.circle(Gdx.graphics.getWidth() - 100 + barcoX, 100 + barcoY, 2);
 	    for(int i = 0; i< listaIslasEstado.size(); i++) {
@@ -81,9 +86,13 @@ public class MiniMapa {
 	    		srIO.circle(Gdx.graphics.getWidth() - 100 + listaIslas.get(2* i), 100 +listaIslas.get(2*i+1), 2);
 	    	}
 	    }
+	    TextureRegion b = new TextureRegion(new Texture("marco.png"));
+	   // En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
+	    sb.draw(b, Gdx.graphics.getWidth() - 210, 0, 105,105, 210, 210, 1, 1, 0);
+	    sb.end();
 	    srIL.end();
 	    srIO.end();
-	    sr.end();
+	
 	    srB.end();
 	}
 

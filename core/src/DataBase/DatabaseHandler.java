@@ -68,7 +68,7 @@ public class DatabaseHandler {
 		 */
 		public static boolean addValue(String table, String... values) {
 			String v = String.join(" , ", values);
-			return rawUpdate("INSERT INTO "+table+"values("+v+")");
+			return rawUpdate("INSERT INTO "+table+" values("+v+")");
 		}
 		/**
 		 * Elimina todos los valores que coinciden con la condición. Para hacer esta función de forma manual se puede usar SQLrawUpdate()

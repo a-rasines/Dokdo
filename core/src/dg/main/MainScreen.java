@@ -89,8 +89,7 @@ public class MainScreen implements Screen{
 	public void asignarTexturasAIslas() {
 		for (int i = 0; i<islaList.size(); i++) {
 			int text = new Random().nextInt(10);
-			Isla is = islaList.get(i); 
-			is.setTexturePos(text>=7?1:0, text%7);
+			Isla is = islaList.get(i).setTexturePos(text>=7?1:0, text%7);
 			/*
 			 * new TableBuilder("Islas")
 				.addColumn("ID", DataType.INT, "2")
@@ -209,7 +208,7 @@ public class MainScreen implements Screen{
     		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
     		try {
 				while (res.next()) {
-					islaList.add(new Isla(res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1));
+					islaList.add(new Isla(res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
 				}
 				logger.info("Islas Cargadas");
 			} catch (SQLException e) {
@@ -220,7 +219,6 @@ public class MainScreen implements Screen{
     	}
     	
     	MiniMapa.setPosIslas(islaList);
-    	asignarTexturasAIslas(); //TODO guardar la textura utilizada en el JSON
 		
     	
 	}

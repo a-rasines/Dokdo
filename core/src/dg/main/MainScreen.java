@@ -81,7 +81,7 @@ public class MainScreen implements Screen{
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
-		BarcoEnemigo b = BarcoEnemigo.lvl1((int) barco.getX() + r.nextInt(1000) -500,  (int) barco.getY() + r.nextInt(1000) - 500, false).setTexturePos(0, 1);
+		BarcoEnemigo b = BarcoEnemigo.lvl1(0,  0, false).setTexturePos(0, 1).tpTo(barco.getX() + r.nextInt(1000) -500, barco.getY() + r.nextInt(1000) - 500);
 		barcosEnemigos.add(b);
 		offRange.add(b);
 	} 
@@ -312,9 +312,9 @@ public class MainScreen implements Screen{
 		//Actualización de rango
 		
 		List<Sprite> move = new LinkedList<>();
+		System.out.println(offRange.size());
 		for(Sprite b : barco.getEnRango(offRange)) {
 			move.add(b);
-			System.out.println("Entrada");
 			b.onRangeOfPlayer();
 		}
 		onRange.addAll(move);
@@ -323,12 +323,14 @@ public class MainScreen implements Screen{
 		for(Sprite s : onRange)
 			if(!barco.enRango(s)) {
 				move.add(s);
-				System.out.println("Salida");
 				s.onExitFromRange();
 			}
 		offRange.addAll(move);
 		onRange.removeAll(move);
 		move.clear();
+		for (BarcoEnemigo b : barcosEnemigos) {
+			b.IAMove();
+		}
 		
 		//Dibujado
 		
@@ -383,11 +385,6 @@ public class MainScreen implements Screen{
 		}
 	}
 	
-	public void moverBarcos() {
-		for (BarcoEnemigo b : barcosEnemigos) {
-			b.IAMove();
-		}
-	}
 	public void secondShipTest() {
 		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN))
 			barco2.decelerate();

@@ -68,7 +68,7 @@ public class DatabaseHandler {
 		 */
 		public static boolean addValue(String table, String... values) {
 			String v = String.join(" , ", values);
-			return rawUpdate("INSERT INTO "+table+" values("+v+")");
+			return rawUpdate("INSERT INTO "+table+" values("+v+")", true);
 		}
 		/**
 		 * Elimina todos los valores que coinciden con la condición. Para hacer esta función de forma manual se puede usar SQLrawUpdate()
@@ -77,10 +77,10 @@ public class DatabaseHandler {
 		 * @return True si se ha completado
 		 */
 		public static boolean removeValues(String table, String condition) {
-			return rawUpdate("DELETE FROM "+table+" WHERE "+condition);
+			return rawUpdate("DELETE FROM "+table+" WHERE "+condition, true);
 		}
 		public static boolean editValue(String table, String newValues, String condition) {
-			return rawUpdate("UPDATE "+table+" SET "+newValues+" WHERE "+condition);
+			return rawUpdate("UPDATE "+table+" SET "+newValues+" WHERE "+condition, false);
 		}
 		/**
 		 * Devuelve un Set de la tabla elegida. Para hacer esta función de forma manual se puede usar SQLrawQuery().
@@ -90,7 +90,7 @@ public class DatabaseHandler {
 		 * @return ResultSet de lo obtenido
 		 */
 		public static ResultSet get(String table, String columns, String conditions) {
-			return rawQuery("select "+columns+" from "+ table + (conditions==""?"": " WHERE "+conditions));
+			return rawQuery("select "+columns+" from "+ table + (conditions==""?"": " WHERE "+conditions), true);
 		}
 		/**
 		 * Devuelve un Set de la tabla elegida. Para hacer esta función de forma manual se puede usar SQLrawQuery().
@@ -99,7 +99,7 @@ public class DatabaseHandler {
 		 * @return ResultSet de lo obtenido
 		 */
 		public static ResultSet get(String table, String columns) {
-			return rawQuery("select "+columns+" from "+ table);
+			return rawQuery("select "+columns+" from "+ table, true);
 		}
 		/**
 		 * Devuelve si un valor existe en la base de datos
@@ -110,7 +110,7 @@ public class DatabaseHandler {
 		 */
 		public static boolean existsValue(String table, String column, String value) {
 			try {
-				return rawQuery("SELECT COUNT("+column+ ") FROM "+table+" WHERE "+column+" = "+value).getInt(1)>0;
+				return rawQuery("SELECT COUNT("+column+ ") FROM "+table+" WHERE "+column+" = "+value, false).getInt(1)>0;
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return false;
@@ -129,9 +129,9 @@ public class DatabaseHandler {
 		 * @param code solicitud
 		 * @return True si se ha completado
 		 */
-		public static boolean rawUpdate(String code) {
+		public static boolean rawUpdate(String code, boolean track) {
 			try {
-				logger.log(Level.INFO, "Trying to update: "+code);
+				if(track)logger.log(Level.INFO, "Trying to update: "+code);
 				connection.createStatement().executeUpdate(code);
 				return true;
 			} catch (SQLException e) {
@@ -144,9 +144,9 @@ public class DatabaseHandler {
 		 * @param query SELECT a introducir
 		 * @return ResultSet de la petición
 		 */
-		public static ResultSet rawQuery(String query) {
+		public static ResultSet rawQuery(String query, boolean track) {
 			try {
-				logger.log(Level.INFO, "Trying to query: "+query);
+				if(track)logger.log(Level.INFO, "Trying to query: "+query);
 				return connection.createStatement().executeQuery(query);
 			} catch (SQLException e) {
 				logger.log(Level.SEVERE, "Error during query to database: "+e.getMessage());
@@ -263,7 +263,6 @@ public class DatabaseHandler {
 		 * @return
 		 */
 		public static String getString(String key) {
-			logger.log(Level.INFO, "Trying to get String from "+key);
 			if (json.containsKey(key))
 				return json.get(key).toString();
 			return null;

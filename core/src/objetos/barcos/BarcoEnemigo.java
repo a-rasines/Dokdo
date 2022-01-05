@@ -1,6 +1,5 @@
 package objetos.barcos;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -228,8 +227,7 @@ public class BarcoEnemigo extends Barco{
 	}
 	@Override
 	public void onRangeOfPlayer() {
-		
-		
+		System.out.println("enter");		
 		MainScreen.cFondo.setVolumen(0f);
 		if(cCombate.reproduciendo()) {
 			cCombate.setVolumen(0.5f);
@@ -257,6 +255,7 @@ public class BarcoEnemigo extends Barco{
 	@Override
 	public void onExitFromRange() {
 		tracking = false;
+		System.out.println("exit");
 		cCombate.setVolumen(0f);
 		MainScreen.cFondo.setVolumen(0.5f);
 //		BarcoEnemigo.hv.setSelCancion(MainScreen.cFondo);

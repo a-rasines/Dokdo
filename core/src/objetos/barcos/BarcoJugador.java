@@ -2,8 +2,6 @@ package objetos.barcos;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import DataBase.DatabaseHandler;
@@ -49,7 +47,6 @@ public class BarcoJugador extends Barco{
 			for(T s : l)if(enRango(s))end.add(s);
 			return end;
 		}
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T move(float x, float y) {
 		T a = super.move(x, y);

@@ -76,18 +76,18 @@ public class MainScreen implements Screen{
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
-		
-		BarcoEnemigo b = new BarcoEnemigo(1, 2, barco.getX() + r.nextInt(500), barco.getY() + r.nextInt(500), false, null);
+		BarcoEnemigo b = BarcoEnemigo.lvl1((int) barco.getX() + r.nextInt(1000) -500,  (int) barco.getY() + r.nextInt(1000) - 500, false);
 		b.setTexturePos(0, 1);
 		barcosEnemigos.add(b);
+		offRange.add(b);
 	}
 	
 	public void generarBarcosEnIslas() {
 		for (Isla i : islaList) {
-			ArrayList<Barco> lb = new ArrayList<Barco>();
-			lb.add(new BarcoEnemigo(1, 1, i.getX() + 25, i.getY() + 80, true, null));
-			lb.add(new BarcoEnemigo(1, 1, i.getX() + 50, i.getY() - 50, true, null));
-			lb.add(new BarcoEnemigo(1, 1, i.getX() - 50, i.getY() - 50, true, null));
+			ArrayList<BarcoEnemigo> lb = new ArrayList<BarcoEnemigo>();
+			lb.add(BarcoEnemigo.lvl1((int) i.getX() + 25, (int) i.getY() + 80, true));
+			lb.add(BarcoEnemigo.lvl1((int) i.getX() + 50, (int) i.getY() - 50, true));
+			lb.add(BarcoEnemigo.lvl1((int) i.getX() - 50, (int) i.getY() - 50, true));
 			for (Barco b : lb) {
 				b.setTexturePos(0, 2);
 			}
@@ -167,7 +167,7 @@ public class MainScreen implements Screen{
 	@Override
 	public void show() {
 		System.out.println("pausap");
-		//Bontón para regresar al menu principal
+		//Bontï¿½n para regresar al menu principal
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	menuPausa = new Table();
     	menuPausa.setFillParent(true);
@@ -347,11 +347,23 @@ public class MainScreen implements Screen{
 			
 		}
 		
+		//TODO prueba de lineas con todos los barcos (Islas no)
+		//Por alguna razon solo detecta la linea de delante
+		detectaCanon();
+		//moverBarcos();
+		
+		
 		for (Isla i : islaList) {
-			for (Barco b : i.getBarcos()) {
+			for (BarcoEnemigo b : i.getBarcos()) {
 				b.dibujar();
+				if(b.tocaLinea(barco) != null) {
+					b.dispararLado(b.tocaLinea(barco));
+					
+				}
 			}
+			
 		}
+		
 		
 		
 		if (ran.nextInt(1000) > 998) {
@@ -360,6 +372,21 @@ public class MainScreen implements Screen{
 		
 		//stage.draw();
 		
+	}
+	
+	public void detectaCanon() {
+		for (BarcoEnemigo b : barcosEnemigos) {
+			if (b.tocaLinea(barco) != null) {
+
+				b.dispararLado(b.tocaLinea(barco));
+			}
+		}
+	}
+	
+	public void moverBarcos() {
+		for (BarcoEnemigo b : barcosEnemigos) {
+			b.IAMove();
+		}
 	}
 	public void secondShipTest() {
 		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN))

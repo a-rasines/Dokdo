@@ -102,16 +102,16 @@ public class BarcoEnemigo extends Barco{
 			lineaIzquierda.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
 		}else 
 			lineaFrente.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaFrente.setRotation(-getAngle()); //Get angulo
+			lineaFrente.setRotation(-getAngle()); //Get angulo
 		
-		lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaAtras.setRotation(-getAngle()); //Get angulo
+			lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+			lineaAtras.setRotation(-getAngle()); //Get angulo
 		
-		lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaDerecha.setRotation(-getAngle()); //Get angulo
+			lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+			lineaDerecha.setRotation(-getAngle()); //Get angulo
 		
-		lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-		lineaIzquierda.setRotation(-getAngle()); //Get angulo
+			lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+			lineaIzquierda.setRotation(-getAngle()); //Get angulo
 		
 	}
 	

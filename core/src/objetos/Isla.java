@@ -7,13 +7,14 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 
 import objetos.barcos.Barco;
+import objetos.barcos.BarcoEnemigo;
 /**
  * Representa las islas en el mapa
  *
  */
 public class Isla extends Sprite{
 	protected int nivelRecomendado;
-	protected List<Barco> barcos;
+	protected List<BarcoEnemigo> barcos;
 	protected int botin;
 	protected boolean liberada = false;
 	private static Texture t;
@@ -29,7 +30,7 @@ public class Isla extends Sprite{
 	 * @param botin
 	 * @param barcosProtegiendo
 	 */
-	public Isla(float posX, float posY, int nivel, int botin,List<Barco> barcosProtegiendo) {
+	public Isla(float posX, float posY, int nivel, int botin,List<BarcoEnemigo> barcosProtegiendo) {
 		super(posX, posY, 0, 64, 64);
 		this.nivelRecomendado=nivel;
 		super.tMap = t;
@@ -65,10 +66,10 @@ public class Isla extends Sprite{
 	public void setNivelRecomendado(int nivelRecomendado) {
 		this.nivelRecomendado = nivelRecomendado;
 	}
-	public List<Barco> getBarcos() {
+	public List<BarcoEnemigo> getBarcos() {
 		return barcos;
 	}
-	public void setBarcos(ArrayList<Barco> barcos) {
+	public void setBarcos(ArrayList<BarcoEnemigo> barcos) {
 		this.barcos = barcos;
 	}
 	public int getBotin() {

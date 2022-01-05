@@ -221,7 +221,7 @@ public class DatabaseHandler {
 	        } catch (FileNotFoundException e) {
 	        	logger.log(Level.WARNING, "JSON not found, generating new");
 	            try {
-					new File("data.json").createNewFile();
+					new File("src/data.json").createNewFile();
 					try (FileWriter file = new FileWriter("src/data.json")) {
 			            //We can write any JSONArray or JSONObject instance to the file
 			            file.write(def.toJSONString()); 

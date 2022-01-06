@@ -71,7 +71,6 @@ public class HiloVolumen extends Thread {
 
 	public boolean bajarVolumen(float v, AudioPlayer c ) {
 		for(float i = c.getVolumen();i>v;i-=0.01) {
-			System.out.println("bajo");
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {
@@ -84,7 +83,6 @@ public class HiloVolumen extends Thread {
 	}
 	public boolean subirVolumen(float v, AudioPlayer c ) {
 		for(float i = c.getVolumen();i<v;i+=0.01) {
-			System.out.println("subo"+c.getVolumen());
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {

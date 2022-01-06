@@ -31,7 +31,7 @@ public class formatoMenus implements Screen{
     	return instance;
     }
     public formatoMenus() {
-    	setViewport(new FitViewport(400, 400));
+    	setViewport(new FitViewport(500, 400));
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(getViewport());

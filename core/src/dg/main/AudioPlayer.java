@@ -13,7 +13,9 @@ public class AudioPlayer {
 	public void setCancion(String cancion) {
 		this.cancion = cancion;
 	}
-	
+	public String getCacion() {
+		return this.cancion;
+	}
 	public Music getMusica() {
 		return this.musica;
 	}

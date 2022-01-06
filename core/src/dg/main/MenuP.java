@@ -30,6 +30,7 @@ public class MenuP extends formatoMenus{
     }
     public MenuP() {
     	super();
+    	setOrdenCancniones(true);
     	//si quiero conservar la herencia, crear una nueva clase hija para el menu y mover las canciones
     	//s1.start();
     	
@@ -87,7 +88,18 @@ public class MenuP extends formatoMenus{
         TextButton boton1 = new TextButton("Jugar", skin);
         TextButton boton2 = new TextButton("Opciones", skin);
         TextButton boton3 = new TextButton("Salir", skin);
-        
+
+        //parte visual del menu
+        Actor barco = new Image(new Texture(Gdx.files.internal("Barco.png")));        
+        menu.add(barco).width(100).height(100);
+        menu.row();
+        menu.add(boton1).width(80).pad(5);
+        menu.row();
+        menu.add(boton2).width(80).pad(5);
+        menu.row();
+        menu.add(boton3).width(80).pad(5);
+                                
+        stage.addActor(menu);
         
       //listeners
         boton1.addListener(new ClickListener(){
@@ -102,7 +114,7 @@ public class MenuP extends formatoMenus{
         boton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
+            	Dokdo.getInstance().setScreen(MenuOp.getInstance(MenuP.getInstance()));           	
             }
         });
         
@@ -113,19 +125,6 @@ public class MenuP extends formatoMenus{
         		       		
         	}
         });
-               
-        
-        
-        //parte visual del menu
-        Actor barco = new Image(new Texture(Gdx.files.internal("Barco.png")));        
-        menu.add(barco).width(100).height(100);
-        menu.row();
-        menu.add(boton1).width(80).pad(5);
-        menu.row();
-        menu.add(boton2).width(80).pad(5);
-        menu.row();
-        menu.add(boton3).width(80).pad(5);
-        
         
         barco.addListener(new ClickListener() {
         	@Override
@@ -141,8 +140,6 @@ public class MenuP extends formatoMenus{
         		}
         	}
         });
-                        
-        stage.addActor(menu);
       
 	}
 	

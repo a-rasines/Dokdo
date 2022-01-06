@@ -153,6 +153,12 @@ public class MainScreen implements Screen{
 		
 		asignarTexturasAIslas();
 		
+		for (Isla i: islaList) { //TODO añadiendolos funciona bien la IA y todo
+			barcosEnemigos.addAll(i.getBarcos());
+			offRange.addAll(i.getBarcos());
+		}
+		
+		
 		logger.info("Generacion completa");
 	}
 	
@@ -364,11 +370,13 @@ public class MainScreen implements Screen{
 				}
 			}
 			
+			
+			
 		}
 		
 		
 		
-		if (ran.nextInt(1000) > 998) {
+		if (ran.nextInt(2000) > 1990) {
 			barcosAltaMar();
 		}
 		

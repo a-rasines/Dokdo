@@ -19,10 +19,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,7 +44,7 @@ import objetos.barcos.BarcoJugador;
 import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
-public class MainScreen implements Screen{
+public class MainScreen extends formatoMenus{
 	protected Skin skin;
 	public static AudioPlayer cFondo = new AudioPlayer();
 	private static Logger logger= Logger.getLogger("MainScreen");
@@ -164,7 +166,6 @@ public class MainScreen implements Screen{
 	
 	@Override
 	public void show() {
-		System.out.println("pausap");
 		//Bont�n para regresar al menu principal
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	menuPausa = new Table();
@@ -190,7 +191,7 @@ public class MainScreen implements Screen{
 		
 		cFondo.Reproducir();
 		cFondo.setVolumen(0.5f);
-		BarcoEnemigo.hv.start();
+		BarcoEnemigo.hv.start();//TODO mover el hilo a otro lugar para poder hacer varias llamadas
 		BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
@@ -198,6 +199,13 @@ public class MainScreen implements Screen{
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
+			int value =new Random().nextInt(899999)+100000;
+			while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {value =new Random().nextInt(899999)+100000;}
+			int user = value;
+			DatabaseHandler.JSON.write("users", value, false);
+			DatabaseHandler.JSON.write("actualUser", value, true);
+			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
+			barco = new BarcoJugador(10,0, Municion.INCENDIARIA);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -275,8 +283,9 @@ public class MainScreen implements Screen{
 		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-			stage.draw();
 			System.out.println("Pausa");
+			MenuOp.setInstanciaDeLlamada(instance);
+			Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
 		}
 		//DAÑO A LOS BARCOS ENEMIGOS.
 		

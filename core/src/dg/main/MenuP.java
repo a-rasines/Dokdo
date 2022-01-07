@@ -44,7 +44,6 @@ public class MenuP extends formatoMenus{
         	logger.info("Fallo al cargar la Cancion secundaria");
 		}
     	try {
-    		System.out.println("paso2");
     		getcPrincipal().setCancion("Sonidos//DrunkenSailor.mp3");
     		getcPrincipal().Reproducir();
         	logger.info("Cancion principal cargada sin problemas");
@@ -113,7 +112,8 @@ public class MenuP extends formatoMenus{
         boton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	Dokdo.getInstance().setScreen(MenuOp.getInstance(MenuP.getInstance()));           	
+            	MenuOp.setInstanciaDeLlamada(instance);
+            	Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
             }
         });
         

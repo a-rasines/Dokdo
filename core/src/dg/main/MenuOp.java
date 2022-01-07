@@ -1,6 +1,7 @@
 package dg.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,25 +30,29 @@ public class MenuOp extends formatoMenus{
     private boolean teclas=false;
     
 	
-    private static MenuOp instance;
-    public static MenuOp getInstance(formatoMenus padre) {
-    	if(instance == null) instance = new MenuOp(null);
-    	setInstanciaDeLlamada(padre);
+    private static formatoMenus instance;
+    public static formatoMenus getInstance() {
+    	if(instance == null) instance = new MenuOp();
     	return instance;
     }
     
+  
+    public MenuOp() {   
+    	super();
+    	
+    }
     public static void setInstanciaDeLlamada(formatoMenus padre) {
     	instaciaDeLlamada=padre;
     }
+    
+	public formatoMenus getInstaciaDeLlamada() {
+		return instaciaDeLlamada;
+	}
 
-    public MenuOp(formatoMenus padre) {   
-    	super();  
-    	this.instaciaDeLlamada=padre;
-    	
-    }
- 
 	@Override
 	public void show() {
+		int xy=30;
+		int xyI=60;
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
         TextButton boton1 = new TextButton("Volver", skin);
@@ -65,31 +70,37 @@ public class MenuOp extends formatoMenus{
         //menu controles movimiento
         Table teclas1= new Table();
         teclas1.pad(10);
-        TextButton adelante = new TextButton("W", skin);
-        TextButton atras = new TextButton("S", skin);
-        TextButton derecha = new TextButton("D", skin);
-        TextButton izquierda = new TextButton("A", skin);
+        TextButton adelante = new TextButton("W ", skin);
+        TextButton atras = new TextButton("S ", skin);
+        TextButton derecha = new TextButton("D ", skin);
+        TextButton izquierda = new TextButton("A ", skin);
         
-        teclas1.add(adelante).width(50).height(50).colspan(3);
+        teclas1.add(adelante).width(xy).height(xy).colspan(3);
         teclas1.row();
-        teclas1.add(izquierda).width(50).height(50);
-        teclas1.add(atras).width(50).height(50);
-        teclas1.add(derecha).width(50).height(50);
+        teclas1.add(izquierda).width(xy).height(xy);
+        Actor timon = new Image(new Texture(Gdx.files.internal("timon.png")));
+        teclas1.add(timon).width(xyI).height(xyI);
+        teclas1.add(derecha).width(xy).height(xy);
+        teclas1.row();
+        teclas1.add(atras).width(xy).height(xy).colspan(xy);
         //TODO meter un dibujo de volante en el centro de estos botones?
        
         //menu controles disparos
         Table teclas2= new Table();
         teclas2.pad(10);
-        TextButton dadelante = new TextButton("I", skin);
-        TextButton datras = new TextButton("K", skin);
-        TextButton dderecha = new TextButton("J", skin);
-        TextButton dizquierda = new TextButton("L", skin);
+        TextButton dadelante = new TextButton("I ", skin);
+        TextButton datras = new TextButton("K ", skin);
+        TextButton dderecha = new TextButton("J ", skin);
+        TextButton dizquierda = new TextButton("L ", skin);
         
-        teclas2.add(dadelante).width(50).height(50).colspan(3);
+        teclas2.add(dadelante).width(xy).height(xy).colspan(xy);
         teclas2.row();
-        teclas2.add(dizquierda).width(50).height(50);
-        teclas2.add(datras).width(50).height(50);
-        teclas2.add(dderecha).width(50).height(50);
+        teclas2.add(dizquierda).width(xy).height(xy);
+        Actor cannon = new Image(new Texture(Gdx.files.internal("sonido2.png")));
+        teclas2.add(cannon).width(xyI).height(xyI);
+        teclas2.add(dderecha).width(xy).height(xy);
+        teclas2.row();
+        teclas2.add(datras).width(xy).height(xy).colspan(3);
         
         contenedorTeclas.add(teclas1);
         contenedorTeclas.add(teclas2);
@@ -127,7 +138,7 @@ public class MenuOp extends formatoMenus{
             		teclas=false;
         			contenedorG.removeActor(contenedorTeclas);    
             	}
-            	Dokdo.getInstance().setScreen(MenuP.getInstance());
+            	Dokdo.getInstance().setScreen(getInstaciaDeLlamada());
             }
         });
 
@@ -149,7 +160,7 @@ public class MenuOp extends formatoMenus{
         			s1.setvDestino(slider.getValue()/100);
         			volumenes[0]=slider.getValue()/100;
             		s1.setCambios(true);
-            		if(instaciaDeLlamada.getOrdenCancniones()) {
+            		if(((formatoMenus) instaciaDeLlamada).getOrdenCancniones()) {
             			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
             		}else {
             			s1.setSelCancion(MenuP.getInstance().getcSecundaria());

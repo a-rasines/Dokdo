@@ -26,8 +26,8 @@ public class formatoMenus implements Screen{
     protected Skin skin;
 	public  HiloVolumen s1 = HiloVolumen.getInstance();
    
-    private static formatoMenus instance;
-    public static formatoMenus getInstance() {
+    private static Screen instance;
+    public static Screen getInstance() {
     	if(instance == null) instance = new formatoMenus();
     	return instance;
     }

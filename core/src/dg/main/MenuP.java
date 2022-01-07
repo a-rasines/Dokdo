@@ -57,7 +57,6 @@ public class MenuP extends formatoMenus{
     	
     	
     	//dibujador de sprites
-    	setViewport(new FitViewport(480, 280));
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(getViewport());

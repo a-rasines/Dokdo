@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -31,7 +32,7 @@ public class formatoMenus implements Screen{
     	return instance;
     }
     public formatoMenus() {
-    	setViewport(new FitViewport(500, 400));
+    	setViewport(new FitViewport(480, 280));
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(getViewport());

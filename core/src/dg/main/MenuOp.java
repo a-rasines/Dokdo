@@ -16,14 +16,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuOp extends formatoMenus{
 	private static formatoMenus instaciaDeLlamada;
+	//TODO agregar log
 	//private static Logger logger= Logger.getLogger("Menu de opciones");
     private boolean visible = false;
+    private boolean teclas=false;
     
 	
     private static MenuOp instance;
@@ -45,42 +48,22 @@ public class MenuOp extends formatoMenus{
  
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
         TextButton boton1 = new TextButton("Volver", skin);
         TextButton botonV = new TextButton("Volumen", skin);
         TextButton botonC = new TextButton("Controles", skin);
         
-        menu.add(boton1).width(100);
+        menu.add(boton1).width(100).pad(5);
         menu.row();
-        menu.add(botonV).width(100);
+        menu.add(botonV).width(100).pad(5);
         menu.row();
-        menu.add(botonC).width(100);
-        menu.row();
+        menu.add(botonC).width(100).pad(5);
         
-        //TODO cambiar por el slider
-        //Set table to fill stage
-        //menu.setFillParent(true);
-        Table volumenM = new Table();
-        //botones del sonido
-        TextButton cero = new TextButton("0%", skin);
-        TextButton v25 = new TextButton("25%", skin);
-        TextButton v50 = new TextButton("50%", skin);
-        TextButton v75 = new TextButton("75%", skin);
-        TextButton v100 = new TextButton("100%", skin);
-      
-        Actor sonido = new Image(new Texture(Gdx.files.internal("sonido2.png")));
-        volumenM.add(sonido).width(40).height(20);
-        volumenM.add(cero).pad(5).width(40);
-        volumenM.add(v25).pad(5).width(40);
-        volumenM.add(v50).pad(5).width(40);
-        volumenM.add(v75).pad(5).width(40);
-        volumenM.add(v100).pad(5).width(40);
-        
+        //Contenedor de teclas
+        Table contenedorTeclas= new Table();
         //menu controles movimiento
         Table teclas1= new Table();
-        teclas1.debug();
         teclas1.pad(10);
         TextButton adelante = new TextButton("W", skin);
         TextButton atras = new TextButton("S", skin);
@@ -92,9 +75,8 @@ public class MenuOp extends formatoMenus{
         teclas1.add(izquierda).width(50).height(50);
         teclas1.add(atras).width(50).height(50);
         teclas1.add(derecha).width(50).height(50);
-        //TODO meter un dibujo de volante en el centro de estos botones
+        //TODO meter un dibujo de volante en el centro de estos botones?
        
-        
         //menu controles disparos
         Table teclas2= new Table();
         teclas2.pad(10);
@@ -109,43 +91,100 @@ public class MenuOp extends formatoMenus{
         teclas2.add(datras).width(50).height(50);
         teclas2.add(dderecha).width(50).height(50);
         
-        
-        /**        
-        Label anotherLabel = new Label("ANOTHER LABEL", skin); esto es para meter un texto sin fondo
-        anotherLabel.setAlignment(Align.left);**/
-        
-        //TODO revisar para reemplazar el sonido
-        Slider slider = new Slider(0, 100, 1, false, skin);
-                
-        /**
-        Container<Table> contenedor = new Container<>();
-        contenedor.setSize(300, 100); //tamaño respecto a la pantalla
-        contenedor.setColor(Color.BLUE);**/
-        
-        
-        //tabla global
-        Table contenedor2 = new Table();
-        contenedor2.add(slider);
-        Table contenedor1 = new Table();
-        contenedor1.debug();
-        contenedor1.center();
-        contenedor1.setFillParent(true);
-        contenedor1.add(menu);
-        contenedor1.add(teclas1);
-        contenedor1.add(teclas2);
+        contenedorTeclas.add(teclas1);
+        contenedorTeclas.add(teclas2);
+              
+        //Sonido
+        Slider slider = new Slider(0, 100, 1, false, skin); 
+        Table contenedorVolumen = new Table();
+        Label instrucionesVolumen = new Label("Presiona Aceptar para guardar los cambios", skin);
+        instrucionesVolumen.setAlignment(Align.center);
+        Label volumen = new Label("volumen: "+slider.getValue(), skin);//esto es para meter un texto sin fondo
+        instrucionesVolumen.setAlignment(Align.center);
+        contenedorVolumen.add(instrucionesVolumen);
+        contenedorVolumen.row();
+        contenedorVolumen.add(slider).fillX();
+        contenedorVolumen.row();
+        contenedorVolumen.add(volumen);
        
+      //tabla global
+        Table contenedorG = new Table();
+        contenedorG.background(new TextureRegionDrawable(new Texture("Ocean.png")));
+        contenedorG.debug();
+        contenedorG.center();
+        contenedorG.setFillParent(true);
+        contenedorG.add(menu);
         
-      
-        
-        stage.addActor(contenedor1);
-        
-      //listeners
+       
+        stage.addActor(contenedorG);
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-           	Dokdo.getInstance().setScreen(MenuP.getInstance());
+            	if(visible) {
+            		visible=false;
+            		contenedorG.removeActor(contenedorVolumen);
+            	}else if(teclas) {
+            		teclas=false;
+        			contenedorG.removeActor(contenedorTeclas);    
+            	}
+            	Dokdo.getInstance().setScreen(MenuP.getInstance());
             }
         });
+
+        botonV.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!visible) {
+        			if(teclas) {
+        				teclas=false;
+            			contenedorG.removeActor(contenedorTeclas);
+        			}
+        			visible=true;  
+        			botonV.setText("Aceptar");
+        			slider.setValue(volumenes[0]*100);
+        			volumen.setText("volumen: "+slider.getValue());
+        			contenedorG.add(contenedorVolumen);	
+        		}else{
+        			//cambio de volumen
+        			s1.setvDestino(slider.getValue()/100);
+        			volumenes[0]=slider.getValue()/100;
+            		s1.setCambios(true);
+            		if(instaciaDeLlamada.getOrdenCancniones()) {
+            			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
+            		}else {
+            			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
+            			}
+            		visible=false;
+        			botonV.setText("Volumen");
+        			contenedorG.removeActor(contenedorVolumen);   
+        			}
+        		}
+        	});
+        botonC.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!teclas) {
+        			if(visible) {
+        				visible=false;
+            			contenedorG.removeActor(contenedorVolumen);     
+        			}
+        			teclas=true;  
+        			contenedorG.add(contenedorTeclas);	
+        		}else{
+        			teclas=false;
+        			contenedorG.removeActor(contenedorTeclas);        			
+        			}
+        		}
+        	});
+        
+        slider.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		volumen.setText("volumen: "+slider.getValue());
+        		}
+        	
+        	});
+        /**
         cero.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
@@ -158,82 +197,7 @@ public class MenuOp extends formatoMenus{
         			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
         		}
         	}
-        });
-        v25.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		s1.setvDestino(0.25f);
-        		s1.setCambios(true);
-    			volumenes[0]=0.25f;
-    			if(instaciaDeLlamada.getOrdenCancniones()) {
-        			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
-        		}else {
-        			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
-        		}
-        	}
-        });
-        v50.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		s1.setvDestino(0.50f);
-        		s1.setCambios(true);
-    			volumenes[0]=0.50f;
-    			if(instaciaDeLlamada.getOrdenCancniones()) {
-        			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
-        		}else {
-        			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
-        		}
-        	}
-        });
-        v75.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		s1.setvDestino(0.75f);
-        		s1.setCambios(true);
-        		if(instaciaDeLlamada.getOrdenCancniones()) {
-        			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
-        		}else {
-        			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
-        		}
-        	}
-        });
-        v100.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		s1.setvDestino(1);
-        		s1.setCambios(true);
-        		volumenes[0]=1;
-        		if(instaciaDeLlamada.getOrdenCancniones()) {
-        			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
-        		}else {
-        			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
-        		}
-        	}
-        });
-        botonV.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		if(!visible) {
-        			visible=true;  
-        			contenedor1.add(contenedor2);	
-        		}else{
-        			visible=false;
-        			contenedor1.removeActor(contenedor2);        			
-        			}
-        		}
-        	});
-        botonC.addListener(new ClickListener() {
-        	@Override
-        	public void clicked(InputEvent event, float x , float y) {
-        		if(!visible) {
-        			visible=true;  
-        			contenedor1.add(teclas1);	
-        		}else{
-        			visible=false;
-        			contenedor1.removeActor(teclas1);        			
-        			}
-        		}
-        	});
+        });**/
         
       
 	}
@@ -241,10 +205,8 @@ public class MenuOp extends formatoMenus{
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f,0);
+		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
         stage.draw();
 	
 	}

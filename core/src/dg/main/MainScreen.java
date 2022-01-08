@@ -355,13 +355,16 @@ public class MainScreen implements Screen{
 			
 		}
 		
-		//TODO prueba de lineas con todos los barcos (Islas no)
-		//Por alguna razon solo detecta la linea de delante
+		
 		detectaCanon();
-		//moverBarcos();
+	
 		
 		
 		for (Isla i : islaList) {
+			
+			if (i.getBarcos().size() == 0) {
+				i.conquistar();
+			}
 			for (BarcoEnemigo b : i.getBarcos()) {
 				b.dibujar();
 				if(b.tocaLinea(barco) != null) {
@@ -376,7 +379,7 @@ public class MainScreen implements Screen{
 		
 		
 		
-		if (ran.nextInt(2000) > 1990) {
+		if (ran.nextInt(2000) > 1995) {
 			barcosAltaMar();
 		}
 		

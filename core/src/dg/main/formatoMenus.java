@@ -36,9 +36,12 @@ public class formatoMenus implements Screen{
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(getViewport());
-    
-    	
     }
+    
+    public Stage getStage() {
+    	return stage;
+    }
+    
 	public AudioPlayer getcPrincipal() {
 		return cPrincipal;
 	}

@@ -1,13 +1,24 @@
 package dg.main;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -28,6 +39,8 @@ public class MenuOp extends formatoMenus{
 	//private static Logger logger= Logger.getLogger("Menu de opciones");
     private boolean visible = false;
     private boolean teclas=false;
+    private boolean cteclas=false;
+    private TextButton origen;
     
 	
     private static formatoMenus instance;
@@ -83,7 +96,7 @@ public class MenuOp extends formatoMenus{
         teclas1.add(derecha).width(xy).height(xy);
         teclas1.row();
         teclas1.add(atras).width(xy).height(xy).colspan(xy);
-        //TODO meter un dibujo de volante en el centro de estos botones?
+   
        
         //menu controles disparos
         Table teclas2= new Table();
@@ -121,7 +134,6 @@ public class MenuOp extends formatoMenus{
       //tabla global
         Table contenedorG = new Table();
         contenedorG.background(new TextureRegionDrawable(new Texture("Ocean.png")));
-        contenedorG.debug();
         contenedorG.center();
         contenedorG.setFillParent(true);
         contenedorG.add(menu);
@@ -172,6 +184,7 @@ public class MenuOp extends formatoMenus{
         		}
         	});
         botonC.addListener(new ClickListener() {
+        	//TODO crear una lista de la que cargar y descargar los valores de los controles
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
         		if(!teclas) {
@@ -195,62 +208,121 @@ public class MenuOp extends formatoMenus{
         		}
         	
         	});
-        /**
-        cero.addListener(new ClickListener() {
+        
+        adelante.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
-        		s1.setvDestino(0);
-    			volumenes[0]=0;
-        		s1.setCambios(true);
-        		if(instaciaDeLlamada.getOrdenCancniones()) {
-        			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
-        		}else {
-        			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
+        		if(!cteclas) {
+        			adelante.setText("?");
+            		origen=adelante;
+            		cteclas=true;
         		}
         	}
-        });**/
+        });
+        atras.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			atras.setText("?");
+            		origen=atras;
+            		cteclas=true;
+        		}
+        	}
+        });
+        izquierda.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			izquierda.setText("?");
+            		origen=izquierda;
+            		cteclas=true;
+        		}
+        	}
+        });
+        derecha.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			derecha.setText("?");
+            		origen=derecha;
+            		cteclas=true;
+        		}
+        	}
+        });
+        dadelante.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			dadelante.setText("?");
+            		origen=dadelante;
+            		cteclas=true;
+        		}
+        	}
+        });
+        datras.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			datras.setText("?");
+            		origen=datras;
+            		cteclas=true;
+        		}
+        	}
+        });
+        dizquierda.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			dizquierda.setText("?");
+            		origen=dizquierda;
+            		cteclas=true;
+        		}
+        	}
+        });
+        dderecha.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		if(!cteclas) {
+        			dderecha.setText("?");
+            		origen=dderecha;
+            		cteclas=true;
+        		}
+        	}
+        });
         
-      
+        getStage().addListener(new InputListener() 
+        {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode){
+            	if(cteclas)origen.setText(Keys.toString(keycode)+" ");
+            	cteclas=false;
+                return true;
+            }
+        });
+        
+        
+        stage.setKeyboardFocus(contenedorG);
 	}
-	
-	
+		
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
+        
+        if(Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+        	//System.out.println(Gdx.input.);    
+		}
 	
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		getViewport().update(width, height);
     	
 	}
+	
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		skin.dispose();
-		
-	}
 }
 

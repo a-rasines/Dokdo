@@ -379,7 +379,7 @@ public class MainScreen implements Screen{
 		
 		
 		
-		if (ran.nextInt(2000) > 1995) {
+		if (ran.nextInt(100000) > 99990) {
 			barcosAltaMar();
 		}
 		

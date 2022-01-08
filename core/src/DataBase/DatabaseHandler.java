@@ -19,6 +19,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import objetos.Municion;
+import objetos.barcos.BarcoJugador;
+
 /**
  * Clase encargada de gestionar la base de datos
  *
@@ -273,7 +276,6 @@ public class DatabaseHandler {
 			int value =new Random().nextInt(899999)+100000;
 			while(SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {value =new Random().nextInt(899999)+100000;}
 			int user = value;
-			System.out.println(value);
 			JSONArray users = new JSONArray();
 			users.add(user);
 			SQL.addValue("Jugadores(ID)", String.valueOf(user));

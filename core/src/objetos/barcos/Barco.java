@@ -194,7 +194,7 @@ public class Barco extends Sprite{
 	}
 	//CANYONES
 	public boolean dispararLado(PosicionCanyon lc) {
-		return canyones.get(lc).shootIfPosible(municionEnUso, 10);
+		return canyones.get(lc).shootIfPosible(municionEnUso, municionEnUso.getCoolDown());
 	}
 	/**
 	 * Establece los cañones de un lado

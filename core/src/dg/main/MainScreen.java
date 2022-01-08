@@ -247,11 +247,11 @@ public class MainScreen extends formatoMenus{
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
 			barco.tpTo(0, 0);
-		if (Gdx.input.isKeyPressed(Input.Keys.W) && Gdx.input.isKeyPressed(Input.Keys.S))
+		if (Gdx.input.isKeyPressed(MenuOp.getvTeclas(0)) && Gdx.input.isKeyPressed(MenuOp.getvTeclas(1)))
 			barco.decelerate();
-		else if(Gdx.input.isKeyPressed(Input.Keys.W))
+		else if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(0)))
 			barco.forward();
-		else if(Gdx.input.isKeyPressed(Input.Keys.S))
+		else if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(1)))
 			barco.backwards();
 		else 
 			barco.decelerate();
@@ -265,22 +265,22 @@ public class MainScreen extends formatoMenus{
 			barco.undoMove();
 			barco.stop();
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
+		if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(3))) 
 			barco.right();
-		if(Gdx.input.isKeyPressed(Input.Keys.A) || barco.collidesWith(islaList)) 
+		if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(2)) || barco.collidesWith(islaList)) 
 			barco.left();
 		if(barco.collidesWith(islaList))
 			barco.right();
 		//logger.info("barco: "+barco.getInfo());
 		secondShipTest();//TODO eliminar al terminar tests
 		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
-		if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+		if (Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(4))) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
-		}else if(Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(5))) {
 			barco.dispararLado(PosicionCanyon.IZQUIERDA);
-		}else if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(6))) {
 			barco.dispararLado(PosicionCanyon.ATRAS);
-		}else if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(7))) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
 			System.out.println("Pausa");

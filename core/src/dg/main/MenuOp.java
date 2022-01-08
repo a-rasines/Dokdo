@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.bullet.collision.integer_comparator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -41,6 +42,9 @@ public class MenuOp extends formatoMenus{
     private boolean teclas=false;
     private boolean cteclas=false;
     private TextButton origen;
+    private int pos;
+    private static int[] vTeclas = {Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
+    
     
 	
     private static formatoMenus instance;
@@ -54,7 +58,12 @@ public class MenuOp extends formatoMenus{
     	super();
     	
     }
-    public static void setInstanciaDeLlamada(formatoMenus padre) {
+    
+    public static int getvTeclas(int x) {
+		return vTeclas[x];
+	}
+
+	public static void setInstanciaDeLlamada(formatoMenus padre) {
     	instaciaDeLlamada=padre;
     }
     
@@ -83,10 +92,10 @@ public class MenuOp extends formatoMenus{
         //menu controles movimiento
         Table teclas1= new Table();
         teclas1.pad(10);
-        TextButton adelante = new TextButton("W ", skin);
-        TextButton atras = new TextButton("S ", skin);
-        TextButton derecha = new TextButton("D ", skin);
-        TextButton izquierda = new TextButton("A ", skin);
+        TextButton adelante = new TextButton(Input.Keys.toString(vTeclas[0])+" ", skin);
+        TextButton atras = new TextButton(Input.Keys.toString(vTeclas[1])+" ", skin);
+        TextButton derecha = new TextButton(Input.Keys.toString(vTeclas[2])+" ", skin);
+        TextButton izquierda = new TextButton(Input.Keys.toString(vTeclas[3])+" ", skin);
         
         teclas1.add(adelante).width(xy).height(xy).colspan(3);
         teclas1.row();
@@ -101,10 +110,10 @@ public class MenuOp extends formatoMenus{
         //menu controles disparos
         Table teclas2= new Table();
         teclas2.pad(10);
-        TextButton dadelante = new TextButton("I ", skin);
-        TextButton datras = new TextButton("K ", skin);
-        TextButton dderecha = new TextButton("J ", skin);
-        TextButton dizquierda = new TextButton("L ", skin);
+        TextButton dadelante = new TextButton(Input.Keys.toString(vTeclas[4])+" ", skin);
+        TextButton datras = new TextButton(Input.Keys.toString(vTeclas[5])+" ", skin);
+        TextButton dderecha = new TextButton(Input.Keys.toString(vTeclas[6])+" ", skin);
+        TextButton dizquierda = new TextButton(Input.Keys.toString(vTeclas[7])+" ", skin);
         
         teclas2.add(dadelante).width(xy).height(xy).colspan(xy);
         teclas2.row();
@@ -214,6 +223,7 @@ public class MenuOp extends formatoMenus{
         	public void clicked(InputEvent event, float x , float y) {
         		if(!cteclas) {
         			adelante.setText("?");
+        			pos=0;
             		origen=adelante;
             		cteclas=true;
         		}
@@ -224,6 +234,7 @@ public class MenuOp extends formatoMenus{
         	public void clicked(InputEvent event, float x , float y) {
         		if(!cteclas) {
         			atras.setText("?");
+        			pos=1;
             		origen=atras;
             		cteclas=true;
         		}
@@ -236,6 +247,7 @@ public class MenuOp extends formatoMenus{
         			izquierda.setText("?");
             		origen=izquierda;
             		cteclas=true;
+            		pos=2;
         		}
         	}
         });
@@ -246,6 +258,7 @@ public class MenuOp extends formatoMenus{
         			derecha.setText("?");
             		origen=derecha;
             		cteclas=true;
+            		pos=3;
         		}
         	}
         });
@@ -256,6 +269,7 @@ public class MenuOp extends formatoMenus{
         			dadelante.setText("?");
             		origen=dadelante;
             		cteclas=true;
+            		pos=4;
         		}
         	}
         });
@@ -266,6 +280,7 @@ public class MenuOp extends formatoMenus{
         			datras.setText("?");
             		origen=datras;
             		cteclas=true;
+            		pos=5;
         		}
         	}
         });
@@ -276,6 +291,7 @@ public class MenuOp extends formatoMenus{
         			dizquierda.setText("?");
             		origen=dizquierda;
             		cteclas=true;
+            		pos=6;
         		}
         	}
         });
@@ -286,6 +302,7 @@ public class MenuOp extends formatoMenus{
         			dderecha.setText("?");
             		origen=dderecha;
             		cteclas=true;
+            		pos=7;
         		}
         	}
         });
@@ -294,7 +311,10 @@ public class MenuOp extends formatoMenus{
         {
             @Override
             public boolean keyDown(InputEvent event, int keycode){
-            	if(cteclas)origen.setText(Keys.toString(keycode)+" ");
+            	if(cteclas) {
+            		origen.setText(Keys.toString(keycode)+" ");
+            		vTeclas[pos]=keycode;
+            	}            	
             	cteclas=false;
                 return true;
             }
@@ -309,11 +329,7 @@ public class MenuOp extends formatoMenus{
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
-        
-        if(Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
-        	//System.out.println(Gdx.input.);    
-		}
-	
+       
 	}
 
 	@Override

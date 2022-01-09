@@ -28,6 +28,9 @@ public class MenuP extends FormatoMenus{
     	if(instance == null) instance = new MenuP();
     	return instance;
     }
+    public static void setInstanciaDeLlamada(FormatoMenus padre) {
+    	instance=(MenuP) padre;
+    }
     public MenuP() {
     	super();
     	setOrdenCancniones(true);
@@ -188,5 +191,6 @@ public class MenuP extends FormatoMenus{
 		
 		
 	}
+	
 }
 

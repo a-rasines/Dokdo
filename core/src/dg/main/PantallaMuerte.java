@@ -15,13 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class PantallaMuerte extends FormatoMenus{
 	private Logger logger = Logger.getLogger("Menu Muerte");
-	private static FormatoMenus instanceFather;
+	private static PantallaMuerte instanceFather;
+	
     public static FormatoMenus getInstance() {
     	if(instanceFather == null) instanceFather = new PantallaMuerte();
     	return instanceFather;
-    }
-    public static void setInstanciaDeLlamada(FormatoMenus padre) {
-    	instanceFather=padre;
     }
     
 	public FormatoMenus getInstaciaDeLlamada() {
@@ -51,7 +49,12 @@ public class PantallaMuerte extends FormatoMenus{
 		menu.row();
 		menu.add(salir).width(100);
 		stage.addActor(menu);
-		
+		menuPrincipal.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Dokdo.getInstance().setScreen(MenuP.getInstance());
+			}
+		});
 		salir.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

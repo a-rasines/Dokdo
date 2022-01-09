@@ -77,7 +77,6 @@ public class BarcoJugador extends Barco{
 		MainScreen.balasBorrar.add(bullet);
 		if(vida<=0) {
 			System.out.println("MURIO");
-			PantallaMuerte.setInstanciaDeLlamada(instance);
 			Dokdo.getInstance().setScreen(PantallaMuerte.getInstance()); 
 		}
 	}

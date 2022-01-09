@@ -95,7 +95,7 @@ public class PantallaMuerte extends FormatoMenus{
 
 	@Override
 	public void dispose() {
-		getcPrincipal().detener();
+		//getcPrincipal().detener();
 		stage.dispose();
 		skin.dispose();
 		Gdx.app.exit();

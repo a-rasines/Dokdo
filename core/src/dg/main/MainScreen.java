@@ -195,7 +195,7 @@ public class MainScreen extends FormatoMenus{
 		BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
-			barco = new BarcoJugador(3,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
+			barco = new BarcoJugador(pos0.getInt("Vida"),0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
@@ -205,7 +205,7 @@ public class MainScreen extends FormatoMenus{
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(3,0, Municion.INCENDIARIA);
+			barco = new BarcoJugador(10,0, Municion.INCENDIARIA);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -299,6 +299,7 @@ public class MainScreen extends FormatoMenus{
 					 balasDannyoContinuo.add(i);
 				}
 			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
+				System.out.println("jugador tocado");
 				barco.recibeDanyo(i);
 			}
 			if(i.collidesWith(islaList)) {

@@ -37,6 +37,8 @@ public abstract class Sprite {
 		} catch (Throwable e) {
 			sb2=null;
 		}
+		bounds = new Polygon(new float[]{0,0,sizeX,0,sizeX,sizeY,0,sizeY});
+		bounds.setOrigin(sizeX/2, sizeY/2);
 		this.x = x;
 		this.y = y;
 		this.v = v;
@@ -247,11 +249,7 @@ public abstract class Sprite {
 	 * Refresca la posición y rotación de la caja de colisiones
 	 */
 	protected void refreshBounds() {
-		if(bounds == null) {
-			bounds = new Polygon(new float[]{x,y,sizeX+x,y,sizeX+x,sizeY+y,x,sizeY+y});
-			bounds.setOrigin(x + sizeX/2, y + sizeY/2);
-		}else 
-			bounds.setPosition(x, y);
+		bounds.setPosition(x, y);
 		bounds.setRotation(-angle);
 		
 	}

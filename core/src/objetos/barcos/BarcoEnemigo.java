@@ -4,10 +4,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
-import dg.main.AudioPlayer;
-import dg.main.FormatoMenus;
 import dg.main.MainScreen;
-import hilos.HiloVolumen;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -32,7 +29,7 @@ public class BarcoEnemigo extends Barco{
 	/*
 	 * Plantillas
 	 */
-	public static BarcoEnemigo lvl1(int x, int y, boolean protecting) {
+	public static BarcoEnemigo lvl1(float x, float y, boolean protecting) {
 		BarcoEnemigo be = new BarcoEnemigo(3, 1, x, y, protecting, Municion.NORMAL);
 		be.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	be.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -55,7 +52,30 @@ public class BarcoEnemigo extends Barco{
 	 */
 	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island, Municion municionEnUso) {
 		super(vida, nivel, posX, posY, municionEnUso);
+		v *= 0.9;
 		isProtecting = island;
+		lineaFrente = new Polygon(new float[]{
+				0 , 0 ,
+				1, 0,
+				0 , 0  + rango
+		});
+		
+		lineaAtras = new Polygon(new float[]{
+				0 , 0 ,
+				1, 0 ,
+				0 , -rango
+		});
+		lineaDerecha = new Polygon(new float[]{
+				0 , 0 ,
+				1, 0,
+				rango, 0 
+		});
+		
+		lineaIzquierda = new Polygon(new float[]{
+				0 , 0 ,
+				1, 0,
+				-rango, 0 
+		});
 		refreshLineas();
 		/**
 		cCombate.setCancion("Sonidos//Battle.mp3");
@@ -69,47 +89,17 @@ public class BarcoEnemigo extends Barco{
 	 * Recalcula las lineas de IA de disparo
 	 */
 	protected void refreshLineas() {
-		if(lineaFrente == null) {
-			lineaFrente = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX() +1, (float) this.getY() ,
-					(float) this.getX() , (float) this.getY()  + rango
-			});//Esquinas
-			
-			lineaAtras = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY() ,
-					(float) this.getX() , (float) this.getY() - rango
-			});//Esquinas
-			
-			lineaDerecha = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY() ,
-					(float) this.getX()  + rango, (float) this.getY() 
-			});//Esquinas
-			
-			lineaIzquierda = new Polygon(new float[]{
-					(float) this.getX() , (float) this.getY() ,
-					(float) this.getX()  +1, (float) this.getY(),
-					(float) this.getX()  - rango, (float) this.getY() 
-			});//Esquinas
-			
-			lineaFrente.setOrigin((float) this.getX(), (float) this.getY());//Pos barco
-			lineaAtras.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-			lineaDerecha.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-			lineaIzquierda.setOrigin((float) this.getX() , (float) this.getY() );//Pos barco
-		}else 
-			lineaFrente.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-			lineaFrente.setRotation(-getAngle()); //Get angulo
-		
-			lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-			lineaAtras.setRotation(-getAngle()); //Get angulo
-		
-			lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-			lineaDerecha.setRotation(-getAngle()); //Get angulo
-		
-			lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
-			lineaIzquierda.setRotation(-getAngle()); //Get angulo
+		lineaFrente.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaFrente.setRotation(-getAngle()); //Get angulo
+	
+		lineaAtras.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaAtras.setRotation(-getAngle()); //Get angulo
+	
+		lineaDerecha.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaDerecha.setRotation(-getAngle()); //Get angulo
+	
+		lineaIzquierda.setPosition((float) this.getX() + this.getSizeX()/2, (float) this.getY() + this.getSizeY()/2); //getX/Y
+		lineaIzquierda.setRotation(-getAngle()); //Get angulo
 		
 	}
 	
@@ -227,7 +217,7 @@ public class BarcoEnemigo extends Barco{
 	@Override
 	public void onRangeOfPlayer() {//TODO sonido
 		System.out.println("enter 0");	
-		MainScreen.m1.setOrdenCancniones(enter);
+		MainScreen.m1.setOrdenCanciones(enter);
 		enter=MainScreen.m1.IntercambioSonido(enter);
 		//MainScreen.cFondo.setVolumen(0f);
 		/**if(cCombate.reproduciendo()) {
@@ -257,7 +247,7 @@ public class BarcoEnemigo extends Barco{
 	public void onExitFromRange() {//TODO sonido
 		tracking = false;
 		System.out.println("exit 0");
-		MainScreen.m1.setOrdenCancniones(enter);
+		MainScreen.m1.setOrdenCanciones(enter);
 		enter=MainScreen.m1.IntercambioSonido(enter);
 		/**
 		cCombate.setVolumen(0f);

@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import DataBase.DatabaseHandler;
 import dg.main.Dokdo;
 import dg.main.MainScreen;
-import dg.main.MenuOp;
 import dg.main.PantallaMuerte;
 import objetos.Bala;
 import objetos.Municion;
@@ -15,10 +14,10 @@ import objetos.Sprite;
 public class BarcoJugador extends Barco{
 	
 	private Circle range;
-	private static PantallaMuerte instance;
+	//private static PantallaMuerte instance; <- Esto no debería de estar en PantallaMuerte?+
 
-	public BarcoJugador(int vida, int nivel, Municion municionEnUso) {
-		super(vida, nivel, 0, 0, municionEnUso);
+	public BarcoJugador(float x, float y, int vida, int nivel, Municion municionEnUso) {
+		super(vida, nivel, x, y, municionEnUso);
 		refreshRange();
 	}
 	/**Refresca la posicion del rango(Circulo)

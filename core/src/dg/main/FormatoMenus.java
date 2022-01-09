@@ -14,7 +14,7 @@ import hilos.HiloVolumen;
 
 public class FormatoMenus implements Screen{
 	
-	private  boolean ordenCancniones;
+	private  boolean ordenCanciones;
 	private  static  AudioPlayer cPrincipal= new AudioPlayer();
 	private  static  AudioPlayer cSecundaria= new AudioPlayer();
 	private  Logger logger= Logger.getLogger("Menu");
@@ -56,11 +56,11 @@ public class FormatoMenus implements Screen{
 		this.cSecundaria = cSecundaria;
 	}
         
-	public boolean getOrdenCancniones() {
-		return ordenCancniones;
+	public boolean getOrdenCanciones() {
+		return ordenCanciones;
 	}
-	public void setOrdenCancniones(boolean ordenCancniones) {
-		this.ordenCancniones = ordenCancniones;
+	public void setOrdenCanciones(boolean ordenCancniones) {
+		this.ordenCanciones = ordenCancniones;
 	}
 	public Viewport getViewport() {
 		return viewport;

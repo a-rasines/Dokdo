@@ -1,7 +1,5 @@
 package dg.main;
 
-import java.io.File;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 

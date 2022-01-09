@@ -1,12 +1,10 @@
 package objetos;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import objetos.barcos.Barco;
 import objetos.barcos.BarcoEnemigo;
 /**
  * Representa las islas en el mapa

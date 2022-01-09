@@ -2,7 +2,6 @@ package dg.main;
 
 import java.util.logging.Logger;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,10 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import hilos.HiloVolumen;
 
 public class MenuP extends FormatoMenus{
 	
@@ -33,7 +28,7 @@ public class MenuP extends FormatoMenus{
     }
     public MenuP() {
     	super();
-    	setOrdenCancniones(true);
+    	setOrdenCanciones(true);
     	//si quiero conservar la herencia, crear una nueva clase hija para el menu y mover las canciones
     	//s1.start();
     	
@@ -131,14 +126,14 @@ public class MenuP extends FormatoMenus{
         barco.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
-        		if(getOrdenCancniones()) {
+        		if(getOrdenCanciones()) {
         			getcPrincipal().setVolumen(volumenes[1]);
             		getcSecundaria().setVolumen(volumenes[0]);
-            		setOrdenCancniones(false);
+            		setOrdenCanciones(false);
         		}else {
         			getcPrincipal().setVolumen(volumenes[0]);
             		getcSecundaria().setVolumen(volumenes[1]);
-            		setOrdenCancniones(true);
+            		setOrdenCanciones(true);
         		}
         	}
         });

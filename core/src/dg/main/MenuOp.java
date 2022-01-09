@@ -1,38 +1,21 @@
 package dg.main;
 
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.bullet.collision.integer_comparator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuOp extends FormatoMenus{
 	private static FormatoMenus instaciaDeLlamada;
@@ -181,7 +164,7 @@ public class MenuOp extends FormatoMenus{
         			s1.setvDestino(slider.getValue()/100);
         			volumenes[0]=slider.getValue()/100;
             		s1.setCambios(true);
-            		if(((FormatoMenus) instaciaDeLlamada).getOrdenCancniones()) {
+            		if(((FormatoMenus) instaciaDeLlamada).getOrdenCanciones()) {
             			s1.setSelCancion(FormatoMenus.getcPrincipal());
             		}else {
             			s1.setSelCancion(FormatoMenus.getcSecundaria());

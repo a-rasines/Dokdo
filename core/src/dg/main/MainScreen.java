@@ -6,32 +6,23 @@ import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import org.json.simple.JSONObject;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import DataBase.DatabaseHandler;
-import DataBase.TableBuilder;
-import DataBase.TableBuilder.DataType;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;
@@ -75,7 +66,7 @@ public class MainScreen extends FormatoMenus{
 	
 	public MainScreen() {
 		m1=this;
-		setOrdenCancniones(true);
+		setOrdenCanciones(true);
 		//Musica normal//TODO sonido
     	try {
     		getcSecundaria().setCancion("Sonidos//Battle.mp3");
@@ -108,7 +99,7 @@ public class MainScreen extends FormatoMenus{
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
-		BarcoEnemigo b = BarcoEnemigo.lvl1(0,  0, false).setTexturePos(0, 1).tpTo(barco.getX() + r.nextInt(1000) -500, barco.getY() + r.nextInt(1000) - 500);
+		BarcoEnemigo b = BarcoEnemigo.lvl1(barco.getX() + r.nextInt(1000) -500,  barco.getY() + r.nextInt(1000) - 500, false).setTexturePos(0, 1);
 		barcosEnemigos.add(b);
 		offRange.add(b);
 	} 
@@ -146,7 +137,6 @@ public class MainScreen extends FormatoMenus{
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public void generarIslas() {
 		Random r = new Random();
 		//Ahora mismo se generan 5 islas por cuadrante
@@ -218,17 +208,16 @@ public class MainScreen extends FormatoMenus{
 		//BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
-			barco = new BarcoJugador(/**pos0.getInt("Vida")**/3,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
+			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 3/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
 			int value =new Random().nextInt(899999)+100000;
 			while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {value =new Random().nextInt(899999)+100000;}
-			int user = value;
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(10,0, Municion.INCENDIARIA);
+			barco = new BarcoJugador(0.0f ,0.0f ,10 ,0 ,Municion.INCENDIARIA);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -295,7 +284,6 @@ public class MainScreen extends FormatoMenus{
 		if(barco.collidesWith(islaList))
 			barco.right();
 		//logger.info("barco: "+barco.getInfo());
-		secondShipTest();//TODO eliminar al terminar tests
 		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(4))) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
@@ -416,7 +404,8 @@ public class MainScreen extends FormatoMenus{
 		
 		
 		
-		if (ran.nextInt(100000) > 99990) {
+		if (ran.nextInt(10000) > 9990) {
+			System.out.println("spawn");
 			barcosAltaMar();
 		}
 		
@@ -431,20 +420,6 @@ public class MainScreen extends FormatoMenus{
 				b.dispararLado(b.tocaLinea(barco));
 			}
 		}
-	}
-	
-	public void secondShipTest() {
-		if (Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN))
-			barco2.decelerate();
-		else if(Gdx.input.isKeyPressed(Input.Keys.UP))
-			barco2.forward();
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
-			barco2.backwards();
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-			barco2.right();
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
-			barco2.left();
-		barco2.IAMove();
 	}
 	
 	public boolean IntercambioSonido(boolean x) {//TODO sonido
@@ -465,9 +440,9 @@ public class MainScreen extends FormatoMenus{
 		**/
 	}
 	public void cambioOrden2() {
-		setOrdenCancniones(false);
+		setOrdenCanciones(false);
 		
-		setOrdenCancniones(true);
+		setOrdenCanciones(true);
 		
 	}
 

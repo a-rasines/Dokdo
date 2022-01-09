@@ -1,9 +1,6 @@
 package dg.main;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
-
-import DataBase.DatabaseHandler;
 import hilos.HiloVolumen;
 
 

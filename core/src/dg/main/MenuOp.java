@@ -182,9 +182,9 @@ public class MenuOp extends FormatoMenus{
         			volumenes[0]=slider.getValue()/100;
             		s1.setCambios(true);
             		if(((FormatoMenus) instaciaDeLlamada).getOrdenCancniones()) {
-            			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
+            			s1.setSelCancion(FormatoMenus.getcPrincipal());
             		}else {
-            			s1.setSelCancion(MenuP.getInstance().getcSecundaria());
+            			s1.setSelCancion(FormatoMenus.getcSecundaria());
             			}
             		visible=false;
         			botonV.setText("Volumen");

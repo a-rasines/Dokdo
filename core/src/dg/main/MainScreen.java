@@ -46,7 +46,8 @@ import objetos.barcos.Barco.PosicionCanyon;
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen extends FormatoMenus{
 	protected Skin skin;
-	public static AudioPlayer cFondo = new AudioPlayer();
+	public static MainScreen m1;
+	public static AudioPlayer cFondo = new AudioPlayer();//TODO cambiar esto por la cacion principal
 	private static Logger logger= Logger.getLogger("MainScreen");
 	public static BarcoJugador barco;
 	public static List<Isla> islaList = new LinkedList<>();
@@ -70,6 +71,30 @@ public class MainScreen extends FormatoMenus{
 	public static MainScreen getInstance() {
 		if (instance == null) instance = new MainScreen();
 		return instance;
+	}
+	
+	public MainScreen() {
+		m1=this;
+		setOrdenCancniones(true);
+		//Musica normal//TODO sonido
+    	try {
+    		getcSecundaria().setCancion("Sonidos//Battle.mp3");
+    		getcSecundaria().Reproducir();
+    		getcSecundaria().setVolumen(volumenes[1]);
+        	logger.info("Cancion secundaria cargada sin problemas");
+		} catch (Exception a) {
+			a.printStackTrace();
+        	logger.info("Fallo al cargar la Cancion secundaria");
+		}
+    	try {
+    		getcPrincipal().setCancion("Sonidos//Overworld.mp3");
+    		getcPrincipal().Reproducir();
+        	logger.info("Cancion principal cargada sin problemas");
+		} catch (Exception e) {
+        	logger.info("Fallo al cargar la Cancion principal");
+        	getcSecundaria().setVolumen(volumenes[0]);
+		}
+
 	}
 
 	/**
@@ -186,13 +211,11 @@ public class MainScreen extends FormatoMenus{
     	
 	
 		
-		//Musica normal
-		cFondo.setCancion("Sonidos//Overworld.mp3");
-		
-		cFondo.Reproducir();
-		cFondo.setVolumen(0.5f);
-		BarcoEnemigo.hv.start();//TODO mover el hilo a otro lugar para poder hacer varias llamadas
-		BarcoEnemigo.hv.setCambios(false);
+	
+
+    	
+		//BarcoEnemigo.hv.start();//TODO mover el hilo a otro lugar para poder hacer varias llamadas
+		//BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
 			barco = new BarcoJugador(/**pos0.getInt("Vida")**/3,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
@@ -422,6 +445,30 @@ public class MainScreen extends FormatoMenus{
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 			barco2.left();
 		barco2.IAMove();
+	}
+	
+	public boolean IntercambioSonido(boolean x) {//TODO sonido
+		if(x) {
+			getcPrincipal().setVolumen(volumenes[1]);
+			getcSecundaria().setVolumen(volumenes[0]);
+			return false;
+		}else {
+			getcPrincipal().setVolumen(volumenes[1]);
+			getcSecundaria().setVolumen(volumenes[0]);
+			return true;
+		}
+			
+		/** si no se implementan estas no se va a cambiar el volumen del combate en tiempo real 
+			setOrdenCancniones(false);
+			
+			setOrdenCancniones(true);
+		**/
+	}
+	public void cambioOrden2() {
+		setOrdenCancniones(false);
+		
+		setOrdenCancniones(true);
+		
 	}
 
 	@Override

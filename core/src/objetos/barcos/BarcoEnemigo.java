@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import dg.main.AudioPlayer;
+import dg.main.FormatoMenus;
 import dg.main.MainScreen;
 import hilos.HiloVolumen;
 import objetos.Bala;
@@ -18,9 +19,7 @@ import objetos.Sprite;
  *
  */
 public class BarcoEnemigo extends Barco{
-	public static AudioPlayer cCombate= new AudioPlayer();
-	
-	public static HiloVolumen hv = new HiloVolumen();
+	private boolean enter=false;
 	private Polygon lineaFrente;
 	private Polygon lineaIzquierda;
 	private Polygon lineaDerecha;
@@ -58,11 +57,10 @@ public class BarcoEnemigo extends Barco{
 		super(vida, nivel, posX, posY, municionEnUso);
 		isProtecting = island;
 		refreshLineas();
-		
+		/**
 		cCombate.setCancion("Sonidos//Battle.mp3");
-		
 		hv.setSelCancion(cCombate);
-		
+		**/
 
 		
 	
@@ -227,15 +225,17 @@ public class BarcoEnemigo extends Barco{
 		}
 	}
 	@Override
-	public void onRangeOfPlayer() {
-		System.out.println("enter");		
-		MainScreen.cFondo.setVolumen(0f);
-		if(cCombate.reproduciendo()) {
+	public void onRangeOfPlayer() {//TODO sonido
+		System.out.println("enter 0");	
+		MainScreen.m1.setOrdenCancniones(enter);
+		enter=MainScreen.m1.IntercambioSonido(enter);
+		//MainScreen.cFondo.setVolumen(0f);
+		/**if(cCombate.reproduciendo()) {
 			cCombate.setVolumen(0.5f);
 			
 		} else {
 			cCombate.Reproducir();
-		}
+		}**/
 		
 //		BarcoEnemigo.hv.setSelCancion(cCombate);
 //		BarcoEnemigo.hv.setCambios(true);
@@ -254,11 +254,14 @@ public class BarcoEnemigo extends Barco{
 //		AudioPlayer.Reproducir("Sonidos//Battle.mp3");**/
 	}
 	@Override
-	public void onExitFromRange() {
+	public void onExitFromRange() {//TODO sonido
 		tracking = false;
-		System.out.println("exit");
+		System.out.println("exit 0");
+		MainScreen.m1.setOrdenCancniones(enter);
+		enter=MainScreen.m1.IntercambioSonido(enter);
+		/**
 		cCombate.setVolumen(0f);
-		MainScreen.cFondo.setVolumen(0.5f);
+		MainScreen.cFondo.setVolumen(0.5f);**/
 //		BarcoEnemigo.hv.setSelCancion(MainScreen.cFondo);
 //		BarcoEnemigo.hv.setCambios(true);
 //		BarcoEnemigo.hv.setDireccion(false);

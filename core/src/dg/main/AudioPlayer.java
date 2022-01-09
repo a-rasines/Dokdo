@@ -46,6 +46,7 @@ public class AudioPlayer {
 	 */
 	public void detener() {
 		musica.dispose();
+		rep=false;
 	}
 	
 	/**

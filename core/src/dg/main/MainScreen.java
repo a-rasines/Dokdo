@@ -301,6 +301,10 @@ public class MainScreen extends formatoMenus{
 			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
 				barco.recibeDanyo(i);
 			}
+			if(i.collidesWith(islaList)) {
+				System.out.println("isla tocada");
+				balasBorrar.add(i);
+			}
 			i.decelerate();
 			i.dibujar();
 		}

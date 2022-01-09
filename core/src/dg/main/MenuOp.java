@@ -43,7 +43,7 @@ public class MenuOp extends formatoMenus{
     private boolean cteclas=false;
     private TextButton origen;
     private int pos;
-    private static int[] vTeclas = {Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
+    private static int[] vTeclas = {Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.J,Input.Keys.K,Input.Keys.L};
     
     
 	

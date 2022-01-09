@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hilos.HiloVolumen;
 
-public class MenuP extends formatoMenus{
+public class MenuP extends FormatoMenus{
 	
 	private  Logger logger= Logger.getLogger("Menu");
 	

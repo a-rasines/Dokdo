@@ -19,6 +19,7 @@ import objetos.Sprite;
  */
 public class BarcoEnemigo extends Barco{
 	public static AudioPlayer cCombate= new AudioPlayer();
+	
 	public static HiloVolumen hv = new HiloVolumen();
 	private Polygon lineaFrente;
 	private Polygon lineaIzquierda;

@@ -1,43 +1,77 @@
 package dg.main;
+import java.util.logging.Logger;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class PantallaMuerte implements Screen{
+public class PantallaMuerte extends FormatoMenus{
+	private Logger logger = Logger.getLogger("Menu Muerte");
+	private static FormatoMenus instanceFather;
+    public static FormatoMenus getInstance() {
+    	if(instanceFather == null) instanceFather = new PantallaMuerte();
+    	return instanceFather;
+    }
+    public static void setInstanciaDeLlamada(FormatoMenus padre) {
+    	instanceFather=padre;
+    }
+    
+	public FormatoMenus getInstaciaDeLlamada() {
+		return instanceFather;
+	}
 	protected Stage stage;
 	protected Skin skin;
 	public PantallaMuerte() {
-		
+		super();
+		getViewport().apply();
+		skin = new Skin(Gdx.files.internal("uiskin.json"));
+		stage = new Stage(getViewport());
 	}
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		Table menu = new Table();
+		menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
 		menu.setFillParent(true);
 		menu.center();
-		TextButton incio = new TextButton("Jugar de nuevo", skin);
+		TextButton cargarPartida = new TextButton("Cargar partida", skin);
 		TextButton menuPrincipal = new TextButton("Volver al menu", skin);
 		TextButton salir=new TextButton("Salir", skin);
-		menu.add(incio).width(100);
+		menu.add(cargarPartida).width(100);
 		menu.row();
 		menu.add(menuPrincipal).width(100);
 		menu.row();
 		menu.add(salir).width(100);
 		stage.addActor(menu);
+		
+		salir.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				dispose();
+			}
+			
+		});
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
+		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.draw();
 		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		getViewport().update(width, height);
 		
 	}
 
@@ -61,8 +95,10 @@ public class PantallaMuerte implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		getcPrincipal().detener();
+		stage.dispose();
+		skin.dispose();
+		Gdx.app.exit();
 	}
 	
 }

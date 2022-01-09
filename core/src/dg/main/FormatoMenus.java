@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hilos.HiloVolumen;
 
-public class formatoMenus implements Screen{
+public class FormatoMenus implements Screen{
 	
 	private  boolean ordenCancniones;
 	private  AudioPlayer cPrincipal= new AudioPlayer();
@@ -28,10 +28,10 @@ public class formatoMenus implements Screen{
    
     private static Screen instance;
     public static Screen getInstance() {
-    	if(instance == null) instance = new formatoMenus();
+    	if(instance == null) instance = new FormatoMenus();
     	return instance;
     }
-    public formatoMenus() {
+    public FormatoMenus() {
     	setViewport(new FitViewport(480, 280));
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));

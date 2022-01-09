@@ -34,8 +34,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MenuOp extends formatoMenus{
-	private static formatoMenus instaciaDeLlamada;
+public class MenuOp extends FormatoMenus{
+	private static FormatoMenus instaciaDeLlamada;
 	//TODO agregar log
 	//private static Logger logger= Logger.getLogger("Menu de opciones");
     private boolean visible = false;
@@ -47,8 +47,8 @@ public class MenuOp extends formatoMenus{
     
     
 	
-    private static formatoMenus instance;
-    public static formatoMenus getInstance() {
+    private static FormatoMenus instance;
+    public static FormatoMenus getInstance() {
     	if(instance == null) instance = new MenuOp();
     	return instance;
     }
@@ -63,11 +63,11 @@ public class MenuOp extends formatoMenus{
 		return vTeclas[x];
 	}
 
-	public static void setInstanciaDeLlamada(formatoMenus padre) {
+	public static void setInstanciaDeLlamada(FormatoMenus padre) {
     	instaciaDeLlamada=padre;
     }
     
-	public formatoMenus getInstaciaDeLlamada() {
+	public FormatoMenus getInstaciaDeLlamada() {
 		return instaciaDeLlamada;
 	}
 
@@ -181,7 +181,7 @@ public class MenuOp extends formatoMenus{
         			s1.setvDestino(slider.getValue()/100);
         			volumenes[0]=slider.getValue()/100;
             		s1.setCambios(true);
-            		if(((formatoMenus) instaciaDeLlamada).getOrdenCancniones()) {
+            		if(((FormatoMenus) instaciaDeLlamada).getOrdenCancniones()) {
             			s1.setSelCancion(MenuP.getInstance().getcPrincipal());
             		}else {
             			s1.setSelCancion(MenuP.getInstance().getcSecundaria());

@@ -44,7 +44,7 @@ import objetos.barcos.BarcoJugador;
 import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
-public class MainScreen extends formatoMenus{
+public class MainScreen extends FormatoMenus{
 	protected Skin skin;
 	public static AudioPlayer cFondo = new AudioPlayer();
 	private static Logger logger= Logger.getLogger("MainScreen");
@@ -195,7 +195,7 @@ public class MainScreen extends formatoMenus{
 		BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
-			barco = new BarcoJugador(pos0.getInt("Vida"),0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
+			barco = new BarcoJugador(3,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
@@ -205,7 +205,7 @@ public class MainScreen extends formatoMenus{
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(10,0, Municion.INCENDIARIA);
+			barco = new BarcoJugador(3,0, Municion.INCENDIARIA);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -331,7 +331,7 @@ public class MainScreen extends formatoMenus{
 		//Actualización de rango
 		
 		List<Sprite> move = new LinkedList<>();
-		System.out.println(offRange.size());
+		//System.out.println(offRange.size());
 		for(Sprite b : barco.getEnRango(offRange)) {
 			move.add(b);
 			b.onRangeOfPlayer();

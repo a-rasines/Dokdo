@@ -195,7 +195,7 @@ public class MainScreen extends FormatoMenus{
 		BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
-			barco = new BarcoJugador(pos0.getInt("Vida"),0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
+			barco = new BarcoJugador(/**pos0.getInt("Vida")**/3,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion")).tpTo(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();

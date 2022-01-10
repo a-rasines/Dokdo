@@ -204,8 +204,6 @@ public class MainScreen extends FormatoMenus{
 	
 
     	
-		//BarcoEnemigo.hv.start();//TODO mover el hilo a otro lugar para poder hacer varias llamadas
-		//BarcoEnemigo.hv.setCambios(false);
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
 			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 3/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion"));
@@ -287,9 +285,9 @@ public class MainScreen extends FormatoMenus{
 		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(4))) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
-		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(5))) {
-			barco.dispararLado(PosicionCanyon.IZQUIERDA);
 		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(6))) {
+			barco.dispararLado(PosicionCanyon.IZQUIERDA);
+		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(5))) {
 			barco.dispararLado(PosicionCanyon.ATRAS);
 		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(7))) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
@@ -333,8 +331,13 @@ public class MainScreen extends FormatoMenus{
 			balasDisparadas.remove(i);
 			 balasDannyoContinuo.remove(i);
 		}
-		for(Barco j: barEneBorrar) {
+		for(Barco j: barEneBorrar) {//TODO
+			System.out.println("Eliminado");
+			setOrdenCanciones(true);
+			IntercambioSonido(getOrdenCanciones());
 			barcosEnemigos.remove(j);
+			onRange.remove(j);
+			offRange.remove(j);
 		}
 		
 		barEneBorrar.clear();
@@ -424,27 +427,17 @@ public class MainScreen extends FormatoMenus{
 	
 	public boolean IntercambioSonido(boolean x) {//TODO sonido
 		if(x) {
-			getcPrincipal().setVolumen(volumenes[1]);
-			getcSecundaria().setVolumen(volumenes[0]);
+			getcPrincipal().setVolumen(volumenes[0]);
+			getcSecundaria().setVolumen(volumenes[1]);
 			return false;
 		}else {
+			System.out.println("Falso");
 			getcPrincipal().setVolumen(volumenes[1]);
 			getcSecundaria().setVolumen(volumenes[0]);
 			return true;
 		}
-			
-		/** si no se implementan estas no se va a cambiar el volumen del combate en tiempo real 
-			setOrdenCancniones(false);
-			
-			setOrdenCancniones(true);
-		**/
 	}
-	public void cambioOrden2() {
-		setOrdenCanciones(false);
-		
-		setOrdenCanciones(true);
-		
-	}
+
 
 	@Override
 	public void resize(int width, int height) {

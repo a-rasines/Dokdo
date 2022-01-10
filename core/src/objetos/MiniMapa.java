@@ -37,7 +37,7 @@ public class MiniMapa {
 			listaIslas.add(i.getY() / FACTOR); //Escalarlo a un tamaño menor
 			listaIslasEstado.add(i.isConquistada());
 		}
-		setBordeMapa();
+
 		srB.setColor(Color.BROWN);
 		srIL.setColor(Color.GREEN);
 		srIO.setColor(Color.RED);
@@ -50,27 +50,9 @@ public class MiniMapa {
 	}
 	
 	
-	private static float[] vertices = new float[8];
 	
-	/** Metodo para dibujar el borde de manera provisional
-	 * Se cambiara por una textura mas bonita
-	 */
 	private static SpriteBatch sb = new SpriteBatch();
-	private static void setBordeMapa() {
-		//Vertice 1
-		vertices[0] = Gdx.graphics.getWidth();
-		vertices[1] = 0;
-		//Vertice 2
-		vertices[2] = Gdx.graphics.getWidth();
-		vertices[3] =  200;
-		//Vertice 3
-		vertices[4] = Gdx.graphics.getWidth() - 200;
-		vertices[5] = 200;
-		//Vertice 4
-		vertices[6] = Gdx.graphics.getWidth() - 200;
-		vertices[7] = 0;
-		
-	}
+
 	public static void mapaRenderer() {
 		sb.begin();
 		srB.begin(ShapeRenderer.ShapeType.Filled);

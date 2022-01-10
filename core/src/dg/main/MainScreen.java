@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -253,6 +256,8 @@ public class MainScreen extends FormatoMenus{
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
+		
+		dibujarFondo();
 		//Control de teclas
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
@@ -372,9 +377,7 @@ public class MainScreen extends FormatoMenus{
 		barcosEnemigos.forEach(v->v.dibujar());
 		islaList.forEach(v->v.dibujar());
 		
-		//Minimapa
-		MiniMapa.mapaRenderer();
-		MiniMapa.setPosBarco(barco);
+		
 		
 		//TODO Prueba de lineas
 		
@@ -412,6 +415,9 @@ public class MainScreen extends FormatoMenus{
 			barcosAltaMar();
 		}
 		
+		//Minimapa
+		MiniMapa.mapaRenderer();
+		MiniMapa.setPosBarco(barco);
 		//stage.draw();
 		
 	}
@@ -438,6 +444,18 @@ public class MainScreen extends FormatoMenus{
 		}
 	}
 
+	private SpriteBatch sb = new SpriteBatch();
+	private Texture fondo = new Texture("FondoJuego.png");
+	private TextureRegion tr = new TextureRegion(fondo);
+	public void dibujarFondo() {
+		sb.begin();
+		
+		//Hay doble render para cubrir bien la pantalla, ya que sino era facil salirse de la imagen del fondo
+		//Plan se veia donde acababa la imagen 
+		sb.draw(tr, -512 - (barco.getX() % 512), -512 - (barco.getY() % 512), 0, 0, 1024, 1024, 2, 2, 0);
+		sb.draw(tr, 512 - (barco.getX() % 512), -512 - (barco.getY() % 512), 0, 0, 1024, 1024, 2, 2, 0);
+		sb.end();
+	}
 
 	@Override
 	public void resize(int width, int height) {

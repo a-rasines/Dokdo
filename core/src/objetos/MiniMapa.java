@@ -21,7 +21,7 @@ public class MiniMapa {
 	private static float barcoX;
 	private static float barcoY;
 	private static ShapeRenderer srB =  new ShapeRenderer();
-	
+	private static ShapeRenderer srF = new ShapeRenderer();
 	private static ShapeRenderer srIL = new ShapeRenderer(); //Isla Liberada
 	private static ShapeRenderer srIO = new ShapeRenderer(); //Isla Ocupada
 	
@@ -41,6 +41,7 @@ public class MiniMapa {
 		srB.setColor(Color.BROWN);
 		srIL.setColor(Color.GREEN);
 		srIO.setColor(Color.RED);
+		srF.setColor(Color.BLUE);
 	}
 	
 	public static void setPosBarco(Barco barco) {
@@ -75,10 +76,14 @@ public class MiniMapa {
 		srB.begin(ShapeRenderer.ShapeType.Filled);
 		srIL.begin(ShapeRenderer.ShapeType.Filled);
 		srIO.begin(ShapeRenderer.ShapeType.Filled);
+		srF.begin(ShapeRenderer.ShapeType.Filled);
+		
+		srF.box(Gdx.graphics.getWidth() - 200, 10, 0, 190, 190, 0);
 		
 	    
-	    srB.setColor(Color.BROWN);
+	    
 	    srB.circle(Gdx.graphics.getWidth() - 100 + barcoX, 100 + barcoY, 2);
+	    
 	    for(int i = 0; i< listaIslasEstado.size(); i++) {
 	    	if(listaIslasEstado.get(i)) {
 	    		srIL.circle(Gdx.graphics.getWidth() - 100 + listaIslas.get(2* i), 100 + listaIslas.get(2*i+1), 2);
@@ -86,14 +91,17 @@ public class MiniMapa {
 	    		srIO.circle(Gdx.graphics.getWidth() - 100 + listaIslas.get(2* i), 100 +listaIslas.get(2*i+1), 2);
 	    	}
 	    }
+	    
+	    
 	    TextureRegion b = new TextureRegion(new Texture("marco.png"));
 	   // En orden, textura, x, y, CentroX, CentroY, Anchura, Altura, EscalaX, EscalaY, Angulo (En grados)
 	    sb.draw(b, Gdx.graphics.getWidth() - 210, 0, 105,105, 210, 210, 1, 1, 0);
 	    sb.end();
+	    srF.end();
 	    srIL.end();
 	    srIO.end();
-	
 	    srB.end();
+	    
 	}
 
 }

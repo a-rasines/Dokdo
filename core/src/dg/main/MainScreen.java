@@ -52,7 +52,6 @@ public class MainScreen extends FormatoMenus{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	private static Table menuPausa;
 	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
 
 	
@@ -62,10 +61,15 @@ public class MainScreen extends FormatoMenus{
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
 	private static MainScreen instance;
+	private static boolean regresoM;
 	public static MainScreen getInstance() {
 		if (instance == null) instance = new MainScreen();
 		return instance;
 	}
+	public static void setreinicio() {
+    	//instance.dispose();
+    	instance=null;
+    }
 	
 	public MainScreen() {
 		m1=this;
@@ -99,6 +103,10 @@ public class MainScreen extends FormatoMenus{
 	public <T> T[] arrayBuilder(@SuppressWarnings("unchecked") T... v){
 		return v;
 	}
+	
+	 public static void setregresoM() {
+	    	regresoM=true;
+	    }
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
@@ -184,29 +192,7 @@ public class MainScreen extends FormatoMenus{
 	
 	@Override
 	public void show() {
-		//Bont�n para regresar al menu principal
-    	skin = new Skin(Gdx.files.internal("uiskin.json"));
-    	menuPausa = new Table();
-    	menuPausa.setFillParent(true);
-    	menuPausa.center();
-        TextButton boton1 = new TextButton("Jugar", skin);
-        TextButton boton2 = new TextButton("Volumen", skin);
-        TextButton boton3 = new TextButton("Salir", skin);
-        
-        menuPausa.add(boton1).width(80).pad(5);
-        menuPausa.row();
-        menuPausa.add(boton2).width(80).pad(5);
-        menuPausa.row();
-        menuPausa.add(boton3).width(80).pad(5);
-        
-    	stage.addActor(menuPausa);
-    	
-    	
-	
-		
-	
-
-    	
+	 
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
 			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 3/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion"));
@@ -437,7 +423,6 @@ public class MainScreen extends FormatoMenus{
 			getcSecundaria().setVolumen(volumenes[1]);
 			return false;
 		}else {
-			System.out.println("Falso");
 			getcPrincipal().setVolumen(volumenes[1]);
 			getcSecundaria().setVolumen(volumenes[0]);
 			return true;
@@ -483,7 +468,7 @@ public class MainScreen extends FormatoMenus{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		// TODO agregar las cosas a detener para poder reinciar el juego
 		
 	}
 }

@@ -9,6 +9,7 @@ public class AudioPlayer {
 	private String cancion;
 	
 	public void setCancion(String cancion) {
+		System.out.println("cambiando cancion");
 		this.cancion = cancion;
 	}
 	public String getCacion() {

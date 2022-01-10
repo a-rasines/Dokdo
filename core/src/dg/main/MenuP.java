@@ -17,21 +17,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class MenuP extends FormatoMenus{
 	
 	private  Logger logger= Logger.getLogger("Menu");
-	
+	private static boolean salir=true;
+	private static boolean regreso=false;
     private static MenuP instance;
     public static MenuP getInstance() {
     	if(instance == null) instance = new MenuP();
     	return instance;
     }
-    public static void setInstanciaDeLlamada(FormatoMenus padre) {
-    	instance=(MenuP) padre;
+    public static void setreinicio() {
+    	salir=false;
+    	instance.dispose();
+    	instance=null;
+    	MainScreen.setreinicio();
     }
+   
     public MenuP() {
     	super();
     	setOrdenCanciones(true);
-    	//si quiero conservar la herencia, crear una nueva clase hija para el menu y mover las canciones
-    	//s1.start();
-    	
+    	System.out.println("prueba");
     	try {
     		getcSecundaria().setCancion("Sonidos//D8Bits.mp3");
     		getcSecundaria().Reproducir();
@@ -50,22 +53,33 @@ public class MenuP extends FormatoMenus{
         	getcSecundaria().setVolumen(volumenes[0]);
 		}
     	
-    	
-    	
-    	
+    	    	
     	//dibujador de sprites
     	getViewport().apply();
     	skin = new Skin(Gdx.files.internal("uiskin.json"));
     	stage = new Stage(getViewport());
-
-    	
     }
  
     //getters y setters
+    public static void setregreso() {
+    	regreso=true;
+    }
     
     
 	@Override
 	public void show() {
+		
+		if(regreso) {
+			System.out.println("prueba");
+			getcSecundaria().setCancion("Sonidos//D8Bits.mp3");
+			//getcSecundaria().Reproducir();
+    		//getcSecundaria().setVolumen(volumenes[1]);
+    		//getcPrincipal().setCancion("Sonidos//DrunkenSailor.mp3");
+    		//getcPrincipal().setVolumen(volumenes[0]);
+    		//getcPrincipal().Reproducir();
+    		regreso=false;
+			
+		}
 
 		Gdx.input.setInputProcessor(stage);
         Table menu = new Table();
@@ -178,10 +192,12 @@ public class MenuP extends FormatoMenus{
 	@Override
 	public void dispose() {
 		getcPrincipal().detener();
+		getcSecundaria().detener();
 		stage.dispose();
 		skin.dispose();
 		s1.interrupt();
-		Gdx.app.exit();
+		if(salir)Gdx.app.exit();
+		salir=true;
 	
 		
 		

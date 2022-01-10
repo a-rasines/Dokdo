@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import DataBase.DatabaseHandler;
 import dg.main.Dokdo;
+import dg.main.FormatoMenus;
 import dg.main.MainScreen;
 import dg.main.PantallaMuerte;
 import objetos.Bala;
@@ -70,7 +71,7 @@ public class BarcoJugador extends Barco{
 		return a;
 	}
 	@Override
-	public void recibeDanyo(Bala bullet) {
+	public void recibeDanyo(Bala bullet) {//TODO sonido
 		vida-=bullet.getDanyo();
 		System.out.println(vida);
 		MainScreen.balasBorrar.add(bullet);

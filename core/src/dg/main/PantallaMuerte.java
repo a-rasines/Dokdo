@@ -25,11 +25,11 @@ public class PantallaMuerte extends FormatoMenus{
 		return instanceFather;
 	}
 	protected Stage stage;
-	protected Skin skin;
+	//protected Skin skin; TODO
 	public PantallaMuerte() {
 		super();
 		getViewport().apply();
-		skin = new Skin(Gdx.files.internal("uiskin.json"));
+		//skin = new Skin(Gdx.files.internal("uiskin.json")); //Esto es el valor por defecto del super()
 		stage = new Stage(getViewport());
 	}
 	@Override
@@ -51,7 +51,9 @@ public class PantallaMuerte extends FormatoMenus{
 		menuPrincipal.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				MenuP.setreinicio();
 				Dokdo.getInstance().setScreen(MenuP.getInstance());
+				
 			}
 		});
 		salir.addListener(new ClickListener() {

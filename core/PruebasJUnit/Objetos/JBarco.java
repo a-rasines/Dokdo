@@ -1,6 +1,8 @@
+package Objetos;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
+import objetos.Bala;
 import objetos.Municion;
 import objetos.barcos.Barco;
 
@@ -11,7 +13,7 @@ public class JBarco {
 	@Test
 	public void Vida() {
 		b1.setVidaDelBarco(3);
-		assertEquals(3,b1.getVidaDelBarco());
+		assertEquals(3,b1.getVidaDelBarco());		
 	}
 	
 	@Test
@@ -33,5 +35,5 @@ public class JBarco {
 		b1.setMunicionEnUso(Municion.NORMAL);
 		assertEquals("Explosiva", Municion.NORMAL , b1.getMunicionEnUso());
 	}
-
+	
 }

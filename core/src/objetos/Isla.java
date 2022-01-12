@@ -1,5 +1,6 @@
 package objetos;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,11 +35,11 @@ public class Isla extends Sprite{
 		this.nivelRecomendado=nivel;
 		this.conquistada = conquistada;
 		super.tMap = t;
-		this.barcos=Arrays.asList(
+		this.barcos=new ArrayList<BarcoEnemigo> (Arrays.asList(
 				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo( posX + 25,  posY + 80),
 				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo(posX + 50, posY - 50),
 				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo(posX - 50,posY - 50)
-			);
+			));
 		this.botin=botin;
 	}
 	/** Islas generales del juego.

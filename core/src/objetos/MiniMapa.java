@@ -49,11 +49,17 @@ public class MiniMapa {
 		barcoY = barco.getY() / FACTOR;
 	}
 	
-	
+	public static void actualizarEstado(List<Isla> lista) {
+		listaIslasEstado.clear();
+		for(Isla i : lista) {
+			listaIslasEstado.add(i.isConquistada());
+		}
+	}
 	
 	private static SpriteBatch sb = new SpriteBatch();
 
 	public static void mapaRenderer() {
+		
 		sb.begin();
 		srB.begin(ShapeRenderer.ShapeType.Filled);
 		srIL.begin(ShapeRenderer.ShapeType.Filled);

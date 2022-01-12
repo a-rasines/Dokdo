@@ -194,7 +194,7 @@ public class MainScreen extends FormatoMenus{
 	public void show() {
 	 
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
-		try {
+		try { //TODO
 			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 3/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
@@ -222,6 +222,11 @@ public class MainScreen extends FormatoMenus{
     		try {
 				while (res.next()) {
 					islaList.add(new Isla(res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+				}
+				
+				for (Isla i: islaList) { 
+					barcosEnemigos.addAll(i.getBarcos());
+					offRange.addAll(i.getBarcos());
 				}
 				logger.info("Islas Cargadas");
 			} catch (SQLException e) {
@@ -390,13 +395,16 @@ public class MainScreen extends FormatoMenus{
 					b.dispararLado(b.tocaLinea(barco));
 					
 				}
+				
+				if (!barcosEnemigos.contains(b)) { //Eliminar el barco de la lista de la Isla
+					i.getBarcos().remove(b);
+					break;
+				}  
 			}
 			
 			
-			
 		}
-		
-		
+				
 		
 		if (ran.nextInt(10000) > 9990) {
 			System.out.println("spawn");
@@ -404,6 +412,7 @@ public class MainScreen extends FormatoMenus{
 		}
 		
 		//Minimapa
+		MiniMapa.actualizarEstado(islaList);
 		MiniMapa.mapaRenderer();
 		MiniMapa.setPosBarco(barco);
 		//stage.draw();

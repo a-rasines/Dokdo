@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import DataBase.DatabaseHandler;
+import database.DatabaseHandler;
 import objetos.barcos.BarcoEnemigo;
 /**
  * Representa las islas en el mapa

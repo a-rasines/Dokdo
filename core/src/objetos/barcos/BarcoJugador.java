@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import DataBase.DatabaseHandler;
+import database.DatabaseHandler;
 import dg.main.Dokdo;
-import dg.main.FormatoMenus;
 import dg.main.MainScreen;
 import dg.main.PantallaMuerte;
 import objetos.Bala;

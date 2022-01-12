@@ -298,11 +298,9 @@ public class MainScreen extends FormatoMenus{
 					 balasDannyoContinuo.add(i);
 				}
 			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
-				System.out.println("jugador tocado");
 				barco.recibeDanyo(i);
 			}
 			if(i.collidesWith(islaList)) {
-				System.out.println("isla tocada");
 				balasBorrar.add(i);
 			}
 			i.decelerate();
@@ -403,9 +401,10 @@ public class MainScreen extends FormatoMenus{
 		if (onRange.size() < 3 && tiempo > 30) {
 			logger.log(Level.INFO, "Spawn de barco");
 			barcosAltaMar();
+			tiempo=0;
 		}
 		
-		tiempo = (tiempo + 1*Gdx.graphics.getDeltaTime()) % 32;
+		tiempo = (tiempo + 1*Gdx.graphics.getDeltaTime()) % 31;
 		
 		//Minimapa
 		MiniMapa.actualizarEstado(islaList);

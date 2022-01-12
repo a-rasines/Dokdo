@@ -25,7 +25,7 @@ public class DesktopLauncher {
 				.addColumn("Rotacion", "0.0", DataType.DEC, "5", "2")
 				.addColumn("Nivel", "0", DataType.INT, "2")
 				.addColumn("Dinero", "0", DataType.INT, "9")
-				.addColumn("TimeS", DataType.BIGINT, "69")
+				.addColumn("TimeS", DataType.BIGINT, String.valueOf(420 + 69 - 84*5))
 				.setPrimaryKey("ID")))
 			System.out.println("Users' table Generated");
 		if(DatabaseHandler.SQL.addTable(

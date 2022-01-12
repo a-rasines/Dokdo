@@ -99,7 +99,7 @@ public class Isla extends Sprite{
 	public void conquistar(BarcoJugador barco) {
 		conquistada = true;
 		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , String.valueOf(this.id));
-		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(barco.getX())+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + DatabaseHandler.JSON.getString("actualUser"));
+		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + DatabaseHandler.JSON.getString("actualUser"));
 	}
 	public boolean isConquistada() {
 		return conquistada;

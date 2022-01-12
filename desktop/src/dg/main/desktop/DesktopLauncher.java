@@ -3,10 +3,10 @@ package dg.main.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import DataBase.DatabaseHandler;
-import DataBase.TableBuilder;
-import DataBase.TableBuilder.DataType;
-import DataBase.TableBuilder.ForeignAction;
+import databasePack.DatabaseHandler;
+import databasePack.TableBuilder;
+import databasePack.TableBuilder.DataType;
+import databasePack.TableBuilder.ForeignAction;
 import dg.main.Dokdo;
 
 import java.awt.Dimension;

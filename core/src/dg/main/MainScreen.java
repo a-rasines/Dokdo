@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import database.DatabaseHandler;
+import databasePack.DatabaseHandler;
 import objetos.Bala;
 import objetos.Canyon;
 import objetos.Isla;

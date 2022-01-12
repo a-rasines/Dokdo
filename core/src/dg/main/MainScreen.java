@@ -289,10 +289,6 @@ public class MainScreen extends FormatoMenus{
 			 balasDannyoContinuo.remove(i);
 		}
 		for(Barco j: barEneBorrar) {
-//			if(onRange.size()==0) {
-//				setOrdenCanciones(true);
-//				IntercambioSonido(getOrdenCanciones());
-//			}
 			barcosEnemigos.remove(j);
 			onRange.remove(j);
 			offRange.remove(j);

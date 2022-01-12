@@ -1,5 +1,7 @@
 package dg.main;
 
+import org.json.simple.JSONObject;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -17,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import databasePack.DatabaseHandler;
+
 public class MenuOp extends FormatoMenus{
 	private static FormatoMenus instaciaDeLlamada;
 	//TODO agregar log
@@ -26,7 +30,8 @@ public class MenuOp extends FormatoMenus{
     private boolean cteclas=false;
     private TextButton origen;
     private int pos;
-    private static int[] vTeclas = {Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
+    private static int[] vTeclas;
+    private String[] keys = {"moveForward", "moveBackward", "moveLeft", "moveRight", "shootForward", "shootBackward", "shootLeft", "shootRight"};
     
     
 	
@@ -39,10 +44,37 @@ public class MenuOp extends FormatoMenus{
   
     public MenuOp() {   
     	super();
+    	//{Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
+    	JSONObject keys = DatabaseHandler.JSON.getObject("keys");
+    	if (vTeclas == null)
+    		vTeclas = new int[]{
+    				(int)(long) keys.get("moveForward"), 
+    				(int)(long) keys.get("moveBackward"), 
+    				(int)(long) keys.get("moveLeft"), 
+    				(int)(long) keys.get("moveRight"), 
+    				
+    				(int)(long) keys.get("shootForward"), 
+    				(int)(long) keys.get("shootBackward"), 
+    				(int)(long) keys.get("shootLeft"), 
+    				(int)(long) keys.get("shootRight")
+    				};
     	
     }
     
     public static int getvTeclas(int x) {
+    	JSONObject keys = DatabaseHandler.JSON.getObject("keys");
+    	if (vTeclas == null)
+    		vTeclas = new int[]{
+    				(int)(long) keys.get("moveForward"), 
+    				(int)(long) keys.get("moveBackward"), 
+    				(int)(long) keys.get("moveLeft"), 
+    				(int)(long) keys.get("moveRight"), 
+    				
+    				(int)(long) keys.get("shootForward"), 
+    				(int)(long) keys.get("shootBackward"), 
+    				(int)(long) keys.get("shootLeft"), 
+    				(int)(long) keys.get("shootRight")
+    				};
 		return vTeclas[x];
 	}
 
@@ -77,8 +109,8 @@ public class MenuOp extends FormatoMenus{
         teclas1.pad(10);
         TextButton adelante = new TextButton(Input.Keys.toString(vTeclas[0])+" ", skin);
         TextButton atras = new TextButton(Input.Keys.toString(vTeclas[1])+" ", skin);
-        TextButton derecha = new TextButton(Input.Keys.toString(vTeclas[2])+" ", skin);
-        TextButton izquierda = new TextButton(Input.Keys.toString(vTeclas[3])+" ", skin);
+        TextButton derecha = new TextButton(Input.Keys.toString(vTeclas[3])+" ", skin);
+        TextButton izquierda = new TextButton(Input.Keys.toString(vTeclas[2])+" ", skin);
         
         teclas1.add(adelante).width(xy).height(xy).colspan(3);
         teclas1.row();
@@ -297,6 +329,7 @@ public class MenuOp extends FormatoMenus{
             	if(cteclas) {
             		origen.setText(Keys.toString(keycode)+" ");
             		vTeclas[pos]=keycode;
+            		DatabaseHandler.JSON.writeInObject("keys", keys[pos], keycode);
             	}            	
             	cteclas=false;
                 return true;

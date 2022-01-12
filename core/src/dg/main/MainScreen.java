@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
@@ -54,7 +55,7 @@ public class MainScreen extends FormatoMenus{
 	public static List<Sprite> offRange = new ArrayList<>();
 	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
 
-	
+	public static float tiempo = 0;
 	public static Random ran = new Random();
 	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -406,10 +407,12 @@ public class MainScreen extends FormatoMenus{
 		}
 				
 		
-		if (ran.nextInt(10000) > 9990) {
-			System.out.println("spawn");
+		if (onRange.size() < 3 && tiempo > 30) {
+			logger.log(Level.INFO, "Spawn de barco");
 			barcosAltaMar();
 		}
+		
+		tiempo = (tiempo + 1*Gdx.graphics.getDeltaTime()) % 32;
 		
 		//Minimapa
 		MiniMapa.actualizarEstado(islaList);

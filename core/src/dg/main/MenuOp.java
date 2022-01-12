@@ -127,8 +127,8 @@ public class MenuOp extends FormatoMenus{
         teclas2.pad(10);
         TextButton dadelante = new TextButton(Input.Keys.toString(vTeclas[4])+" ", skin);
         TextButton datras = new TextButton(Input.Keys.toString(vTeclas[5])+" ", skin);
-        TextButton dderecha = new TextButton(Input.Keys.toString(vTeclas[6])+" ", skin);
-        TextButton dizquierda = new TextButton(Input.Keys.toString(vTeclas[7])+" ", skin);
+        TextButton dderecha = new TextButton(Input.Keys.toString(vTeclas[7])+" ", skin);
+        TextButton dizquierda = new TextButton(Input.Keys.toString(vTeclas[6])+" ", skin);
         
         teclas2.add(dadelante).width(xy).height(xy).colspan(xy);
         teclas2.row();

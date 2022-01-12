@@ -195,7 +195,7 @@ public class MainScreen extends FormatoMenus{
 	 
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try { //TODO
-			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 3/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA).rotate(pos0.getFloat("Rotacion"));
+			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 30000/*pos0.getInt("Vida")*/,0, Municion.NORMAL).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
@@ -204,7 +204,7 @@ public class MainScreen extends FormatoMenus{
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(0.0f ,0.0f ,10 ,0 ,Municion.INCENDIARIA);
+			barco = new BarcoJugador(0.0f ,0.0f ,10 ,0 ,Municion.NORMAL);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));

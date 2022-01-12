@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import DataBase.DatabaseHandler;
 import objetos.barcos.BarcoEnemigo;
 /**
  * Representa las islas en el mapa
@@ -89,6 +90,9 @@ public class Isla extends Sprite{
 	
 	public void conquistar() {
 		conquistada = true;
+		String data = 1 + "";
+		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + data, DatabaseHandler.JSON.getString("actualUser"));
+		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 	}
 	public boolean isConquistada() {
 		return conquistada;

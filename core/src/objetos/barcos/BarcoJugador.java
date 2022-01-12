@@ -67,7 +67,7 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
-		DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		//DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		return a;
 	}
 	@Override

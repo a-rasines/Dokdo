@@ -114,36 +114,6 @@ public class MainScreen extends FormatoMenus{
 		offRange.add(b);
 	} 
 	
-	public void asignarTexturasAIslas() {
-		for (int i = 0; i<islaList.size(); i++) {
-			int text = new Random().nextInt(10);
-			Isla is = islaList.get(i).setTexturePos(text>=7?1:0, text%7);
-			/*
-			 * new TableBuilder("Islas")
-				.addColumn("ID", DataType.INT, "2")
-				.addColumn("ID_Jugador", "Player1", DataType.INT, "6")
-				.addColumn("X", "0.0", DataType.DEC, "9", "4")
-				.addColumn("Y", "0.0", DataType.DEC, "9", "4")
-				.addColumn("Conquistada", "0", DataType.INT, "1")
-				.addColumn("Nivel", "0", DataType.INT, "2")
-				.addColumn("Botin", "0", DataType.INT, "5")
-				.addColumn("Textura", DataType.INT, "2")
-			 */
-			DatabaseHandler.SQL.addValue(
-					"Islas", 
-					String.valueOf(i), 
-					String.valueOf(DatabaseHandler.JSON.getString("actualUser")), 
-					String.valueOf(is.getX()), 
-					String.valueOf(is.getY()), 
-					is.isConquistada()?"1":"0",
-					String.valueOf(is.getNivelRecomendado()),
-					String.valueOf(is.getBotin()),
-					String.valueOf(text)
-			);
-		}
-
-	}
-	
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
 	 * 
 	 */
@@ -170,15 +140,40 @@ public class MainScreen extends FormatoMenus{
 					}
 					if (valid) {
 						islaList.add(
-							new Isla((float) x,(float) y, 0, 0, false)
+							new Isla(0,(float) x,(float) y, 0, 0, false)
 						);
 						next = true;
 					}
 				}
 			}
 		}
-		
-		asignarTexturasAIslas();
+		for (int i = 0; i<islaList.size(); i++) {
+			int text = new Random().nextInt(10);
+			Isla is = islaList.get(i).setTexturePos(text>=7?1:0, text%7);
+			/*
+			 * new TableBuilder("Islas")
+				.addColumn("ID", DataType.INT, "2")
+				.addColumn("ID_Jugador", "Player1", DataType.INT, "6")
+				.addColumn("X", "0.0", DataType.DEC, "9", "4")
+				.addColumn("Y", "0.0", DataType.DEC, "9", "4")
+				.addColumn("Conquistada", "0", DataType.INT, "1")
+				.addColumn("Nivel", "0", DataType.INT, "2")
+				.addColumn("Botin", "0", DataType.INT, "5")
+				.addColumn("Textura", DataType.INT, "2")
+			 */
+			is.setId(i);
+			DatabaseHandler.SQL.addValue(
+					"Islas", 
+					String.valueOf(i), 
+					String.valueOf(DatabaseHandler.JSON.getString("actualUser")), 
+					String.valueOf(is.getX()), 
+					String.valueOf(is.getY()), 
+					is.isConquistada()?"1":"0",
+					String.valueOf(is.getNivelRecomendado()),
+					String.valueOf(is.getBotin()),
+					String.valueOf(text)
+			);
+		}
 		
 		for (Isla i: islaList) { //TODO añadiendolos funciona bien la IA y todo
 			barcosEnemigos.addAll(i.getBarcos());
@@ -220,7 +215,7 @@ public class MainScreen extends FormatoMenus{
     		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
     		try {
 				while (res.next()) {
-					islaList.add(new Isla(res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+					islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
 				}
 				
 				for (Isla i: islaList) { 
@@ -386,7 +381,7 @@ public class MainScreen extends FormatoMenus{
 		for (Isla i : islaList) {
 			
 			if (i.getBarcos().size() == 0) {
-				i.conquistar();
+				i.conquistar(barco);
 			}
 			for (BarcoEnemigo b : i.getBarcos()) {
 				b.dibujar();

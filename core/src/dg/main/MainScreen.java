@@ -51,7 +51,6 @@ public class MainScreen extends FormatoMenus{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-	BarcoEnemigo barco2 = BarcoEnemigo.lvl1(0, 0, false).setTexturePos(0,1);
 
 	public static float tiempo = 0;
 	public static Random ran = new Random();
@@ -93,15 +92,6 @@ public class MainScreen extends FormatoMenus{
 		}
 
 	}
-
-	/**
-	 * Genera un array a partir de valores
-	 * @param v valores en el array
-	 * @return Array de los objetos metidos. Si es nativo sale como su versión que extiende de Object
-	 */
-	public <T> T[] arrayBuilder(@SuppressWarnings("unchecked") T... v){
-		return v;
-	}
 	
 	 public static void setregresoM() {
 	    	regresoM=true;
@@ -123,7 +113,7 @@ public class MainScreen extends FormatoMenus{
 		
 		logger.info("Iniciada Generacion de islas");
 		List<Vector2> isles = new LinkedList<>();
-		Integer[][]cuadrants = arrayBuilder(arrayBuilder(1,1), arrayBuilder(-1, 1), arrayBuilder(-1, -1), arrayBuilder(1, -1));
+		Integer[][]cuadrants = {{1,1},{-1,1},{-1,-1},{1,-1}};
 		for(int i = 0; i< 4; i++) {			
 			for(int j = 0; j < 5; j++) {
 				boolean next = false;
@@ -150,17 +140,6 @@ public class MainScreen extends FormatoMenus{
 		for (int i = 0; i<islaList.size(); i++) {
 			int text = new Random().nextInt(10);
 			Isla is = islaList.get(i).setTexturePos(text>=7?1:0, text%7);
-			/*
-			 * new TableBuilder("Islas")
-				.addColumn("ID", DataType.INT, "2")
-				.addColumn("ID_Jugador", "Player1", DataType.INT, "6")
-				.addColumn("X", "0.0", DataType.DEC, "9", "4")
-				.addColumn("Y", "0.0", DataType.DEC, "9", "4")
-				.addColumn("Conquistada", "0", DataType.INT, "1")
-				.addColumn("Nivel", "0", DataType.INT, "2")
-				.addColumn("Botin", "0", DataType.INT, "5")
-				.addColumn("Textura", DataType.INT, "2")
-			 */
 			is.setId(i);
 			DatabaseHandler.SQL.addValue(
 					"Islas", 
@@ -175,7 +154,7 @@ public class MainScreen extends FormatoMenus{
 			);
 		}
 		
-		for (Isla i: islaList) { //TODO añadiendolos funciona bien la IA y todo
+		for (Isla i: islaList) {
 			barcosEnemigos.addAll(i.getBarcos());
 			offRange.addAll(i.getBarcos());
 		}
@@ -188,13 +167,16 @@ public class MainScreen extends FormatoMenus{
 	public void show() {
 	 
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
-		try { //TODO
+		try {
 			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 30000/*pos0.getInt("Vida")*/,0, Municion.NORMAL).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
 			int value =new Random().nextInt(899999)+100000;
-			while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {value =new Random().nextInt(899999)+100000;}
+			while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
+				value =new Random().nextInt(899999)+100000;
+				System.out.println(value);
+			}
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
@@ -204,8 +186,6 @@ public class MainScreen extends FormatoMenus{
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
-    	barcosEnemigos.add(barco2);
-    	offRange.add(barco2);
     	
     	
     	
@@ -240,11 +220,10 @@ public class MainScreen extends FormatoMenus{
 	
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantalla
-		
+		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantall
 		dibujarFondo();
-		//Control de teclas
 		
+		//Control de teclas
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
 			barco.tpTo(0, 0);
 		if (Gdx.input.isKeyPressed(MenuOp.getvTeclas(0)) && Gdx.input.isKeyPressed(MenuOp.getvTeclas(1)))
@@ -255,24 +234,12 @@ public class MainScreen extends FormatoMenus{
 			barco.backwards();
 		else 
 			barco.decelerate();
-		/*logger.info("pressed:"+
-				" W= "+Gdx.input.isKeyPressed(Input.Keys.W)+
-				" A= "+Gdx.input.isKeyPressed(Input.Keys.A)+
-				" S= "+Gdx.input.isKeyPressed(Input.Keys.S)+
-				" D= "+Gdx.input.isKeyPressed(Input.Keys.D)
-				);*/
-		if (barco.collidesWith(islaList)) {
-			barco.undoMove();
-			barco.stop();
-		}
 		if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(3))) 
 			barco.right();
 		if(Gdx.input.isKeyPressed(MenuOp.getvTeclas(2)) || barco.collidesWith(islaList)) 
 			barco.left();
 		if(barco.collidesWith(islaList))
 			barco.right();
-		//logger.info("barco: "+barco.getInfo());
-		//logger.info("collision:"+String.valueOf(barco.collidesWith(barco2)));
 		if (Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(4))) {
 			barco.dispararLado(PosicionCanyon.DELANTE);
 		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(6))) {
@@ -282,12 +249,14 @@ public class MainScreen extends FormatoMenus{
 		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(7))) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-			System.out.println("Pausa");
 			MenuOp.setInstanciaDeLlamada(instance);
 			Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
 		}
-		//DAÑO A LOS BARCOS ENEMIGOS.
-		
+		//COLISIONES
+		if (barco.collidesWith(islaList)) {
+			barco.undoMove();
+			barco.stop();
+		}
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.barcoDisparo(barco)) {
@@ -311,8 +280,8 @@ public class MainScreen extends FormatoMenus{
 			if(z.getVeces()==0) {
 				balasBorrar.add(z);
 			}else {
-				if(z.barcoDisparo(barco)) barco2.recibeDanyoContinuo(z);
-				else barco.recibeDanyoContinuo(z);
+				//if(z.barcoDisparo(barco)) barco2.recibeDanyoContinuo(z); TODO Quien recibe el dano?
+				//else barco.recibeDanyoContinuo(z);
 			}
 		}
 		for(Bala i: balasBorrar) {
@@ -320,14 +289,14 @@ public class MainScreen extends FormatoMenus{
 			 balasDannyoContinuo.remove(i);
 		}
 		for(Barco j: barEneBorrar) {
-			if(onRange.size()==0) {
-				setOrdenCanciones(true);
-				IntercambioSonido(getOrdenCanciones());
-			}
-			
+//			if(onRange.size()==0) {
+//				setOrdenCanciones(true);
+//				IntercambioSonido(getOrdenCanciones());
+//			}
 			barcosEnemigos.remove(j);
 			onRange.remove(j);
 			offRange.remove(j);
+			j.onExitFromRange();
 		}
 		
 		barEneBorrar.clear();
@@ -353,31 +322,18 @@ public class MainScreen extends FormatoMenus{
 		onRange.removeAll(move);
 		move.clear();
 		for (BarcoEnemigo b : barcosEnemigos) {
+			if (b.tocaLinea(barco) != null) {
+				b.dispararLado(b.tocaLinea(barco));
+			}
 			b.IAMove();
+			b.dibujar();
 		}
 		
 		//Dibujado
-		
-		barco.dibujar();
-		barcosEnemigos.forEach(v->v.dibujar());
-		islaList.forEach(v->v.dibujar());
-		
-		
-		
-		//TODO Prueba de lineas
-		
-		if(barco2.tocaLinea(barco) != null) {
-			barco2.dispararLado(barco2.tocaLinea(barco));
-			
-		}
-		
-		
-		detectaCanon();
-	
-		
+		barco.dibujar();		
 		
 		for (Isla i : islaList) {
-			
+			i.dibujar();
 			if (i.getBarcos().size() == 0) {
 				i.conquistar(barco);
 			}
@@ -392,9 +348,7 @@ public class MainScreen extends FormatoMenus{
 					i.getBarcos().remove(b);
 					break;
 				}  
-			}
-			
-			
+			}			
 		}
 				
 		
@@ -413,16 +367,7 @@ public class MainScreen extends FormatoMenus{
 		//stage.draw();
 		
 	}
-	
-	public void detectaCanon() {
-		for (BarcoEnemigo b : barcosEnemigos) {
-			if (b.tocaLinea(barco) != null) {
-
-				b.dispararLado(b.tocaLinea(barco));
-			}
-		}
-	}
-	
+	//volumenes = {0.5f,0.0f}
 	public boolean IntercambioSonido(boolean x) {//TODO sonido
 		if(x) {
 			getcPrincipal().setVolumen(volumenes[0]);

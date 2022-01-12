@@ -4,7 +4,7 @@ package objetos;
  *
  */
 public enum Municion {
-	NORMAL(1, true,0,0),
+	NORMAL(1, true,0,3),
 	EXPLOSIVA(2, true,0,3),
 	INCENDIARIA(2, false,3,1),
 	VENENOSA(2, false,3,3),

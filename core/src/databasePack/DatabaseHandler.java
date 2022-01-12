@@ -202,7 +202,6 @@ public class DatabaseHandler {
 		/**
 		 * Carga el JSON
 		 */
-		@SuppressWarnings("unchecked")
 		public static void load() {
 			load(defaultObject());
 		}

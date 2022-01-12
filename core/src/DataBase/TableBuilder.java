@@ -11,17 +11,15 @@ import java.util.function.Consumer;
 public class TableBuilder {
 	private String name;
 	private List<String> columns = new LinkedList<>();
-	private List<String> foreign = new ArrayList<>();
+	private List<String> extra = new ArrayList<>();
 	private List<String> columnNames = new ArrayList<>();
-	private String primaryKey = "";
-	private List<String> unique = new ArrayList<>();
-	private List<String> checks = new ArrayList<>();
 	public enum DataType{
-		DATE(0), 
-		CHAR(1), 
-		VARCHAR(1), 
+		BIGINT(1),
+		CHAR(1),
+		DATE(0),
+		DEC(2),
 		INT(1), 
-		DEC(2);
+		VARCHAR(1); 
 		private int params;
 		DataType(int i) {
 			this.params = i;
@@ -73,7 +71,7 @@ public class TableBuilder {
 	 */
 	public TableBuilder setPrimaryKey(String name) {
 		if(!columnNames.contains(name))throw new NullPointerException("No existe ninguna columna llamada "+name);
-		primaryKey="PRIMARY KEY ("+name+")";
+		extra.add("PRIMARY KEY ("+name+")");
 		return this;
 	}
 	public enum ForeignAction{NO_ACTION, CASCADE, SET_NULL, SET_DEFAULT};
@@ -89,7 +87,7 @@ public class TableBuilder {
 	 */
 	public TableBuilder addForeignKey(String name, String otherTable, String reference, ForeignAction onDelete, ForeignAction onUpdate) {
 		if(!columnNames.contains(name))throw new NullPointerException("No existe ninguna columna llamada "+name);
-		foreign.add("FOREIGN KEY ("+name+") REFERENCES "+otherTable+"("+reference+") ON DELETE "+ onDelete.toString().replace("_", " ")+" ON UPDATE "+onUpdate.toString().replace("_", " "));
+		extra.add("FOREIGN KEY ("+name+") REFERENCES "+otherTable+"("+reference+") ON DELETE "+ onDelete.toString().replace("_", " ")+" ON UPDATE "+onUpdate.toString().replace("_", " "));
 		return this;
 	}
 	/**
@@ -124,7 +122,7 @@ public class TableBuilder {
 	 */
 	public TableBuilder addCheck(String column, String condition) {
 		if(!columnNames.contains(column))throw new NullPointerException("No existe ninguna columna llamada "+column);
-		checks.add("CHECK("+column+" "+condition+")");
+		extra.add("CHECK("+column+" "+condition+")");
 		return this;
 	}
 	/**
@@ -135,7 +133,7 @@ public class TableBuilder {
 	 */
 	public TableBuilder addUnique(String column) {
 		if(!columnNames.contains(column))throw new NullPointerException("No existe ninguna columna llamada "+column);
-		unique.add("UNIQUE("+column+")");
+		extra.add("UNIQUE("+column+")");
 		return this;
 	}
 	
@@ -149,10 +147,7 @@ public class TableBuilder {
 				
 			}};
 		columns.forEach(c);
-		sb.append(primaryKey==""?"":primaryKey+",\n");
-		foreign.forEach(c);
-		unique.forEach(c);
-		checks.forEach(c);
+		extra.forEach(c);
 		String end = sb.toString();
 		char[] end0 = end.toCharArray();
 		end0[end.length()-2]=" ".toCharArray()[0];

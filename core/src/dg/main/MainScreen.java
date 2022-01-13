@@ -99,9 +99,28 @@ public class MainScreen extends FormatoMenus{
 	
 	public void barcosAltaMar() {
 		Random r = new Random();
-		BarcoEnemigo b = BarcoEnemigo.lvl1(barco.getX() + r.nextInt(1000) -500,  barco.getY() + r.nextInt(1000) - 500, false).setTexturePos(0, 1);
-		barcosEnemigos.add(b);
-		offRange.add(b);
+		
+		boolean spawn = false;
+		
+		
+		while (!spawn) {
+			
+			
+			float x = barco.getX() + r.nextInt(1500) - 750;
+			float y = barco.getY() + r.nextInt(1500) - 750;
+			
+			if((barco.getX() - x >= 500 || barco.getX() - x <= -500) && (barco.getY() - y >= 500 || barco.getY() - y <= -500)) {
+
+				BarcoEnemigo b = BarcoEnemigo.lvl1(x,  y, false).setTexturePos(0, 1);
+				barcosEnemigos.add(b);
+				offRange.add(b);
+				spawn = true;
+			}
+		}
+		
+		
+		logger.log(Level.INFO, "Barco generado");
+		
 	} 
 	
 	/** Genera islas de manera repartida por un mundo de 10000x10000 ( 5000 hacia cada lado ) 
@@ -349,7 +368,7 @@ public class MainScreen extends FormatoMenus{
 				
 		
 		if (onRange.size() < 3 && tiempo > 30) {
-			logger.log(Level.INFO, "Spawn de barco");
+			
 			barcosAltaMar();
 			tiempo=0;
 		}

@@ -16,6 +16,10 @@ public class BarcoJugador extends Barco{
 	
 	private Circle range;
 	//private static PantallaMuerte instance; <- Esto no debería de estar en PantallaMuerte?+
+	private final int MAX = 6900;
+	private final int MAXX = 6300;
+	private final int MIN = -6900;
+	private final int MINY = -6300;
 	private int dineros;
 	public BarcoJugador(float x, float y, int vida, int nivel, Municion municionEnUso, int dineros) {
 		super(vida, nivel, x, y, municionEnUso);
@@ -60,10 +64,43 @@ public class BarcoJugador extends Barco{
 			for(T s : l)if(enRango(s))end.add(s);
 			return end;
 		}
+		
+	private boolean limit = false;
 	@Override
 	public <T> T move(float x, float y) {
+//		limit = false;
+//		T a = (T)this;
+//		if(this.getX() > MAXX && x > 0) {
+//			a =super.move(0,y);
+//			limit = true;
+//		} else if (this.getX() < MIN && x < 0) {
+//			a =super.move(0,y);
+//			limit = true;
+//		}
+//		
+//		if(this.getY() > MAX && y > 0) {
+//			a =super.move(x,0);
+//			limit = true;
+//		} else if(this.getY() < MINY && y < 0) {
+//			a =super.move(x,0);
+//			limit = true;
+//		}
+		
 		T a = super.move(x, y);
+		if(this.getX() > MAXX) {
+			this.tpTo(MIN, this.getY());
+		} else if (this.getX() < MIN) {
+			this.tpTo(MAXX, this.getY());
+		}
+		
+		if(this.getY() > MAX) {
+			this.tpTo(this.getX(), MINY);
+		} else if( this.getY() < MINY) {
+			this.tpTo(this.getX(), MAX);
+		}
 		refreshRange();
+		
+		
 		return a;
 	}
 	@Override

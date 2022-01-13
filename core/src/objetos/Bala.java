@@ -93,4 +93,7 @@ public class Bala extends Sprite{
 	public boolean barcoDisparo(Barco barcoComparado) {
 		return this.barcoDisparo.equals(barcoComparado);
 	}
+	public void recudirVeces() {
+		this.veces--;
+	}
 }

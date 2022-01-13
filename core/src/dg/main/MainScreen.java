@@ -201,7 +201,7 @@ public class MainScreen extends FormatoMenus{
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.NORMAL,100);
+			barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.INCENDIARIA,100);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -277,6 +277,18 @@ public class MainScreen extends FormatoMenus{
 			barco.undoMove();
 			barco.stop();
 		}
+		for(Bala z: danoContinuo.keySet()) {
+			if(balasDisparadas.contains(z)) balasDisparadas.remove(z);
+			if(z.getVeces()==0) {
+				balasBorrar.add(z);
+			}else {
+				danoContinuo.get(z).recibeDanyoContinuo(z);
+			}
+		}
+		for(Bala i: balasBorrar) {
+			danoContinuo.remove(i);
+		}
+		balasBorrar.clear();
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.barcoDisparo(barco)) {
@@ -299,14 +311,7 @@ public class MainScreen extends FormatoMenus{
 			i.decelerate();
 			i.dibujar();
 		}
-		for(Bala z: danoContinuo.keySet()) {
-			if(balasDisparadas.contains(z)) balasDisparadas.remove(z);
-			if(z.getVeces()==0) {
-				balasDisparadas.remove(z);
-			}else {
-				danoContinuo.get(z).recibeDanyoContinuo(z);
-			}
-		}
+		
 		for(Bala i: balasBorrar) {
 			balasDisparadas.remove(i);
 		}

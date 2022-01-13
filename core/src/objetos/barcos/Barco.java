@@ -168,13 +168,12 @@ public class Barco extends Sprite{
 	public void recibeDanyo( Bala bullet) {
 			vida -= bullet.getDanyo();
 			MainScreen.balasBorrar.add(bullet);
-			System.out.println(vida);
 	}
 	
 	public void recibeDanyoContinuo(Bala bullet) {
 		if(bullet.canDamage()) {
-			this.setVidaDelBarco((int) (this.getVidaDelBarco() - bullet.getDanyo()*0.5));
-			bullet.setVeces(bullet.getVeces()-1);
+			vida=(int) (vida - bullet.getDanyo()*0.5);
+			bullet.recudirVeces();
 			System.out.println("Danyo continuo hecho");
 		}
 	}

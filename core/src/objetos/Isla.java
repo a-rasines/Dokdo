@@ -3,6 +3,7 @@ package objetos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -14,6 +15,7 @@ import objetos.barcos.BarcoJugador;
  *
  */
 public class Isla extends Sprite{
+	private static Logger logger= Logger.getLogger("Isla");
 	private int nivelRecomendado;
 	private int id;
 	private List<BarcoEnemigo> barcos;
@@ -98,8 +100,11 @@ public class Isla extends Sprite{
 	
 	public void conquistar(BarcoJugador barco) {
 		conquistada = true;
-		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , String.valueOf(this.id));
+		barco.setDineros(barco.getDineros()+this.botin);
+		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , "ID =" + String.valueOf(this.id));
 		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + DatabaseHandler.JSON.getString("actualUser"));
+		logger.info("Isla conquistada");
+		logger.info("Autoguardado Completado");
 	}
 	public boolean isConquistada() {
 		return conquistada;

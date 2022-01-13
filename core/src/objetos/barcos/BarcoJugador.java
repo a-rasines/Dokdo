@@ -16,11 +16,13 @@ public class BarcoJugador extends Barco{
 	
 	private Circle range;
 	//private static PantallaMuerte instance; <- Esto no debería de estar en PantallaMuerte?+
-
-	public BarcoJugador(float x, float y, int vida, int nivel, Municion municionEnUso) {
+	private int dineros;
+	public BarcoJugador(float x, float y, int vida, int nivel, Municion municionEnUso, int dineros) {
 		super(vida, nivel, x, y, municionEnUso);
 		refreshRange();
+		this.dineros = dineros;
 	}
+	
 	/**Refresca la posicion del rango(Circulo)
 	 * 
 	 */
@@ -32,6 +34,13 @@ public class BarcoJugador extends Barco{
 		} else {
 			range.setPosition(new Vector2(getX(),getY()));
 		}
+	}
+	
+	public int getDineros() {
+		return dineros;
+	}
+	public void setDineros(int dineros) {
+		this.dineros = dineros;
 	}
 	
 	//Colisiones con el Circulo
@@ -54,7 +63,6 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T> T move(float x, float y) {
 		T a = super.move(x, y);
-		//DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		refreshRange();
 		return a;
 	}
@@ -67,7 +75,6 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
-		//DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		return a;
 	}
 	@Override

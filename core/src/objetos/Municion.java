@@ -4,11 +4,11 @@ package objetos;
  *
  */
 public enum Municion {
-	NORMAL(1, true,0,3),
-	EXPLOSIVA(2, true,0,3),
+	NORMAL(1, true,0,2),
+	EXPLOSIVA(2, true,0,2),
 	INCENDIARIA(2, false,3,1),
-	VENENOSA(2, false,3,3),
-	ENCADENADA(2, false,3,3);
+	VENENOSA(2, false,3,2),
+	ENCADENADA(2, false,3,2);
 	
 	public int getCoolDown() {
 		return coolDown;

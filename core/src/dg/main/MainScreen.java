@@ -6,8 +6,10 @@ import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +49,7 @@ public class MainScreen extends FormatoMenus{
 	public static List<BarcoEnemigo> barcosEnemigos = new ArrayList<>();
 	public static List<BarcoEnemigo> barEneBorrar = new ArrayList<>();
 	public static List<Bala> balasDisparadas = new ArrayList<>();
-	public static List<Bala> balasDannyoContinuo = new ArrayList<>();
+	public static Map<Bala, BarcoEnemigo> danoContinuo = new HashMap<>();
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
@@ -187,7 +189,7 @@ public class MainScreen extends FormatoMenus{
 	 
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
-			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.NORMAL).rotate(pos0.getFloat("Rotacion"));
+			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
 			logger.severe("Error cargando el barco principal: "+e1.getMessage());
 			e1.printStackTrace();
@@ -199,7 +201,7 @@ public class MainScreen extends FormatoMenus{
 			DatabaseHandler.JSON.write("users", value, false);
 			DatabaseHandler.JSON.write("actualUser", value, true);
 			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(0.0f ,0.0f ,10 ,0 ,Municion.NORMAL);
+			barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.NORMAL,100);
 		}
     	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -214,9 +216,8 @@ public class MainScreen extends FormatoMenus{
     		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
     		try {
 				while (res.next()) {
-					islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+					islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getString("Conquistada")=="1").setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
 				}
-				
 				for (Isla i: islaList) { 
 					barcosEnemigos.addAll(i.getBarcos());
 					offRange.addAll(i.getBarcos());
@@ -279,14 +280,18 @@ public class MainScreen extends FormatoMenus{
 		for (Bala i: balasDisparadas){
 			BarcoEnemigo b = i.getCollidesWith(barcosEnemigos);
 			if(b != null && i.barcoDisparo(barco)) {
-				if(barco.getMunicionEnUso().getInstantaneo())
+				if(barco.getMunicionEnUso().getInstantaneo()) {
 					b.recibeDanyo(i);
+					balasBorrar.add(i);
+				}
 				else{
 					b.recibeDanyo(i);
-					 balasDannyoContinuo.add(i);
+					danoContinuo.put(i, b);
+					balasBorrar.add(i);
 				}
 			} else if(i.collidesWith(barco) && !i.barcoDisparo(barco)) {
 				barco.recibeDanyo(i);
+				balasBorrar.add(i);
 			}
 			if(i.collidesWith(islaList)) {
 				balasBorrar.add(i);
@@ -294,18 +299,16 @@ public class MainScreen extends FormatoMenus{
 			i.decelerate();
 			i.dibujar();
 		}
-		for(Bala z: balasDannyoContinuo) {
-			balasDisparadas.remove(z);
+		for(Bala z: danoContinuo.keySet()) {
+			if(balasDisparadas.contains(z)) balasDisparadas.remove(z);
 			if(z.getVeces()==0) {
-				balasBorrar.add(z);
+				balasDisparadas.remove(z);
 			}else {
-				//if(z.barcoDisparo(barco)) barco2.recibeDanyoContinuo(z); TODO Quien recibe el dano?
-				//else barco.recibeDanyoContinuo(z);
+				danoContinuo.get(z).recibeDanyoContinuo(z);
 			}
 		}
 		for(Bala i: balasBorrar) {
 			balasDisparadas.remove(i);
-			 balasDannyoContinuo.remove(i);
 		}
 		for(Barco j: barEneBorrar) {
 			barcosEnemigos.remove(j);

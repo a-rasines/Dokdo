@@ -267,7 +267,6 @@ public class DatabaseHandler {
 		 * @return
 		 */
 		public static JSONObject getObject(String key) {
-			logger.log(Level.INFO, "Trying to get JSONObject from "+key);
 			return (JSONObject) json.get(key);
 		}
 		/**

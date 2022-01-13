@@ -160,10 +160,8 @@ public class MainScreen extends FormatoMenus{
 		}
 		for (int i = 0; i<islaList.size(); i++) {
 			
-			Isla is = islaList.get(i).setTexturePos(i%10>=7?1:0, i%7);
+			Isla is = islaList.get(i).setTexturePos(i%10>=7?1:0, i%10%7);
 			is.setId(i);
-			System.out.println( i%10>=7?1:0);
-			System.out.println(i%7);
 			DatabaseHandler.SQL.addValue(
 					"Islas", 
 					String.valueOf(i), 

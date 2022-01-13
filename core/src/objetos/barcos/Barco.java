@@ -130,6 +130,7 @@ public class Barco extends Sprite{
 	}
 	public void forward() {
 		if(v < vMax)v+=a;
+		if(v > vMax)v=vMax;
 		move();
 	}
 	public void undoMove() {

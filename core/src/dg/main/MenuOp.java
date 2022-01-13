@@ -195,6 +195,7 @@ public class MenuOp extends FormatoMenus{
         			//cambio de volumen
         			s1.setvDestino(slider.getValue()/100);
         			volumenes[0]=slider.getValue()/100;
+        			DatabaseHandler.JSON.write("volumen", slider.getValue()/100, true);
             		s1.setCambios(true);
             		if(((FormatoMenus) instaciaDeLlamada).getOrdenCanciones()) {
             			s1.setSelCancion(FormatoMenus.getcPrincipal());

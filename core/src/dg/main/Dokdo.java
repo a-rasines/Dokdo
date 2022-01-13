@@ -1,6 +1,8 @@
 package dg.main;
 
 import com.badlogic.gdx.Game;
+
+import databasePack.DatabaseHandler;
 import hilos.HiloVolumen;
 
 
@@ -14,6 +16,7 @@ public class Dokdo extends Game{
 	}
 	@Override
 	public void create() {
+		FormatoMenus.volumenes = new float[]{Float.parseFloat(DatabaseHandler.JSON.getString("volumen")),0.0f};
 		HiloVolumen.getInstance().start();
 		//menuOp= new MenuOp(Dokdo.getInstance(), s1, cMenu, Menu8Bits, volumenes, false, MenuP);
 		//TODO Crear todas las ventnas que se van a usar para poder cambiar entre ellas

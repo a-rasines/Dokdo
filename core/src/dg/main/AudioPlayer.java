@@ -3,6 +3,8 @@ package dg.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
+import databasePack.DatabaseHandler;
+
 public class AudioPlayer {
 	
 	private  Music musica;
@@ -31,7 +33,7 @@ public class AudioPlayer {
 		musica = Gdx.audio.newMusic(Gdx.files.internal(cancion));
 		musica.play();
 		musica.setLooping(true);
-		musica.setVolume(0.5f);
+		musica.setVolume(Float.parseFloat(DatabaseHandler.JSON.getString("volumen")));
 		rep = true;
 	}
 	

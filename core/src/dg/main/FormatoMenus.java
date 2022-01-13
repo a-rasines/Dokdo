@@ -22,7 +22,7 @@ public class FormatoMenus implements Screen{
 	//elementos menu
     protected Stage stage;
     private Viewport viewport;
-	public static float[] volumenes = {0.5f,0.0f};
+	public static float[] volumenes;
     protected Skin skin;
 	public  HiloVolumen s1 = HiloVolumen.getInstance();
    

@@ -159,9 +159,11 @@ public class MainScreen extends FormatoMenus{
 			}
 		}
 		for (int i = 0; i<islaList.size(); i++) {
-			int text = new Random().nextInt(10);
-			Isla is = islaList.get(i).setTexturePos(text>=7?1:0, text%7);
+			
+			Isla is = islaList.get(i).setTexturePos(i%10>=7?1:0, i%7);
 			is.setId(i);
+			System.out.println( i%10>=7?1:0);
+			System.out.println(i%7);
 			DatabaseHandler.SQL.addValue(
 					"Islas", 
 					String.valueOf(i), 
@@ -171,7 +173,7 @@ public class MainScreen extends FormatoMenus{
 					is.isConquistada()?"1":"0",
 					String.valueOf(is.getNivelRecomendado()),
 					String.valueOf(is.getBotin()),
-					String.valueOf(text)
+					String.valueOf(i%10)
 			);
 		}
 		

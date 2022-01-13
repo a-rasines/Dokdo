@@ -8,15 +8,17 @@ import com.badlogic.gdx.graphics.Texture;
 
 import databasePack.DatabaseHandler;
 import objetos.barcos.BarcoEnemigo;
+import objetos.barcos.BarcoJugador;
 /**
  * Representa las islas en el mapa
  *
  */
 public class Isla extends Sprite{
-	protected int nivelRecomendado;
-	protected List<BarcoEnemigo> barcos;
-	protected int botin;
-	protected boolean conquistada = false;
+	private int nivelRecomendado;
+	private int id;
+	private List<BarcoEnemigo> barcos;
+	private int botin;
+	private boolean conquistada = false;
 	private static Texture t;
 	static {
 		try {
@@ -31,8 +33,9 @@ public class Isla extends Sprite{
 	 * @param botin
 	 * @param barcosProtegiendo
 	 */
-	public Isla(float posX, float posY, int nivel, int botin, boolean conquistada) {
+	public Isla(int id, float posX, float posY, int nivel, int botin, boolean conquistada) {
 		super(posX, posY, 0, 64, 64);
+		this.id = id;
 		this.nivelRecomendado=nivel;
 		this.conquistada = conquistada;
 		super.tMap = t;
@@ -65,7 +68,12 @@ public class Isla extends Sprite{
 		// TODO Auto-generated method stub
 		
 	}
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getNivelRecomendado() {
 		return nivelRecomendado;
 	}
@@ -88,11 +96,10 @@ public class Isla extends Sprite{
 		this.botin = botin;
 	}
 	
-	public void conquistar() {
+	public void conquistar(BarcoJugador barco) {
 		conquistada = true;
-		String data = 1 + "";
-		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + data, DatabaseHandler.JSON.getString("actualUser"));
-		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , String.valueOf(this.id));
+		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + DatabaseHandler.JSON.getString("actualUser"));
 	}
 	public boolean isConquistada() {
 		return conquistada;

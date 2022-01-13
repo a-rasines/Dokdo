@@ -156,7 +156,6 @@ public class Barco extends Sprite{
 	}
 	@Override
 	public <T extends Sprite> T rotate(double q){
-		//System.out.println("Rotate: "+String.valueOf(q));
 		if(Math.abs(q)>180) 
 			return rotate((q/Math.abs(q))*(360-Math.abs(q))*Gdx.graphics.getDeltaTime());
 		if (Math.abs(q)>vAng*Gdx.graphics.getDeltaTime())

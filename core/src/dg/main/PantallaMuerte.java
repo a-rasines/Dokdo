@@ -39,7 +39,7 @@ public class PantallaMuerte extends FormatoMenus{
 		menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
 		menu.setFillParent(true);
 		menu.center();
-		TextButton cargarPartida = new TextButton("Cargar partida", skin);
+		TextButton cargarPartida = new TextButton("Cargar guardado", skin);
 		TextButton menuPrincipal = new TextButton("Volver al menu", skin);
 		TextButton salir=new TextButton("Salir", skin);
 		menu.add(cargarPartida).width(100);
@@ -48,6 +48,14 @@ public class PantallaMuerte extends FormatoMenus{
 		menu.row();
 		menu.add(salir).width(100);
 		stage.addActor(menu);
+		cargarPartida.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				getcPrincipal().detener();
+				getcSecundaria().detener();
+				Dokdo.getInstance().setScreen(MainScreen.getInstance());
+			}
+		});
 		menuPrincipal.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

@@ -19,6 +19,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.badlogic.gdx.Input;
+
 import objetos.Municion;
 import objetos.barcos.BarcoJugador;
 
@@ -183,6 +185,24 @@ public class DatabaseHandler {
 	        }
 		}
 		/**
+		 * Añade o edita un valor en un diccionario en un JSON
+		 * @param key llave del diccionario
+		 * @param subKey llave dentro del diccionario
+		 * @param object nuevo valor
+		 */
+		@SuppressWarnings("unchecked")
+		public static void writeInObject(String key, String subKey, Object v) {
+			JSONObject o = (JSONObject) json.get(key);
+			o.put(subKey, v);
+			try (FileWriter file = new FileWriter("src/data.json")) {
+	            file.write(json.toJSONString()); 
+	            file.flush();
+	 
+	        } catch (IOException e) {
+	        	logger.log(Level.SEVERE, "Error writting to JSON: "+e.getMessage()+" Tried to insert in "+key+"("+subKey+") a(n) "+v.getClass().getName()+".("+v.toString()+")");
+	        }
+		}
+		/**
 		 * Elimina objeto de JSONArray
 		 * @param key llave del objeto
 		 * @param v objeto a borrar
@@ -202,7 +222,6 @@ public class DatabaseHandler {
 		/**
 		 * Carga el JSON
 		 */
-		@SuppressWarnings("unchecked")
 		public static void load() {
 			load(defaultObject());
 		}
@@ -282,6 +301,17 @@ public class DatabaseHandler {
 			def.put("users", users);
 			def.put("actualUser", value);
 			def.put("volumen", "0.5");
+			//{Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
+			JSONObject keys = new JSONObject();
+			keys.put("moveForward", Input.Keys.W);
+			keys.put("moveBackward", Input.Keys.S);
+			keys.put("moveLeft", Input.Keys.A);
+			keys.put("moveRight", Input.Keys.D);
+			keys.put("shootForward", Input.Keys.I);
+			keys.put("shootBackward", Input.Keys.K);
+			keys.put("shootLeft", Input.Keys.J);
+			keys.put("shootRight", Input.Keys.L);
+			def.put("keys", keys);
 			logger.info("Default JSON generated");
 			return def;
 		}

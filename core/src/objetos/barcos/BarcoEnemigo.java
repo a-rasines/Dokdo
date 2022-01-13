@@ -141,7 +141,6 @@ public class BarcoEnemigo extends Barco{
 			playerTracker = new Vector2(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}else {
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
-			//System.out.println(isTrackerIntersecting()?"PathfindCollision":"ClearPathfind");
 		}
 		if(tracking) {
 			float angFin; //Angulo al que rotar (absoluto)
@@ -161,7 +160,7 @@ public class BarcoEnemigo extends Barco{
 						angFin = 0;
 					else
 						angFin = 180;
-				angFin = 0;//TODO calcular el angulo a seguir en caso de haber una isla de por medio
+				angFin = 0;
 			}else { //Perseguir sin obstrucciones
 				angFin = -((playerTracker.angleDeg()+90)%360);
 			}
@@ -216,16 +215,15 @@ public class BarcoEnemigo extends Barco{
 	}
 	@Override
 	public void onRangeOfPlayer() {//TODO sonido	
-		MainScreen.m1.setOrdenCanciones(enter);
-		enter=MainScreen.m1.IntercambioSonido(enter);
+		MainScreen.m1.IntercambioSonido(false);
 		tracking = true;
 	}
 	@Override
 	public void onExitFromRange() {//TODO sonido
 		tracking = false;
-		System.out.println("exit 0");
-		MainScreen.m1.setOrdenCanciones(enter);
-		enter=MainScreen.m1.IntercambioSonido(enter);
-			
+		System.out.println("OnRange="+String.valueOf(MainScreen.onRange.size()));
+		if(MainScreen.onRange.size() == 0) {
+			enter=MainScreen.m1.IntercambioSonido(true);
+		}
 	}
 }

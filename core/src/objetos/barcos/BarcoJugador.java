@@ -67,16 +67,14 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T extends Sprite> T rotate(double q) {
 		T a = super.rotate(q);
-		DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		//DatabaseHandler.SQL.editValue("Jugadores", "Rotacion = "+String.valueOf(getAngle()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		return a;
 	}
 	@Override
 	public void recibeDanyo(Bala bullet) {//TODO sonido
 		vida-=bullet.getDanyo();
-		System.out.println(vida);
 		MainScreen.balasBorrar.add(bullet);
 		if(vida<=0) {
-			System.out.println("MURIO");
 			Dokdo.getInstance().setScreen(PantallaMuerte.getInstance()); 
 		}
 	}

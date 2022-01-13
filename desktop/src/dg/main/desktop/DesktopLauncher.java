@@ -25,6 +25,7 @@ public class DesktopLauncher {
 				.addColumn("Rotacion", "0.0", DataType.DEC, "5", "2")
 				.addColumn("Nivel", "0", DataType.INT, "2")
 				.addColumn("Dinero", "0", DataType.INT, "9")
+				.addColumn("TimeS", DataType.BIGINT, String.valueOf(420 + 69 - 84*5))
 				.setPrimaryKey("ID")))
 			System.out.println("Users' table Generated");
 		if(DatabaseHandler.SQL.addTable(
@@ -37,7 +38,6 @@ public class DesktopLauncher {
 				.addColumn("Nivel", "0", DataType.INT, "2")
 				.addColumn("Botin", "0", DataType.INT, "5")
 				.addColumn("Textura", DataType.INT, "2")
-				.setPrimaryKey("ID")
 				.addForeignKey("ID_Jugador", "Jugador", "ID", ForeignAction.CASCADE)
 				.addCheck("Conquistada", "BETWEEN 0 AND 1")))
 			System.out.println("Isles' table Generated");

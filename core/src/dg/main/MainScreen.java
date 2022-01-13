@@ -187,7 +187,7 @@ public class MainScreen extends FormatoMenus{
 	@Override
 	public void show() {
 	 
-		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "Vida, BarcoX, BarcoY, Rotacion", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		try {
 			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
 		} catch (NumberFormatException | SQLException e1) {
@@ -211,6 +211,7 @@ public class MainScreen extends FormatoMenus{
     	
     	
     	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", DatabaseHandler.JSON.getString("actualUser"))) {
+    		System.out.println("in");
     		generarIslas();
     	} else {
     		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");

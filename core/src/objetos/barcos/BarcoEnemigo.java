@@ -148,14 +148,12 @@ public class BarcoEnemigo extends Barco{
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}
 		if(tracking) {
-			System.out.println(getX());
-			System.out.println(pos0[0]);
-			System.out.println(getY());
-			System.out.println(pos0[1]);
-			int distance = (int) Math.sqrt(Math.pow(getX()-pos0[0], 2)+Math.pow(getY()-pos0[1], 2));
-			if(distance >= 1500) {
-				System.out.println("bigger");
-				tracking = false;
+			if(isProtecting) {
+				int distance = (int) Math.sqrt(Math.pow(getX()-pos0[0], 2)+Math.pow(getY()-pos0[1], 2));
+				if(distance >= 1500) {
+					System.out.println("bigger");
+					tracking = false;
+				}
 			}
 			float angFin; //Angulo al que rotar (absoluto)
 			Isla inters = isTrackerIntersecting(); //Isla con la que intersecta el tracker

@@ -50,7 +50,7 @@ public class MenuP extends FormatoMenus{
         	logger.info("Cancion principal cargada sin problemas");
 		} catch (Exception e) {
         	logger.info("Fallo al cargar la Cancion principal");
-        	getcSecundaria().setVolumen(volumenes[0]);
+        	//getcSecundaria().setVolumen(volumenes[0]);
 		}
     	
     	    	

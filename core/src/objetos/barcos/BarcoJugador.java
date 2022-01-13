@@ -54,7 +54,7 @@ public class BarcoJugador extends Barco{
 	@Override
 	public <T> T move(float x, float y) {
 		T a = super.move(x, y);
-		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		//DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX())+", BarcoY = "+String.valueOf(getY()), "ID = "+DatabaseHandler.JSON.getString("actualUser"));
 		refreshRange();
 		return a;
 	}

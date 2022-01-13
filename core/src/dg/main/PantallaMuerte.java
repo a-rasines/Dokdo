@@ -36,7 +36,7 @@ public class PantallaMuerte extends FormatoMenus{
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		Table menu = new Table();
-		menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
+		menu.background(new TextureRegionDrawable(new Texture("FondoMuerte.png")));
 		menu.setFillParent(true);
 		menu.center();
 		TextButton cargarPartida = new TextButton("Cargar guardado", skin);

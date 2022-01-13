@@ -25,6 +25,7 @@ public class BarcoEnemigo extends Barco{
 	private boolean isProtecting;
 	private Vector2 playerTracker;
 	private boolean tracking = false;
+	private float[] pos0; //Posicion a volver si estan defendiendo
 	
 	/*
 	 * Plantillas
@@ -52,6 +53,7 @@ public class BarcoEnemigo extends Barco{
 	 */
 	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island, Municion municionEnUso) {
 		super(vida, nivel, posX, posY, municionEnUso);
+		if(island)pos0 = new float[]{posX, posY};
 		v *= 0.9;
 		isProtecting = island;
 		lineaFrente = new Polygon(new float[]{
@@ -185,6 +187,8 @@ public class BarcoEnemigo extends Barco{
 			}else {
 				backwards();
 			}
+		}else if (isProtecting) {
+			
 		}
 	}
 	@Override

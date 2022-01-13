@@ -1,5 +1,9 @@
 package dg.main;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,6 +22,7 @@ public class MenuP extends FormatoMenus{
 	
 	private  Logger logger= Logger.getLogger("Menu");
 	private static boolean salir=true;
+	private int count = 0;
 	private static boolean regreso=false;
     private static MenuP instance;
     public static MenuP getInstance() {
@@ -140,6 +145,13 @@ public class MenuP extends FormatoMenus{
         barco.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {
+        		count++;
+        		if(count >= 10)
+					try {
+						Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=QtBDL8EiNZo"));
+					} catch (IOException | URISyntaxException e) {
+						e.printStackTrace();
+					}
         		if(getOrdenCanciones()) {
         			getcPrincipal().setVolumen(volumenes[1]);
             		getcSecundaria().setVolumen(volumenes[0]);

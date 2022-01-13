@@ -1,5 +1,10 @@
 package dg.main;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.json.simple.JSONObject;
 
 import com.badlogic.gdx.Gdx;
@@ -95,12 +100,15 @@ public class MenuOp extends FormatoMenus{
         TextButton boton1 = new TextButton("Volver", skin);
         TextButton botonV = new TextButton("Volumen", skin);
         TextButton botonC = new TextButton("Controles", skin);
+        TextButton botonSSS = new TextButton("Super Secret Settings", skin);
         
-        menu.add(boton1).width(100).pad(5);
+		menu.add(boton1).width(100).pad(5);
+		menu.row();
+		menu.add(botonV).width(100).pad(5);
+		menu.row();
+		menu.add(botonC).width(100).pad(5);
         menu.row();
-        menu.add(botonV).width(100).pad(5);
-        menu.row();
-        menu.add(botonC).width(100).pad(5);
+        menu.add(botonSSS).width(100).pad(5);
         
         //Contenedor de teclas
         Table contenedorTeclas= new Table();
@@ -225,7 +233,17 @@ public class MenuOp extends FormatoMenus{
         			}
         		}
         	});
-        
+        botonSSS.addListener(new ClickListener() {
+        	@Override
+        	public void clicked(InputEvent event, float x , float y) {
+        		try {
+					Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=QtBDL8EiNZo"));
+				} catch (IOException | URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+        });
         slider.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x , float y) {

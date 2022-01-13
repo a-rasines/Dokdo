@@ -29,7 +29,6 @@ public class PantallaMuerte extends FormatoMenus{
 	public PantallaMuerte() {
 		super();
 		getViewport().apply();
-		//skin = new Skin(Gdx.files.internal("uiskin.json")); //Esto es el valor por defecto del super()
 		stage = new Stage(getViewport());
 	}
 	@Override

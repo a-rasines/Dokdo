@@ -122,7 +122,7 @@ public class MenuP extends FormatoMenus{
             public void clicked(InputEvent event, float x, float y) {
             	getcPrincipal().detener();
             	getcSecundaria().detener();
-            	Dokdo.getInstance().setScreen(MainScreen.getInstance());
+            	Dokdo.getInstance().setScreen(MenuPartidas.getInstance());
             }
         });
         

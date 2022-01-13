@@ -269,6 +269,7 @@ public class MainScreen extends FormatoMenus{
 		}else if(Gdx.input.isKeyJustPressed(MenuOp.getvTeclas(7))) {
 			barco.dispararLado(PosicionCanyon.DERECHA);
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+			barcosEnemigos.forEach(b->b.stop());
 			MenuOp.setInstanciaDeLlamada(instance);
 			Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
 		}

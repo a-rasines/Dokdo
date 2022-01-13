@@ -53,7 +53,10 @@ public class BarcoEnemigo extends Barco{
 	 */
 	public BarcoEnemigo(int vida, int nivel, float posX, float posY, boolean island, Municion municionEnUso) {
 		super(vida, nivel, posX, posY, municionEnUso);
-		if(island)pos0 = new float[]{posX, posY};
+		if(island) {
+			pos0 = new float[]{posX, posY};
+			System.out.println(pos0[0]);
+		}
 		v *= 0.9;
 		isProtecting = island;
 		lineaFrente = new Polygon(new float[]{
@@ -145,6 +148,15 @@ public class BarcoEnemigo extends Barco{
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}
 		if(tracking) {
+			System.out.println(getX());
+			System.out.println(pos0[0]);
+			System.out.println(getY());
+			System.out.println(pos0[1]);
+			int distance = (int) Math.sqrt(Math.pow(getX()-pos0[0], 2)+Math.pow(getY()-pos0[1], 2));
+			if(distance >= 1500) {
+				System.out.println("bigger");
+				tracking = false;
+			}
 			float angFin; //Angulo al que rotar (absoluto)
 			Isla inters = isTrackerIntersecting(); //Isla con la que intersecta el tracker
 			if(playerTracker.len()<rango && inters == null) { //Atacar sin obstrucciones
@@ -188,7 +200,17 @@ public class BarcoEnemigo extends Barco{
 				backwards();
 			}
 		}else if (isProtecting) {
-			
+			Vector2 v = new Vector2(getX()-pos0[0], getY()-pos0[1]);
+			float angFin = -(v.angleDeg()+90)%360;
+			float angRot = (angFin - getAngle())%360;
+			if(angRot>180) {
+				angRot-=360;	
+			}else if(angRot<-180) {
+				angRot+=360;
+			}
+			if(Math.abs(angRot)<30)forward();
+			else decelerate();
+			rotate(angRot);
 		}
 	}
 	@Override

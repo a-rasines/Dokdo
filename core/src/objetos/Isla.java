@@ -42,9 +42,9 @@ public class Isla extends Sprite{
 		this.conquistada = conquistada;
 		super.tMap = t;
 		this.barcos=new ArrayList<BarcoEnemigo> (Arrays.asList(
-				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo( posX + 25,  posY + 80),
-				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo(posX + 50, posY - 50),
-				BarcoEnemigo.lvl1(0,0, true).setTexturePos(0, 2).tpTo(posX - 50,posY - 50)
+				BarcoEnemigo.lvl1(posX + 25,posY + 80, true).setTexturePos(0, 2),
+				BarcoEnemigo.lvl1(posX + 50, posY - 50, true).setTexturePos(0, 2),
+				BarcoEnemigo.lvl1(posX - 50,posY - 50, true).setTexturePos(0, 2)
 			));
 		this.botin=botin;
 	}

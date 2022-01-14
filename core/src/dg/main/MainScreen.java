@@ -246,6 +246,10 @@ public class MainScreen extends FormatoMenus{
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantall
 		dibujarFondo();
 		
+		for(Isla i : islaList) {
+			i.dibujar();
+		}
+		
 		//Control de teclas
 		if(Gdx.input.isKeyPressed(Input.Keys.R))
 			barco.tpTo(0, 0);
@@ -360,7 +364,7 @@ public class MainScreen extends FormatoMenus{
 		barco.dibujar();		
 		
 		for (Isla i : islaList) {
-			i.dibujar();
+//			i.dibujar();
 			if (i.getBarcos().size() == 0 && !i.isConquistada()) {
 				islasConquistadas++;
 				i.conquistar(barco);

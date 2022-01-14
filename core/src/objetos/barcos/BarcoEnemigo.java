@@ -31,7 +31,22 @@ public class BarcoEnemigo extends Barco{
 	 * Plantillas
 	 */
 	public static BarcoEnemigo lvl1(float x, float y, boolean protecting) {
-		BarcoEnemigo be = new BarcoEnemigo(3, 1, x, y, protecting, Municion.NORMAL);
+		BarcoEnemigo be = new BarcoEnemigo(5, 1, x, y, protecting, Municion.NORMAL);
+		be.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+    	return be;
+	}
+	public static BarcoEnemigo lvl2(float x, float y, boolean protecting) {
+		BarcoEnemigo be = new BarcoEnemigo(12, 2, x, y, protecting, Municion.NORMAL);
+		be.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+    	be.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+    	return be;
+	}public static BarcoEnemigo lvl3(float x, float y, boolean protecting) {
+		BarcoEnemigo be = new BarcoEnemigo(18, 3, x, y, protecting, Municion.NORMAL);
 		be.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
     	be.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
     	be.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));

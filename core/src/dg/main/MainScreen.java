@@ -80,6 +80,11 @@ public class MainScreen extends FormatoMenus{
 	 */
 	public static MainScreen resetInstance() {
     	instance=new MainScreen();
+    	barcosEnemigos.clear();
+    	onRange.clear();
+    	offRange.clear();
+    	islaList.clear();
+    	balasDisparadas.clear();
     	barco=null;
     	return instance;
     }
@@ -201,8 +206,8 @@ public class MainScreen extends FormatoMenus{
 	public void show() {
 		if(barco==null) {
 			try {
-				islasConquistadas=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR + " AND CONQUISTADA=1").getInt(0);
-				islasTotales=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR).getInt(0);
+				islasConquistadas=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR + " AND CONQUISTADA=1").getInt(1);
+				islasTotales=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR).getInt(1);
 			} catch (SQLException e2) {
 				e2.printStackTrace();
 				logger.warning("No hay islas");

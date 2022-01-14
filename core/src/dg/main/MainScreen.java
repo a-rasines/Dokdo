@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,6 +42,7 @@ import objetos.barcos.Barco.PosicionCanyon;
 
 //Pantalla en la que se va desarrollar el juego
 public class MainScreen extends FormatoMenus{
+	static public String ID_JUGADOR="";
 	protected Skin skin;
 	public static MainScreen m1;
 	public static AudioPlayer cFondo = new AudioPlayer();//TODO cambiar esto por la cacion principal
@@ -165,7 +168,7 @@ public class MainScreen extends FormatoMenus{
 			DatabaseHandler.SQL.addValue(
 					"Islas", 
 					String.valueOf(i), 
-					String.valueOf(DatabaseHandler.JSON.getString("actualUser")), 
+					String.valueOf(ID_JUGADOR), 
 					String.valueOf(is.getX()), 
 					String.valueOf(is.getY()), 
 					is.isConquistada()?"1":"0",
@@ -186,10 +189,10 @@ public class MainScreen extends FormatoMenus{
 	
 	@Override
 	public void show() {
-		if(barco == null) {
-			ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+		if(barco==null) {
+			ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+ID_JUGADOR);
 			try {
-				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
+				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), pos0.getInt("Vida"),0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
 			} catch (NumberFormatException | SQLException e1) {
 				logger.severe("Error cargando el barco principal: "+e1.getMessage());
 				e1.printStackTrace();
@@ -197,47 +200,45 @@ public class MainScreen extends FormatoMenus{
 				while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
 					value =new Random().nextInt(899999)+100000;
 				}
+				ID_JUGADOR=String.valueOf(value);
 				DatabaseHandler.JSON.write("users", value, false);
 				DatabaseHandler.JSON.write("actualUser", value, true);
 				DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-				barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.INCENDIARIA,100);
+				barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.NORMAL,100);
 			}
+			//String nombre = JOptionPane.showInputDialog("ELIGE TU PINCHE PUTO NOMBRE PRRO");
 			barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
-			barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
-			barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
-			barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
-		
-    	
-    	
-    	
-    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", DatabaseHandler.JSON.getString("actualUser"))) {
-    		generarIslas();
-    	} else {
-    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*", "ID_Jugador="+DatabaseHandler.JSON.getString("actualUser"));
-    		try {
-				while (res.next()) {
-					islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getString("Conquistada")=="1").setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+	    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+	    	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+	    	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+	    	
+	    	
+	    	
+	    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", ID_JUGADOR)) {
+	    		System.out.println("in");
+	    		generarIslas();
+	    	} else {
+	    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
+	    		try {
+					while (res.next()) {
+						islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getString("Conquistada")=="1").setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+					}
+					for (Isla i: islaList) { 
+						barcosEnemigos.addAll(i.getBarcos());
+						offRange.addAll(i.getBarcos());
+					}
+					logger.info("Islas Cargadas");
+				} catch (SQLException e) {
+					logger.severe("Error Cargando las islas: "+e.getMessage());
+					e.printStackTrace();
 				}
-				for (Isla i: islaList) { 
-					barcosEnemigos.addAll(i.getBarcos());
-					offRange.addAll(i.getBarcos());
-				}
-				logger.info("Islas Cargadas");
-			} catch (SQLException e) {
-				logger.severe("Error Cargando las islas: "+e.getMessage());
-				e.printStackTrace();
-			}
-    		
-    	}
-    	
-    	MiniMapa.setPosIslas(islaList);
-		
-    	
-	}}
-
+	    		
+	    	}
+	    	
+	    	MiniMapa.setPosIslas(islaList);	
+		}
+	}
 	Boolean cambioEstado = true;
-
-	
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0.0f, 0.5f, 1f,0); //Necesario para updatear correctamente la pantall
@@ -329,6 +330,7 @@ public class MainScreen extends FormatoMenus{
 		//Actualización de rango
 		
 		List<Sprite> move = new LinkedList<>();
+		//System.out.println(offRange.size());
 		for(Sprite b : barco.getEnRango(offRange)) {
 			move.add(b);
 			b.onRangeOfPlayer();

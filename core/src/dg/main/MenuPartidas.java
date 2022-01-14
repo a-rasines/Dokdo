@@ -9,9 +9,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import databasePack.DatabaseHandler;
@@ -44,6 +46,7 @@ public class MenuPartidas extends FormatoMenus{
 		botones.add(partida1);
 		botones.add(partida2);
 		botones.add(partida3);
+		List<?> ids = DatabaseHandler.JSON.getArray("users");
 		try {
 			int boton = 0;
 			while(pos0.next()) {
@@ -61,13 +64,49 @@ public class MenuPartidas extends FormatoMenus{
 		} catch (Exception e) {
 			logger.warning("NO HA SIDO POSIBLE MOSTRAR PARTIDAS");
 		}
-		menu.add(partida1).width(500);
+		menu.add(partida1).width(400);
 		menu.row();
-		menu.add(partida2).width(500);
+		menu.add(partida2).width(400);
 		menu.row();
-		menu.add(partida3).width(500);
+		menu.add(partida3).width(400);
 		stage.addActor(menu);
-		
+		partida1.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				getcPrincipal().detener();
+            	getcSecundaria().detener();
+            	if(ids.size()>=1) {
+            		MainScreen.ID_JUGADOR=ids.get(0).toString();
+            		logger.info("Partida cargada correctamente");
+            	}else {logger.info("Nueva partida generada correctamente");}
+            	Dokdo.getInstance().setScreen(MainScreen.getInstance());
+			}
+		});
+		partida2.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				getcPrincipal().detener();
+            	getcSecundaria().detener();
+            	if(ids.size()>=2) { 
+            		MainScreen.ID_JUGADOR=ids.get(1).toString();
+            		logger.info("Partida cargada correctamente");
+            	}else {logger.info("Nueva partida generada correctamente");}
+            	Dokdo.getInstance().setScreen(MainScreen.getInstance());
+            	
+			}
+		});
+		partida3.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				getcPrincipal().detener();
+            	getcSecundaria().detener();
+            	if(ids.size()>=3) {
+            		MainScreen.ID_JUGADOR=ids.get(2).toString();
+            		logger.info("Partida cargada correctamente");
+            	}else {logger.info("Nueva partida generada correctamente");}
+            	Dokdo.getInstance().setScreen(MainScreen.getInstance());
+			}
+		});
 	}
 
 	@Override

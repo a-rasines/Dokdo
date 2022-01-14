@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.badlogic.gdx.graphics.Texture;
 
 import databasePack.DatabaseHandler;
+import dg.main.MainScreen;
 import objetos.barcos.BarcoEnemigo;
 import objetos.barcos.BarcoJugador;
 /**
@@ -102,7 +103,7 @@ public class Isla extends Sprite{
 		conquistada = true;
 		barco.setDineros(barco.getDineros()+this.botin);
 		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , "ID =" + String.valueOf(this.id));
-		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + DatabaseHandler.JSON.getString("actualUser"));
+		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis()), "ID = " + MainScreen.ID_JUGADOR);
 		logger.info("Isla conquistada");
 		logger.info("Autoguardado Completado");
 	}

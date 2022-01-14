@@ -18,7 +18,7 @@ public class DesktopLauncher {
 		if(DatabaseHandler.SQL.addTable(
 				new TableBuilder("Jugadores")
 				.addColumn("ID", DataType.INT, "6")
-				.addColumn("Nombre", "Player1", DataType.CHAR, "10")
+				.addColumn("Nombre", "'Player1'", DataType.CHAR, "10")
 				.addColumn("BarcoX", "0.0", DataType.DEC, "9", "4")
 				.addColumn("BarcoY", "0.0", DataType.DEC, "9", "4")
 				.addColumn("Vida", "10",DataType.INT, "2")
@@ -31,7 +31,7 @@ public class DesktopLauncher {
 		if(DatabaseHandler.SQL.addTable(
 				new TableBuilder("Islas")
 				.addColumn("ID", DataType.INT, "2")
-				.addColumn("ID_Jugador", "Player1", DataType.INT, "6")
+				.addColumn("ID_Jugador", DataType.INT, "6")
 				.addColumn("X", "0.0", DataType.DEC, "9", "4")
 				.addColumn("Y", "0.0", DataType.DEC, "9", "4")
 				.addColumn("Conquistada", "0", DataType.INT, "1")

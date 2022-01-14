@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,9 +18,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.Input;
-
-import objetos.Municion;
-import objetos.barcos.BarcoJugador;
 
 /**
  * Clase encargada de gestionar la base de datos
@@ -135,6 +130,7 @@ public class DatabaseHandler {
 		 * @return True si se ha completado
 		 */
 		public static boolean rawUpdate(String code, boolean track) {
+			System.out.println("Añadiendo valor");
 			try {
 				if(track)logger.log(Level.INFO, "Trying to update: "+code);
 				connection.createStatement().executeUpdate(code);

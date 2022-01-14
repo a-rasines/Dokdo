@@ -66,13 +66,21 @@ public class MainScreen extends FormatoMenus{
 	public static Stage stage = new Stage(vp);
 	private static MainScreen instance;
 	private static boolean regresoM;
+	/**
+	 * Devuelve la última instancia generada
+	 * @return La instancia de la clase
+	 */
 	public static MainScreen getInstance() {
 		if (instance == null) instance = new MainScreen();
 		return instance;
 	}
-	public static void setreinicio() {
-    	//instance.dispose();
-    	instance=null;
+	/**
+	 * Reinicia la instancia
+	 * @return La nueva instancia
+	 */
+	public static MainScreen resetInstance() {
+    	instance=new MainScreen();
+    	return instance;
     }
 	
 	public MainScreen() {

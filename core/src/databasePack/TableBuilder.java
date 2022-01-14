@@ -18,6 +18,7 @@ public class TableBuilder {
 		CHAR(1),
 		DATE(0),
 		DEC(2),
+		ENUM(-1),
 		INT(1), 
 		VARCHAR(1); 
 		private int params;
@@ -52,15 +53,16 @@ public class TableBuilder {
 	 * @return El propio constructor para concatenar acciones
 	 */
 	public TableBuilder addColumn(String name, String def, DataType type, String... q) {
-		if(type.getParams() != q.length)throw new NullPointerException("No coincide el número de parametros introducidos con los del tipo");
+		if(type.getParams()==-1 && q.length>0 || type.getParams() != q.length)throw new NullPointerException("No coincide el número de parametros introducidos con los del tipo");
 		for(String s : q)Integer.parseInt(s);
 		String params = String.join(",",q);
 		if(!columnNames.contains(name)) {
 			columns.add(name+" "+type.toString()+(params.length()==0?"":"("+params+")"+(def == null?"": " DEFAULT "+def)));
 			columnNames.add(name);
+			return this;
 		}
 		int pos = columnNames.indexOf(name);
-		columns.set(pos, name+" "+type.toString()+(params.length()==0?"":"("+params+")"));
+		columns.set(pos, name+" "+type.toString()+(params.length()==0?"":"("+params+")"+(def == null?"": " DEFAULT "+def)));
 		return this;
 	}
 	/**

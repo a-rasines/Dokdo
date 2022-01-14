@@ -33,7 +33,7 @@ public class MenuP extends FormatoMenus{
     	salir=false;
     	instance.dispose();
     	instance=null;
-    	MainScreen.setreinicio();
+    	MainScreen.resetInstance();
     }
    
     public MenuP() {

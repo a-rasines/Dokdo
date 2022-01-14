@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Random;
 import java.util.logging.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -90,7 +91,10 @@ public class MenuP extends FormatoMenus{
         Table menu = new Table();
     
        // volumenM.setVisible(visible);
+       
         menu.background(new TextureRegionDrawable(new Texture("Ocean.png")));
+        
+        
         
         //Set table to fill stage
         menu.setFillParent(true);

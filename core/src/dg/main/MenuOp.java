@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Random;
 
 import org.json.simple.JSONObject;
 
@@ -162,10 +163,16 @@ public class MenuOp extends FormatoMenus{
         contenedorVolumen.add(slider).fillX();
         contenedorVolumen.row();
         contenedorVolumen.add(volumen);
-       
+
       //tabla global
         Table contenedorG = new Table();
-        contenedorG.background(new TextureRegionDrawable(new Texture("Ocean.png")));
+        Random ran = new Random();
+        if(ran.nextInt(500) == 69) {
+        	 contenedorG.background(new TextureRegionDrawable(new Texture("FondoLander.png")));
+        } else {
+        	 contenedorG.background(new TextureRegionDrawable(new Texture("Ocean.png")));
+        }
+       
         contenedorG.center();
         contenedorG.setFillParent(true);
         contenedorG.add(menu);

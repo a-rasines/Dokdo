@@ -65,11 +65,11 @@ public class MenuPartidas extends FormatoMenus{
 			e.printStackTrace();
 			logger.warning("NO HA SIDO POSIBLE MOSTRAR PARTIDAS");
 		}
-		menu.add(partida1).width(400);
+		menu.add(partida1).width(400).pad(5);;
 		menu.row();
-		menu.add(partida2).width(400);
+		menu.add(partida2).width(400).pad(5);;
 		menu.row();
-		menu.add(partida3).width(400);
+		menu.add(partida3).width(400).pad(5);;
 		back.add(menu);
 		stage.addActor(back);
 		partida1.addListener(new ClickListener() {

@@ -41,11 +41,11 @@ public class PantallaMuerte extends FormatoMenus{
 		TextButton cargarPartida = new TextButton("Cargar guardado", skin);
 		TextButton menuPrincipal = new TextButton("Volver al menu", skin);
 		TextButton salir=new TextButton("Salir", skin);
-		menu.add(cargarPartida).width(100);
+		menu.add(cargarPartida).width(100).pad(5).padTop(100);
 		menu.row();
-		menu.add(menuPrincipal).width(100);
+		menu.add(menuPrincipal).width(100).pad(5);;
 		menu.row();
-		menu.add(salir).width(100);
+		menu.add(salir).width(100).pad(5);;
 		stage.addActor(menu);
 		cargarPartida.addListener(new ClickListener() {
 			@Override

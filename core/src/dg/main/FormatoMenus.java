@@ -17,7 +17,7 @@ public class FormatoMenus implements Screen{
 	private  boolean ordenCanciones;
 	private  static  AudioPlayer cPrincipal= new AudioPlayer();
 	private  static  AudioPlayer cSecundaria= new AudioPlayer();
-	private  Logger logger= Logger.getLogger("Menu");
+	protected static Logger logger= Logger.getLogger("Menu");
 	
 	//elementos menu
     protected Stage stage;

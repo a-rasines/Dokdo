@@ -14,7 +14,11 @@ public class JbarcoJugador {
 	BarcoJugador bj = new BarcoJugador(0, 0, 3, 0, Municion.NORMAL);
 	
 	@Test
-	public void cambui() {//TODO hacer cuando funcionenen los botines
+	public void nivel() {//TODO hacer cuando funcionenen los botines
+		assertEquals(0,bj.getNivelDelBarco());
+		bj.setNivelDelBarco(3);
+		assertEquals(3,bj.getNivelDelBarco());
+		
 		
 	}
 

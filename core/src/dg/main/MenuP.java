@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MenuP extends FormatoMenus{
 	
-	private  Logger logger= Logger.getLogger("Menu");
+	
 	private static boolean salir=true;
 	private int count = 0;
 	private static boolean regreso=false;
@@ -40,7 +40,6 @@ public class MenuP extends FormatoMenus{
     public MenuP() {
     	super();
     	setOrdenCanciones(true);
-    	System.out.println("prueba");
     	try {
     		getcSecundaria().setCancion("Sonidos//D8Bits.mp3");
     		getcSecundaria().Reproducir();
@@ -76,13 +75,7 @@ public class MenuP extends FormatoMenus{
 	public void show() {
 		
 		if(regreso) {
-			System.out.println("prueba");
 			getcSecundaria().setCancion("Sonidos//D8Bits.mp3");
-			//getcSecundaria().Reproducir();
-    		//getcSecundaria().setVolumen(volumenes[1]);
-    		//getcPrincipal().setCancion("Sonidos//DrunkenSailor.mp3");
-    		//getcPrincipal().setVolumen(volumenes[0]);
-    		//getcPrincipal().Reproducir();
     		regreso=false;
 			
 		}

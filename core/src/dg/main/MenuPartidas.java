@@ -39,7 +39,7 @@ public class MenuPartidas extends FormatoMenus{
 	public void show() {
 		back.clear();
 		@SuppressWarnings("unchecked")
-		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID IN ('"+String.join("','", DatabaseHandler.JSON.getArray("users"))+"')");
+		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID IN ("+String.join(",", DatabaseHandler.JSON.getArray("users"))+")");
 		Gdx.input.setInputProcessor(stage);
 		back.background(new TextureRegionDrawable(new Texture("Ocean.png")));
 		back.setFillParent(true);

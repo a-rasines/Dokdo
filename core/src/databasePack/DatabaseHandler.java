@@ -130,7 +130,7 @@ public class DatabaseHandler {
 		 * @return True si se ha completado
 		 */
 		public static boolean rawUpdate(String code, boolean track) {
-			System.out.println("Añadiendo valor");
+			System.out.println(code);
 			try {
 				if(track)logger.log(Level.INFO, "Trying to update: "+code);
 				connection.createStatement().executeUpdate(code);

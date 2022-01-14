@@ -68,23 +68,6 @@ public class BarcoJugador extends Barco{
 	private boolean limit = false;
 	@Override
 	public <T> T move(float x, float y) {
-//		limit = false;
-//		T a = (T)this;
-//		if(this.getX() > MAXX && x > 0) {
-//			a =super.move(0,y);
-//			limit = true;
-//		} else if (this.getX() < MIN && x < 0) {
-//			a =super.move(0,y);
-//			limit = true;
-//		}
-//		
-//		if(this.getY() > MAX && y > 0) {
-//			a =super.move(x,0);
-//			limit = true;
-//		} else if(this.getY() < MINY && y < 0) {
-//			a =super.move(x,0);
-//			limit = true;
-//		}
 		T a = super.move(x, y);
 		if(this.getX() > MAXX) {
 			this.tpTo(MIN, this.getY());
@@ -116,7 +99,9 @@ public class BarcoJugador extends Barco{
 	public void recibeDanyo(Bala bullet) {//TODO sonido
 		vida-=bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
+		System.out.println(vida);
 		if(vida<=0) {
+			DatabaseHandler.SQL.editValue("Jugadores", "Vida= 10", "ID = " + MainScreen.ID_JUGADOR);
 			Dokdo.getInstance().setScreen(PantallaMuerte.getInstance()); 
 		}
 	}

@@ -205,7 +205,7 @@ public class MainScreen extends FormatoMenus{
 			} catch (NumberFormatException | SQLException e1) {
 				logger.severe("Error cargando el barco principal: "+e1.getMessage());
 				e1.printStackTrace();
-				barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.NORMAL,100);
+				barco = new BarcoJugador(0.0f ,0.0f ,10,0 ,Municion.NORMAL,100);
 			}
 			barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -357,7 +357,7 @@ public class MainScreen extends FormatoMenus{
 		
 		for (Isla i : islaList) {
 			i.dibujar();
-			if (i.getBarcos().size() == 0) {
+			if (i.getBarcos().size() == 0 && !i.isConquistada()) {
 				i.conquistar(barco);
 			}
 			for (BarcoEnemigo b : i.getBarcos()) {

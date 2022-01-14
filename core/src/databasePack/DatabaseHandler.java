@@ -171,7 +171,7 @@ public class DatabaseHandler {
 				JSONArray a = (JSONArray) json.get(key);
 				a.add(v);
 			}
-			try (FileWriter file = new FileWriter("src/data.json")) {
+			try (FileWriter file = new FileWriter("data.json")) {
 	            //We can write any JSONArray or JSONObject instance to the file
 	            file.write(json.toJSONString()); 
 	            file.flush();
@@ -228,7 +228,7 @@ public class DatabaseHandler {
 		private static void load(JSONObject def) {
 			logger.log(Level.INFO, "Loading JSON");
 			JSONParser jsonParser = new JSONParser();
-	        try (FileReader reader = new FileReader("src/data.json")){
+	        try (FileReader reader = new FileReader("data.json")){
 	            json = (JSONObject)jsonParser.parse(reader);
 	            if (!json.keySet().equals(def.keySet())) {
 	            	def.forEach((k, v)->{
@@ -239,12 +239,13 @@ public class DatabaseHandler {
 	        } catch (FileNotFoundException e) {
 	        	logger.log(Level.WARNING, "JSON not found, generating new");
 	            try {
-					new File("src/data.json").createNewFile();
-					try (FileWriter file = new FileWriter("src/data.json")) {
+					new File("data.json").createNewFile();
+					try (FileWriter file = new FileWriter("data.json")) {
 			            //We can write any JSONArray or JSONObject instance to the file
 			            file.write(def.toJSONString()); 
 			            file.flush();
 			            load(def);
+			            logger.info("Default JSON generated");
 			        } catch (IOException e1) {
 			        	logger.log(Level.SEVERE, "Error writting JSON archive: "+e.getMessage());
 			        }

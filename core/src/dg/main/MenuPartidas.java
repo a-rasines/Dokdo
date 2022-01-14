@@ -2,6 +2,7 @@ package dg.main;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -35,8 +36,10 @@ public class MenuPartidas extends FormatoMenus{
 		getViewport().apply();
 		stage = new Stage(getViewport());
 	}
+	List<String> ids = new LinkedList<>();
 	@Override
 	public void show() {
+		ids.clear();
 		back.clear();
 		@SuppressWarnings("unchecked")
 		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID IN ("+String.join(",", DatabaseHandler.JSON.getArray("users"))+")");
@@ -55,6 +58,7 @@ public class MenuPartidas extends FormatoMenus{
 		try {
 			int boton = 0;
 			while(pos0.next()) {
+				ids.add(String.valueOf(pos0.getInt("ID")));
 				String jugador = pos0.getString("Nombre")+"   "+"vida: "+pos0.getInt("Vida")+"\n"+"Nivel: "+pos0.getInt("Nivel")+"   "+"Dinero: "+pos0.getInt("Dinero");
 				botones.get(boton).setText(jugador);
 				logger.info("Patidas Mostradas Correctamente");
@@ -92,7 +96,8 @@ public class MenuPartidas extends FormatoMenus{
 		});
 	}
 	public void nuevaPartida(int num) {
-		List<?> ids = DatabaseHandler.JSON.getArray("users");
+		getcPrincipal().detener();
+		getcSecundaria().detener();
     	if(ids.size()>=num+1) {
     		MainScreen.ID_JUGADOR=ids.get(num).toString();
     		logger.info("Partida cargada correctamente");

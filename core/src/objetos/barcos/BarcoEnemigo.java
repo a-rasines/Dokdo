@@ -162,66 +162,66 @@ public class BarcoEnemigo extends Barco{
 			playerTracker.set(getX()-MainScreen.barco.getX(), getY()-MainScreen.barco.getY());
 		}
 		if(tracking) {
+			int distance = 0;
 			if(isProtecting) {
-				int distance = (int) Math.sqrt(Math.pow(getX()-pos0[0], 2)+Math.pow(getY()-pos0[1], 2));
-				if(distance >= 1500) {
-					tracking = false;
+				distance = (int) Math.sqrt(Math.pow(MainScreen.barco.getX()-pos0[0], 2)+Math.pow(MainScreen.barco.getY()-pos0[1], 2));
+			}
+			if(distance <= 1500) {
+				float angFin; //Angulo al que rotar (absoluto)
+				Isla inters = isTrackerIntersecting(); //Isla con la que intersecta el tracker
+				if(playerTracker.len()<rango && inters == null) { //Atacar sin obstrucciones
+					angFin = MainScreen.barco.getAngle();
+					
+				}else if (inters != null) { //Intersecta una isla
+					Face f = inters.getFirstCollidingFace(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()));
+					if(f == Face.N || f == Face.S) 
+						if(MainScreen.barco.getX() > getX())
+							angFin = 90;
+						else
+							angFin = -90;
+					else if (f == Face.E || f == Face.W)
+						if(MainScreen.barco.getY() > getY())
+							angFin = 0;
+						else
+							angFin = 180;
+					angFin = 0;
+				}else { //Perseguir sin obstrucciones
+					angFin = -((playerTracker.angleDeg()+90)%360);
 				}
-			}
-			float angFin; //Angulo al que rotar (absoluto)
-			Isla inters = isTrackerIntersecting(); //Isla con la que intersecta el tracker
-			if(playerTracker.len()<rango && inters == null) { //Atacar sin obstrucciones
-				angFin = MainScreen.barco.getAngle();
-				
-			}else if (inters != null) { //Intersecta una isla
-				Face f = inters.getFirstCollidingFace(new Vector2(getX(), getY()), new Vector2(MainScreen.barco.getX(), MainScreen.barco.getY()));
-				if(f == Face.N || f == Face.S) 
-					if(MainScreen.barco.getX() > getX())
-						angFin = 90;
-					else
-						angFin = -90;
-				else if (f == Face.E || f == Face.W)
-					if(MainScreen.barco.getY() > getY())
-						angFin = 0;
-					else
-						angFin = 180;
-				angFin = 0;
-			}else { //Perseguir sin obstrucciones
-				angFin = -((playerTracker.angleDeg()+90)%360);
-			}
-			if(angFin>180) {
-				angFin= angFin-360;	
-			}else if(angFin<-180) {
-				angFin = angFin+360;
-			}
-			float angRot = (angFin-getAngle())%360; //Angulo a rotar (relativo)
-			if(angRot>180) {
-				angRot-=360;	
-			}else if(angRot<-180) {
-				angRot+=360;
-			}
-			rotate(angRot);
-			if(!collidesWith(MainScreen.islaList)) {
-				if(Math.abs((angFin-getAngle())%360)<30) {
-					forward();
+				if(angFin>180) {
+					angFin= angFin-360;	
+				}else if(angFin<-180) {
+					angFin = angFin+360;
+				}
+				float angRot = (angFin-getAngle())%360; //Angulo a rotar (relativo)
+				if(angRot>180) {
+					angRot-=360;	
+				}else if(angRot<-180) {
+					angRot+=360;
+				}
+				rotate(angRot);
+				if(!collidesWith(MainScreen.islaList)) {
+					if(Math.abs((angFin-getAngle())%360)<30) {
+						forward();
+					}else {
+						decelerate();
+					}
 				}else {
-					decelerate();
+					backwards();
 				}
-			}else {
-				backwards();
+			}else if (isProtecting) {
+				Vector2 v = new Vector2(getX()-pos0[0], getY()-pos0[1]);
+				float angFin = -(v.angleDeg()+90)%360;
+				float angRot = (angFin - getAngle())%360;
+				if(angRot>180) {
+					angRot-=360;	
+				}else if(angRot<-180) {
+					angRot+=360;
+				}
+				if(Math.abs(angRot)<30)forward();
+				else decelerate();
+				rotate(angRot);
 			}
-		}else if (isProtecting) {
-			Vector2 v = new Vector2(getX()-pos0[0], getY()-pos0[1]);
-			float angFin = -(v.angleDeg()+90)%360;
-			float angRot = (angFin - getAngle())%360;
-			if(angRot>180) {
-				angRot-=360;	
-			}else if(angRot<-180) {
-				angRot+=360;
-			}
-			if(Math.abs(angRot)<30)forward();
-			else decelerate();
-			rotate(angRot);
 		}
 	}
 	@Override

@@ -30,7 +30,8 @@ public class MiniMapa {
 	 * @param lista, lista de las islas a las q sacarle el valor
 	 */
 	public static void setPosIslas(List<Isla> lista) {
-		
+		listaIslas.clear();
+		listaIslasEstado.clear();
 		//Dos posiciones cumplen una posicion de una isla
 		for(Isla i : lista) {
 			listaIslas.add(i.getX() / FACTOR); //Escalarlo a un tamaño menor

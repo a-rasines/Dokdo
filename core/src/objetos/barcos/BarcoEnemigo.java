@@ -55,7 +55,6 @@ public class BarcoEnemigo extends Barco{
 		super(vida, nivel, posX, posY, municionEnUso);
 		if(island) {
 			pos0 = new float[]{posX, posY};
-			System.out.println(pos0[0]);
 		}
 		v *= 0.9;
 		isProtecting = island;
@@ -151,7 +150,6 @@ public class BarcoEnemigo extends Barco{
 			if(isProtecting) {
 				int distance = (int) Math.sqrt(Math.pow(getX()-pos0[0], 2)+Math.pow(getY()-pos0[1], 2));
 				if(distance >= 1500) {
-					System.out.println("bigger");
 					tracking = false;
 				}
 			}
@@ -245,7 +243,6 @@ public class BarcoEnemigo extends Barco{
 	@Override
 	public void onExitFromRange() {//TODO sonido
 		tracking = false;
-		System.out.println("OnRange="+String.valueOf(MainScreen.onRange.size()));
 		if(MainScreen.onRange.size() == 0) {
 			enter=MainScreen.m1.IntercambioSonido(true);
 		}

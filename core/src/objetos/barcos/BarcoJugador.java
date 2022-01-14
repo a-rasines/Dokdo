@@ -85,7 +85,6 @@ public class BarcoJugador extends Barco{
 //			a =super.move(x,0);
 //			limit = true;
 //		}
-		
 		T a = super.move(x, y);
 		if(this.getX() > MAXX) {
 			this.tpTo(MIN, this.getY());
@@ -99,7 +98,6 @@ public class BarcoJugador extends Barco{
 			this.tpTo(this.getX(), MAX);
 		}
 		refreshRange();
-		
 		
 		return a;
 	}

@@ -75,10 +75,11 @@ public class HiloVolumen extends Thread {
 				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				System.out.println("No se pudo detener el hilo");
+				logger.severe("No se pudo detener el hilo");
 			}
 			c.setVolumen(i);
-		}System.out.println("Acabado bajada");
+		}
+		logger.info("Acabado bajada");
 		return false;
 	}
 	public boolean subirVolumen(float v, AudioPlayer c ) {
@@ -87,10 +88,11 @@ public class HiloVolumen extends Thread {
 				sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				System.out.println("No se pudo detener el hilo");
+				logger.severe("No se pudo detener el hilo");
 			}
 			c.setVolumen(i);
-		}System.out.println("Acabado Subida");
+		}
+		logger.info("Acabado Subida");
 		return false;
 	}
 

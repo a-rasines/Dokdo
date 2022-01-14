@@ -186,35 +186,34 @@ public class MainScreen extends FormatoMenus{
 	
 	@Override
 	public void show() {
-	 
-		ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
-		try {
-			barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
-		} catch (NumberFormatException | SQLException e1) {
-			logger.severe("Error cargando el barco principal: "+e1.getMessage());
-			e1.printStackTrace();
-			int value =new Random().nextInt(899999)+100000;
-			while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
-				value =new Random().nextInt(899999)+100000;
-				System.out.println(value);
+		if(barco == null) {
+			ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+DatabaseHandler.JSON.getString("actualUser"));
+			try {
+				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), 10/*pos0.getInt("Vida")*/,0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
+			} catch (NumberFormatException | SQLException e1) {
+				logger.severe("Error cargando el barco principal: "+e1.getMessage());
+				e1.printStackTrace();
+				int value =new Random().nextInt(899999)+100000;
+				while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
+					value =new Random().nextInt(899999)+100000;
+				}
+				DatabaseHandler.JSON.write("users", value, false);
+				DatabaseHandler.JSON.write("actualUser", value, true);
+				DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
+				barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.INCENDIARIA,100);
 			}
-			DatabaseHandler.JSON.write("users", value, false);
-			DatabaseHandler.JSON.write("actualUser", value, true);
-			DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
-			barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.INCENDIARIA,100);
-		}
-    	barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
-    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
-    	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
-    	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+			barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
+			barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
+			barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
+			barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
+		
     	
     	
     	
     	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", DatabaseHandler.JSON.getString("actualUser"))) {
-    		System.out.println("in");
     		generarIslas();
     	} else {
-    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
+    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*", "ID_Jugador="+DatabaseHandler.JSON.getString("actualUser"));
     		try {
 				while (res.next()) {
 					islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getString("Conquistada")=="1").setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
@@ -234,7 +233,7 @@ public class MainScreen extends FormatoMenus{
     	MiniMapa.setPosIslas(islaList);
 		
     	
-	}
+	}}
 
 	Boolean cambioEstado = true;
 
@@ -330,7 +329,6 @@ public class MainScreen extends FormatoMenus{
 		//Actualización de rango
 		
 		List<Sprite> move = new LinkedList<>();
-		//System.out.println(offRange.size());
 		for(Sprite b : barco.getEnRango(offRange)) {
 			move.add(b);
 			b.onRangeOfPlayer();

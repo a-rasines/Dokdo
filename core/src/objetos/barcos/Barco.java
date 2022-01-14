@@ -174,7 +174,6 @@ public class Barco extends Sprite{
 		if(bullet.canDamage()) {
 			vida=(int) (vida - bullet.getDanyo()*0.5);
 			bullet.recudirVeces();
-			System.out.println("Danyo continuo hecho");
 		}
 	}
 	//DETECCIÓN

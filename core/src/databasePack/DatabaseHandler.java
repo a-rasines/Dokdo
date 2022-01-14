@@ -291,14 +291,7 @@ public class DatabaseHandler {
 		@SuppressWarnings("unchecked")
 		private static JSONObject defaultObject() {
 			JSONObject def = new JSONObject();
-			int value =new Random().nextInt(899999)+100000;
-			while(SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {value =new Random().nextInt(899999)+100000;}
-			int user = value;
-			JSONArray users = new JSONArray();
-			users.add(user);
-			SQL.addValue("Jugadores(ID)", String.valueOf(user));
-			def.put("users", users);
-			def.put("actualUser", value);
+			def.put("users", new JSONArray());
 			def.put("volumen", "0.5");
 			//{Input.Keys.W,Input.Keys.S,Input.Keys.A,Input.Keys.D,Input.Keys.I,Input.Keys.K,Input.Keys.J,Input.Keys.L};
 			JSONObject keys = new JSONObject();

@@ -3,6 +3,7 @@ package dg.main;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.Gdx;
@@ -13,10 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import databasePack.DatabaseHandler;
+import objetos.Municion;
+import objetos.barcos.BarcoJugador;
 
 public class MenuPartidas extends FormatoMenus{
 	protected Stage stage;
@@ -108,7 +112,26 @@ public class MenuPartidas extends FormatoMenus{
 			}
 		});
 	}
-
+	public void nuevaPartida() {
+		TextButton superColegasDelInfierno = new TextButton("ACEPTAR", skin);
+		TextField superColegasDelCielo = new TextField("INSERTA NOMBRE", skin);
+		Table nuevo = new Table();
+		nuevo.add(superColegasDelCielo);
+		nuevo.add(superColegasDelInfierno);
+		superColegasDelInfierno.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				int value =new Random().nextInt(899999)+100000;
+				while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
+					value =new Random().nextInt(899999)+100000;
+				}
+				MainScreen.ID_JUGADOR=String.valueOf(value);
+				DatabaseHandler.JSON.write("users", value, false);
+				DatabaseHandler.SQL.addValue("Jugadores(ID, Nombre)", Integer.toString(value), superColegasDelCielo.getText());
+				Dokdo.getInstance().setScreen(MainScreen.getInstance());
+			}
+		});
+	}
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.0f, 0.5f, 1f,0);

@@ -21,7 +21,7 @@ public class DesktopLauncher {
 				.addColumn("Nombre", "Player1", DataType.CHAR, "10")
 				.addColumn("BarcoX", "0.0", DataType.DEC, "9", "4")
 				.addColumn("BarcoY", "0.0", DataType.DEC, "9", "4")
-				.addColumn("Vida", DataType.INT, "2")
+				.addColumn("Vida", "10",DataType.INT, "2")
 				.addColumn("Rotacion", "0.0", DataType.DEC, "5", "2")
 				.addColumn("Nivel", "0", DataType.INT, "2")
 				.addColumn("Dinero", "0", DataType.INT, "9")

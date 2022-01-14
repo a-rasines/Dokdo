@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
@@ -196,17 +197,8 @@ public class MainScreen extends FormatoMenus{
 			} catch (NumberFormatException | SQLException e1) {
 				logger.severe("Error cargando el barco principal: "+e1.getMessage());
 				e1.printStackTrace();
-				int value =new Random().nextInt(899999)+100000;
-				while(DatabaseHandler.SQL.existsValue("Jugadores", "ID", String.valueOf(value))) {
-					value =new Random().nextInt(899999)+100000;
-				}
-				ID_JUGADOR=String.valueOf(value);
-				DatabaseHandler.JSON.write("users", value, false);
-				DatabaseHandler.JSON.write("actualUser", value, true);
-				DatabaseHandler.SQL.addValue("Jugadores(ID)", Integer.toString(value));
 				barco = new BarcoJugador(0.0f ,0.0f ,1000000,0 ,Municion.NORMAL,100);
 			}
-			//String nombre = JOptionPane.showInputDialog("ELIGE TU PINCHE PUTO NOMBRE PRRO");
 			barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
@@ -231,10 +223,8 @@ public class MainScreen extends FormatoMenus{
 				} catch (SQLException e) {
 					logger.severe("Error Cargando las islas: "+e.getMessage());
 					e.printStackTrace();
-				}
-	    		
+				}	
 	    	}
-	    	
 	    	MiniMapa.setPosIslas(islaList);	
 		}
 	}

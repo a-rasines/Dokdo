@@ -108,7 +108,7 @@ public class MenuOp extends FormatoMenus{
 		menu.row();
 		menu.add(botonC).width(100).pad(5);
         menu.row();
-        menu.add(botonSSS).width(200).pad(5);
+        menu.add(botonSSS).width(160).pad(5);
         
         //Contenedor de teclas
         Table contenedorTeclas= new Table();

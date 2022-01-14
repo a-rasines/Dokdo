@@ -50,8 +50,6 @@ public class PantallaMuerte extends FormatoMenus{
 		cargarPartida.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				getcPrincipal().detener();
-				getcSecundaria().detener();
 				Dokdo.getInstance().setScreen(MainScreen.getInstance());
 			}
 		});
@@ -59,6 +57,8 @@ public class PantallaMuerte extends FormatoMenus{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				MenuP.setreinicio();
+				getcPrincipal().detener();
+            	getcSecundaria().detener();
 				Dokdo.getInstance().setScreen(MenuP.getInstance());
 				
 			}

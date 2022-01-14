@@ -120,8 +120,6 @@ public class MenuP extends FormatoMenus{
         boton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-            	getcPrincipal().detener();
-            	getcSecundaria().detener();
             	Dokdo.getInstance().setScreen(MenuPartidas.getInstance());
             }
         });

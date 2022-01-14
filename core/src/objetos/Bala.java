@@ -79,7 +79,7 @@ public class Bala extends Sprite{
 	 */
 	public int getDanyo() {
 		t0 = System.currentTimeMillis();
-		return danyo;
+		return danyo * this.barcoDisparo.getNivelDelBarco();
 	}
 	public boolean canDamage() {
 		return System.currentTimeMillis()-t0 >=cd*1000;

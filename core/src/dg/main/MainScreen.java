@@ -57,10 +57,10 @@ public class MainScreen extends FormatoMenus{
 	public static List<Bala> balasBorrar = new ArrayList<>();
 	public static List<Sprite> onRange = new ArrayList<>();
 	public static List<Sprite> offRange = new ArrayList<>();
-
+	public float islasConquistadas; 
+	public float islasTotales;
 	public static float tiempo = 0;
 	public static Random ran = new Random();
-	
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
@@ -80,6 +80,7 @@ public class MainScreen extends FormatoMenus{
 	 */
 	public static MainScreen resetInstance() {
     	instance=new MainScreen();
+    	barco=null;
     	return instance;
     }
 	
@@ -199,6 +200,13 @@ public class MainScreen extends FormatoMenus{
 	@Override
 	public void show() {
 		if(barco==null) {
+			try {
+				islasConquistadas=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR + " AND CONQUISTADA=1").getInt(0);
+				islasTotales=DatabaseHandler.SQL.get("Islas","COUNT(*)","ID_Jugador="+ID_JUGADOR).getInt(0);
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+				logger.warning("No hay islas");
+			}
 			ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+ID_JUGADOR);
 			try {
 				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), pos0.getInt("Vida"),0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
@@ -211,9 +219,6 @@ public class MainScreen extends FormatoMenus{
 	    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.DERECHA, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.IZQUIERDA, new Canyon(0,0));
-	    	
-	    	
-	    	
 	    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", ID_JUGADOR)) {
 	    		generarIslas();
 	    	} else {
@@ -357,15 +362,34 @@ public class MainScreen extends FormatoMenus{
 		for (Isla i : islaList) {
 			i.dibujar();
 			if (i.getBarcos().size() == 0 && !i.isConquistada()) {
+				islasConquistadas++;
 				i.conquistar(barco);
+				if(islasConquistadas/islasTotales>0.25 && islasConquistadas/islasTotales<0.5) {
+					barco.setNivelDelBarco(2);
+					for(BarcoEnemigo barco:barcosEnemigos) {
+						barco.setNivelDelBarco(2);
+					}
+				}else if(islasConquistadas/islasTotales<0.75){
+					barco.setNivelDelBarco(3);
+					for(BarcoEnemigo barco:barcosEnemigos) {
+						barco.setNivelDelBarco(3);
+					}
+				}else if(islasConquistadas/islasTotales>0.75){
+					for(BarcoEnemigo barco:barcosEnemigos) {
+						barco.setNivelDelBarco(4);
+					}
+				}else {
+					barco.setNivelDelBarco(1);
+					for(BarcoEnemigo barco:barcosEnemigos) {
+						barco.setNivelDelBarco(1);
+					}
+				}
 			}
 			for (BarcoEnemigo b : i.getBarcos()) {
 				b.dibujar();
 				if(b.tocaLinea(barco) != null) {
 					b.dispararLado(b.tocaLinea(barco));
-					
 				}
-				
 				if (!barcosEnemigos.contains(b)) { //Eliminar el barco de la lista de la Isla
 					i.getBarcos().remove(b);
 					break;

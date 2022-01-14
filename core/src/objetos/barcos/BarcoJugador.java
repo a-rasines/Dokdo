@@ -101,7 +101,6 @@ public class BarcoJugador extends Barco{
 		MainScreen.balasBorrar.add(bullet);
 		System.out.println(vida);
 		if(vida<=0) {
-			DatabaseHandler.SQL.editValue("Jugadores", "Vida= 10", "ID = " + MainScreen.ID_JUGADOR);
 			Dokdo.getInstance().setScreen(PantallaMuerte.getInstance()); 
 		}
 	}

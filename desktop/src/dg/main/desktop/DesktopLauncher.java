@@ -23,7 +23,7 @@ public class DesktopLauncher {
 				.addColumn("BarcoY", "0.0", DataType.DEC, "9", "4")
 				.addColumn("Vida", "10",DataType.INT, "2")
 				.addColumn("Rotacion", "0.0", DataType.DEC, "5", "2")
-				.addColumn("Nivel", "0", DataType.INT, "2")
+				.addColumn("Nivel", "1", DataType.INT, "2")
 				.addColumn("Dinero", "0", DataType.INT, "9")
 				.addColumn("TimeS", DataType.BIGINT, String.valueOf(420 + 69 - 84*5))
 				.setPrimaryKey("ID")))

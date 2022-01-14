@@ -50,7 +50,7 @@ public class PantallaMuerte extends FormatoMenus{
 		cargarPartida.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Dokdo.getInstance().setScreen(MainScreen.getInstance());
+				Dokdo.getInstance().setScreen(MenuPartidas.getInstance());
 			}
 		});
 		menuPrincipal.addListener(new ClickListener() {

@@ -93,8 +93,6 @@ public class MenuPartidas extends FormatoMenus{
 	}
 	public void nuevaPartida(int num) {
 		List<?> ids = DatabaseHandler.JSON.getArray("users");
-		getcPrincipal().detener();
-    	getcSecundaria().detener();
     	if(ids.size()>=num+1) {
     		MainScreen.ID_JUGADOR=ids.get(num).toString();
     		logger.info("Partida cargada correctamente");

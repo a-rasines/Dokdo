@@ -1,6 +1,12 @@
-sourceCompatibility = 1.7
+sourceCompatibility = 1.11
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 eclipse.project.name = appName + "-core"
+// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+dependencies{
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.36.0.3'
+	
+}

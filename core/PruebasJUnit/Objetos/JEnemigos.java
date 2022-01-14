@@ -13,11 +13,11 @@ import objetos.barcos.BarcoJugador;
 public class JEnemigos {
 	
 	BarcoEnemigo bE = new BarcoEnemigo(3, 1, 0, 0, false, Municion.NORMAL);
-	Barco p1 = new BarcoJugador(0, 0, 3, 0, Municion.NORMAL);
-	Barco p2 = new BarcoJugador(0, 0, 3, 0, Municion.INCENDIARIA);
-	Barco p3 = new BarcoJugador(0, 0, 3, 0, Municion.EXPLOSIVA);
-	Barco p4 = new BarcoJugador(0, 0, 3, 0, Municion.VENENOSA);
-	Barco p5 = new BarcoJugador(0, 0, 3, 0, Municion.ENCADENADA);
+	Barco p1 = new BarcoJugador(0, 0, 3, 0, Municion.NORMAL, 0);
+	Barco p2 = new BarcoJugador(0, 0, 3, 0, Municion.INCENDIARIA, 0);
+	Barco p3 = new BarcoJugador(0, 0, 3, 0, Municion.EXPLOSIVA, 0);
+	Barco p4 = new BarcoJugador(0, 0, 3, 0, Municion.VENENOSA, 0);
+	Barco p5 = new BarcoJugador(0, 0, 3, 0, Municion.ENCADENADA, 0);
 	
 	@Test
 	public void municion() {
@@ -38,4 +38,4 @@ public class JEnemigos {
 		assertEquals(1,bE.getVidaDelBarco(),1);
 	}
 	
-
+}

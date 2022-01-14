@@ -169,7 +169,7 @@ public class MainScreen extends FormatoMenus{
 					}
 					if (valid) {
 						islaList.add(
-							new Isla(0,(float) x,(float) y, 0, 0, false)
+							new Isla(0,(float) x,(float) y, 2, 10, false)
 						);
 						next = true;
 					}
@@ -227,7 +227,7 @@ public class MainScreen extends FormatoMenus{
 	    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", ID_JUGADOR)) {
 	    		generarIslas();
 	    	} else {
-	    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
+	    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*", "ID_Jugador=" +ID_JUGADOR);
 	    		try {
 					while (res.next()) {
 						islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));

@@ -55,7 +55,7 @@ public class MenuPartidas extends FormatoMenus{
 		try {
 			int boton = 0;
 			while(pos0.next()) {
-				String jugador = pos0.getString("Nombre")+"   "+"vida: "+pos0.getInt("Vida")+"\n"+"Nivel: "+pos0.getInt("Nivel")+"   "+"Dinero: "+pos0.getInt("Dinero")/*+"   "+"Islas Conquistadas = " + iC + "/" + iT*/;
+				String jugador = pos0.getString("Nombre")+"   "+"vida: "+pos0.getInt("Vida")+"\n"+"Nivel: "+pos0.getInt("Nivel")+"   "+"Dinero: "+pos0.getInt("Dinero");
 				botones.get(boton).setText(jugador);
 				logger.info("Patidas Mostradas Correctamente");
 				boton++;

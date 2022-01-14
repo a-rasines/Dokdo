@@ -214,11 +214,11 @@ public class MainScreen extends FormatoMenus{
 			}
 			ResultSet pos0 = DatabaseHandler.SQL.get("Jugadores", "*", "ID = "+ID_JUGADOR);
 			try {
-				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), pos0.getInt("Vida"),0, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
+				barco = new BarcoJugador(pos0.getFloat("BarcoX"), pos0.getFloat("BarcoY"), pos0.getInt("Vida"),1, Municion.INCENDIARIA, pos0.getInt("Dinero")).rotate(pos0.getFloat("Rotacion"));
 			} catch (NumberFormatException | SQLException e1) {
 				logger.severe("Error cargando el barco principal: "+e1.getMessage());
 				e1.printStackTrace();
-				barco = new BarcoJugador(0.0f ,0.0f ,10,0 ,Municion.NORMAL,100);
+				barco = new BarcoJugador(0.0f ,0.0f ,10,0 ,Municion.INCENDIARIA,100);
 			}
 			barco.setCanyones(PosicionCanyon.DELANTE, new Canyon(0,0));
 	    	barco.setCanyones(PosicionCanyon.ATRAS, new Canyon(0,0));
@@ -369,7 +369,6 @@ public class MainScreen extends FormatoMenus{
 		barco.dibujar();		
 		
 		for (Isla i : islaList) {
-//			i.dibujar();
 			if (i.getBarcos().size() == 0 && !i.isConquistada()) {
 				islasConquistadas++;
 				i.conquistar(barco);
@@ -419,10 +418,8 @@ public class MainScreen extends FormatoMenus{
 		MiniMapa.actualizarEstado(islaList);
 		MiniMapa.mapaRenderer();
 		MiniMapa.setPosBarco(barco);
-		//stage.draw();
 		
 	}
-	//volumenes = {0.5f,0.0f}
 	public boolean IntercambioSonido(boolean x) {//TODO sonido
 		if(x) {
 			getcPrincipal().setVolumen(volumenes[0]);

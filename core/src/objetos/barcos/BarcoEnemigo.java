@@ -245,7 +245,8 @@ public class BarcoEnemigo extends Barco{
 	}
 	@Override
 	public void recibeDanyoContinuo(Bala bullet) {
-		super.recibeDanyoContinuo(bullet);
+		vida-=bullet.getDanyo();
+		System.out.println(vida);
 		if(vida<=0) {
 			MainScreen.barEneBorrar.add(this);
 		}

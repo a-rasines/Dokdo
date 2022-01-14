@@ -104,7 +104,7 @@ public class Isla extends Sprite{
 		conquistada = true;
 		barco.setDineros(barco.getDineros()+this.botin);
 		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , "ID = " + String.valueOf(this.id)+" AND ID_Jugador = "+MainScreen.ID_JUGADOR);
-		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+70)+", BarcoY = "+String.valueOf(getY())+", TimeS = " + String.valueOf(System.currentTimeMillis())+", Vida=" + String.valueOf(barco.getNivelDelBarco()*8) + ", Nivel= "+String.valueOf(barco.getNivelDelBarco()), "ID = " + MainScreen.ID_JUGADOR);
+		DatabaseHandler.SQL.editValue("Jugadores", "Dinero= "+String.valueOf(barco.getDineros()) + ", BarcoX = "+String.valueOf(getX()+70)+", BarcoY = "+String.valueOf(getY())+", TimeS = " + String.valueOf(System.currentTimeMillis())+", Vida=" + String.valueOf(barco.getNivelDelBarco()*8) + ", Nivel= "+String.valueOf(barco.getNivelDelBarco()), "ID = " + MainScreen.ID_JUGADOR);
 		logger.info("Isla conquistada");
 		logger.info("Autoguardado Completado");
 	}

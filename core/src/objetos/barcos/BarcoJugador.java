@@ -99,7 +99,6 @@ public class BarcoJugador extends Barco{
 	public void recibeDanyo(Bala bullet) {//TODO sonido
 		vida-=bullet.getDanyo();
 		MainScreen.balasBorrar.add(bullet);
-		System.out.println(vida);
 		if(vida<=0) {
 			Dokdo.getInstance().setScreen(PantallaMuerte.getInstance()); 
 		}

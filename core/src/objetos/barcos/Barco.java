@@ -166,8 +166,10 @@ public class Barco extends Sprite{
 		return super.rotate(q*Gdx.graphics.getDeltaTime());
 	}
 	public void recibeDanyo( Bala bullet) {
-			vida -= bullet.getDanyo();
-			MainScreen.balasBorrar.add(bullet);
+		vida -= bullet.getDanyo();
+		System.out.println(bullet.getDanyo());
+		System.out.println(vida);
+		MainScreen.balasBorrar.add(bullet);
 	}
 	
 	public void recibeDanyoContinuo(Bala bullet) {

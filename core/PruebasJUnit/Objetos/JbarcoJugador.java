@@ -18,8 +18,6 @@ public class JbarcoJugador {
 		assertEquals(0,bj.getNivelDelBarco());
 		bj.setNivelDelBarco(3);
 		assertEquals(3,bj.getNivelDelBarco());
-		
-		
 	}
 
 }

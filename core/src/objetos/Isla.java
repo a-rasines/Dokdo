@@ -42,7 +42,8 @@ public class Isla extends Sprite{
 		this.nivelRecomendado=nivel;
 		this.conquistada = conquistada;
 		super.tMap = t;
-		this.barcos=new ArrayList<BarcoEnemigo> (Arrays.asList(
+		if(conquistada)this.barcos = new ArrayList<>();
+		else this.barcos=new ArrayList<BarcoEnemigo> (Arrays.asList(
 				BarcoEnemigo.lvl1(posX + 25,posY + 80, true).setTexturePos(0, 2),
 				BarcoEnemigo.lvl1(posX + 50, posY - 50, true).setTexturePos(0, 2),
 				BarcoEnemigo.lvl1(posX - 50,posY - 50, true).setTexturePos(0, 2)
@@ -102,7 +103,7 @@ public class Isla extends Sprite{
 	public void conquistar(BarcoJugador barco) {
 		conquistada = true;
 		barco.setDineros(barco.getDineros()+this.botin);
-		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , "ID =" + String.valueOf(this.id));
+		DatabaseHandler.SQL.editValue("Islas", "Conquistada = " + "1" , "ID = " + String.valueOf(this.id)+" AND ID_Jugador = "+MainScreen.ID_JUGADOR);
 		DatabaseHandler.SQL.editValue("Jugadores", "BarcoX = "+String.valueOf(getX()+45)+", BarcoY = "+String.valueOf(barco.getY())+", TimeS = " + String.valueOf(System.currentTimeMillis())+", Vida= 10", "ID = " + MainScreen.ID_JUGADOR);
 		logger.info("Isla conquistada");
 		logger.info("Autoguardado Completado");

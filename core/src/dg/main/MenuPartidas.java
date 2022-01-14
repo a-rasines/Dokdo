@@ -60,7 +60,6 @@ public class MenuPartidas extends FormatoMenus{
 				System.out.println(iT);
 				ResultSet islasConquistadas = DatabaseHandler.SQL.get("Islas", "COUNT(*)", "ID_Jugador = " + pos0.getInt("ID") + "AND Conquistada = 1");
 				int iC = islasConquistadas.getInt(1);*/
-				System.out.println("g");
 				String jugador = pos0.getString("Nombre")+"   "+"vida: "+pos0.getInt("Vida")+"\n"+"Nivel: "+pos0.getInt("Nivel")+"   "+"Dinero: "+pos0.getInt("Dinero")/*+"   "+"Islas Conquistadas = " + iC + "/" + iT*/;
 				botones.get(boton).setText(jugador);
 				logger.info("Patidas Mostradas Correctamente");

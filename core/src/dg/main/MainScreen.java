@@ -143,7 +143,7 @@ public class MainScreen extends FormatoMenus{
 	public void generarIslas() {
 		Random r = new Random();
 		//Ahora mismo se generan 5 islas por cuadrante
-		
+		System.out.println("a");
 		logger.info("Iniciada Generacion de islas");
 		List<Vector2> isles = new LinkedList<>();
 		Integer[][]cuadrants = {{1,1},{-1,1},{-1,-1},{1,-1}};
@@ -215,13 +215,12 @@ public class MainScreen extends FormatoMenus{
 	    	
 	    	
 	    	if(!DatabaseHandler.SQL.existsValue("Islas", "ID_Jugador", ID_JUGADOR)) {
-	    		System.out.println("in");
 	    		generarIslas();
 	    	} else {
 	    		ResultSet res = DatabaseHandler.SQL.get("Islas", "*");
 	    		try {
 					while (res.next()) {
-						islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getString("Conquistada")=="1").setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
+						islaList.add(new Isla(res.getInt("ID"),res.getFloat("X"),res.getFloat("Y"),res.getInt("Nivel"),res.getInt("Botin"), res.getInt("Conquistada")==1).setTexturePos(res.getInt("Textura")>=7?1:0, res.getInt("Textura")%7));
 					}
 					for (Isla i: islaList) { 
 						barcosEnemigos.addAll(i.getBarcos());

@@ -283,7 +283,7 @@ public class MainScreen extends FormatoMenus{
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
 			barcosEnemigos.forEach(b->b.stop());
 			MenuOp.setInstanciaDeLlamada(instance);
-			Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
+			Dokdo.getInstance().setScreen(Tienda.getInstance());           	
 		}
 		//COLISIONES
 		if (barco.collidesWith(islaList)) {

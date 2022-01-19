@@ -6,11 +6,13 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import databasePack.DatabaseHandler;
 
@@ -26,7 +28,6 @@ public class VentanaCompras extends FormatoMenus{
 	Table back = new Table();
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
 		ClickListener list = new ClickListener() {
 			@Override
 	        public void clicked(InputEvent event, float x, float y) {
@@ -80,6 +81,7 @@ public class VentanaCompras extends FormatoMenus{
 			back.add(barco);
 			back.center();
 			back.setFillParent(true);
+			back.background(new TextureRegionDrawable(new Texture("Ocean.png")));
 			stage.addActor(back);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

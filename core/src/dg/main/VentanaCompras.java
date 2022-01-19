@@ -65,8 +65,8 @@ public class VentanaCompras extends FormatoMenus{
 			}
 			TextButton vela = new TextButton("Vela \nNivel "+niveles[0]+" Coste: 0", skin);
 			TextButton casco = new TextButton("Casco \nNivel "+niveles[1]+" Coste: 0", skin);
-			TextButton cannons = new TextButton("Canones \nNivel "+niveles[1]+" Coste: 0", skin);
-			TextButton barco = new TextButton("Barco \nNivel "+niveles[1]+" Coste: 0", skin);
+			TextButton cannons = new TextButton("Canones \nNivel "+niveles[2]+" Coste: 0", skin);
+			TextButton barco = new TextButton("Barco \nNivel "+niveles[3]+" Coste: 0", skin);
 			vela.addListener(list);
 			casco.addListener(list);
 			cannons.addListener(list);

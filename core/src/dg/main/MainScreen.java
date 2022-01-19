@@ -14,9 +14,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -283,7 +280,10 @@ public class MainScreen extends FormatoMenus{
 		}else if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
 			barcosEnemigos.forEach(b->b.stop());
 			MenuOp.setInstanciaDeLlamada(instance);
-			Dokdo.getInstance().setScreen(Tienda.getInstance());           	
+			Dokdo.getInstance().setScreen(MenuOp.getInstance());           	
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+			Dokdo.getInstance().setScreen(VentanaCompras.getInstance());
 		}
 		//COLISIONES
 		if (barco.collidesWith(islaList)) {

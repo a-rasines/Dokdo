@@ -1,19 +1,15 @@
 package dg.main;
-import java.util.logging.Logger;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class PantallaMuerte extends FormatoMenus{
-	private Logger logger = Logger.getLogger("Menu Muerte");
 	private static PantallaMuerte instanceFather;
 	
     public static FormatoMenus getInstance() {

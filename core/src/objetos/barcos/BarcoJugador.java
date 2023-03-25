@@ -5,7 +5,6 @@ import java.util.List;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
-import databasePack.DatabaseHandler;
 import dg.main.Dokdo;
 import dg.main.MainScreen;
 import dg.main.PantallaMuerte;
@@ -65,7 +64,7 @@ public class BarcoJugador extends Barco{
 			return end;
 		}
 		
-	private boolean limit = false;
+	//private boolean limit = false;
 	@Override
 	public <T> T move(float x, float y) {
 		T a = super.move(x, y);

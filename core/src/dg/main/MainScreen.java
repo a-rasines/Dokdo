@@ -62,7 +62,7 @@ public class MainScreen extends FormatoMenus{
 	public static Viewport vp = new FillViewport((float)screenSize.getWidth()-50, (float)screenSize.getHeight()-50);
 	public static Stage stage = new Stage(vp);
 	private static MainScreen instance;
-	private static boolean regresoM;
+	//private static boolean regresoM;
 	/**
 	 * Devuelve la última instancia generada
 	 * @return La instancia de la clase
@@ -110,10 +110,10 @@ public class MainScreen extends FormatoMenus{
 
 	}
 	
-	 public static void setregresoM() {
+	 /*public static void setregresoM() {
 	    	regresoM=true;
 	    }
-	
+	*/
 	public void barcosAltaMar() {
 		Random r = new Random();
 		

@@ -16,7 +16,7 @@ import objetos.Sprite;
  *
  */
 public class BarcoEnemigo extends Barco{
-	private boolean enter=false;
+	//private boolean enter=false;
 	private Polygon lineaFrente;
 	private Polygon lineaIzquierda;
 	private Polygon lineaDerecha;
@@ -260,7 +260,7 @@ public class BarcoEnemigo extends Barco{
 	public void onExitFromRange() {//TODO sonido
 		tracking = false;
 		if(MainScreen.onRange.size() == 0) {
-			enter=MainScreen.m1.IntercambioSonido(true);
+			/*enter=*/MainScreen.m1.IntercambioSonido(true);
 		}
 	}
 }

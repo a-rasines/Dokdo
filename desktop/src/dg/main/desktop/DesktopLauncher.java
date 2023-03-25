@@ -1,8 +1,5 @@
 package dg.main.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-
 import databasePack.DatabaseHandler;
 import databasePack.TableBuilder;
 import databasePack.TableBuilder.DataType;
@@ -11,6 +8,9 @@ import dg.main.Dokdo;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {

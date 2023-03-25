@@ -1,8 +1,5 @@
 package objetos;
 
-import java.util.logging.Logger;
-
-
 import dg.main.MainScreen;
 import objetos.barcos.Barco;
 
@@ -11,7 +8,6 @@ import objetos.barcos.Barco;
  *
  */
 public class Canyon extends Mejoras{
-	private static Logger loggerCanyon = Logger.getLogger("Canyon");
 	/** Cañones que usaran los barcos del juego
 	 * @param nivel Nivel necesario para adquirir el cañon
 	 * @param precio Precio necesario para comprar el cañon
